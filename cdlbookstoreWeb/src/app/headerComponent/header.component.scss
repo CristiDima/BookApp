@@ -1,0 +1,26 @@
+.header {
+    background-color: #FFD700;
+    padding: 0%;
+    margin: 0%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    z-index: 100;;
+    border-bottom: 1px solid #000000;
+
+    .home {
+        cursor: pointer;
+    }
+}
+
+.right {
+    position: fixed;
+    right: 1%;
+    .login {
+        background-color: #000000;
+        color: #FFD700;
+        margin: 0.5em;
+    }
+}
+

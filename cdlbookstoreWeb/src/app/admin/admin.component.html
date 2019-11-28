@@ -1,0 +1,83 @@
+<div class="header">
+    <app-header></app-header>
+</div>
+<div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
+    <form [formGroup]="addbookForm" (ngSubmit)="onSubmit()" *ngIf="isOnAddPageMode">
+        <div formGroupName="bookData" fxLayout fxLayout="column" fxLayoutAlign="center">
+            <div fxLayout="row" fxLayoutAlign="center">
+                <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                    <mat-label for="bookname">Book Name:*</mat-label>
+                    <input matInput placeholder="Placeholder"
+                    type="text"
+                    id="bookname"
+                    formControlName="bookname"
+                    class="form-control">
+                </mat-form-field>
+                <span
+                *ngIf="!addbookForm.get('bookData.bookname').valid && addbookForm.get('bookData.bookname').touched"
+                class="help-block">
+                </span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center">
+                <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                    <mat-label for="authorname">Author name:*</mat-label>
+                    <input matInput placeholder="Placeholder"
+                    type="text"
+                    id="authorname"
+                    formControlName="authorname"
+                    class="form-control">
+                </mat-form-field>
+                <span
+                *ngIf="!addbookForm.get('bookData.authorname').valid && addbookForm.get('bookData.authorname').touched"
+                class="help-block">
+                </span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center">
+                <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                    <mat-label for="type">Type:*</mat-label>
+                    <input matInput placeholder="Placeholder"
+                    type="text"
+                    id="type"
+                    formControlName="type"
+                    class="form-control">
+                </mat-form-field>
+                <span
+                *ngIf="!addbookForm.get('bookData.type').valid && addbookForm.get('bookData.type').touched"
+                class="help-block">
+                </span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center">
+                <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                    <mat-label for="description">Description:*</mat-label>
+                    <input matInput placeholder="Placeholder"
+                    type="text"
+                    id="description"
+                    formControlName="description"
+                    class="form-control">
+                </mat-form-field>
+                <span
+                *ngIf="!addbookForm.get('bookData.description').valid && addbookForm.get('bookData.description').touched"
+                class="help-block">
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div fxLayout="row" fxLayoutAlign="center">
+            <button class="save-button" mat-raised-button type="submit">Save</button>
+            <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
+        </div>
+    </form>
+    <hr>
+    <div class="mode" fxLayout fxLayout="column" fxLayoutAlign="center" >
+        <div fxLayout="row" fxLayoutAlign="center">
+            <button class="mode-button" mat-raised-button (click)="onChangeMode()">
+                <span *ngIf="isOnAddPageMode">Delete a book</span>
+                <span *ngIf="!isOnAddPageMode">Add a book</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <app-footer></app-footer>
+</div>

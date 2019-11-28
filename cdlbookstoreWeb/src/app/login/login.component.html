@@ -1,0 +1,50 @@
+<div class="header">
+    <app-header></app-header>
+</div>
+<div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="userData" fxLayout fxLayout="column" fxLayoutAlign="center">
+            <div fxLayout="row" fxLayoutAlign="center">
+                <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                    <mat-label for="username">Username</mat-label>
+                    <input matInput placeholder="Placeholder"
+                    type="text"
+                    id="username"
+                    formControlName="username"
+                    class="form-control">
+                </mat-form-field>
+                <span
+                *ngIf="!signinForm.get('userData.username').valid && signinForm.get('userData.username').touched"
+                class="help-block">
+                </span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center">
+                <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                    <mat-label for="password">Password</mat-label>
+                    <input matInput placeholder="Placeholder"
+                    type="text"
+                    id="password"
+                    formControlName="password"
+                    class="form-control">
+                </mat-form-field>
+                <span
+                *ngIf="!signinForm.get('userData.password').valid && signinForm.get('userData.password').touched"
+                class="help-block">
+                </span>
+            </div>
+        </div>
+        <hr>
+        <div fxLayout="row" fxLayoutAlign="center">
+            <button class="login-buttons" mat-raised-button type="submit">LogIn</button>
+            <button class="login-buttons" mat-raised-button click="onCancel()">Cancel</button>
+        </div>
+        <hr>
+        <div fxLayout="row" fxLayoutAlign="center">
+            <button class="account-button" mat-raised-button (click)="onSignUpPage()">Create an account</button>
+        </div>
+    </form>
+</div>
+<div class="footer">
+    <app-footer></app-footer>
+</div>
+      

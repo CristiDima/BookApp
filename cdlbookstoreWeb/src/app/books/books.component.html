@@ -1,0 +1,38 @@
+<div class="header">
+    <app-header></app-header>
+</div>
+
+<div class="container">
+    <mat-sidenav-container class="books-container" *ngIf="true">
+        <mat-sidenav-content fxLayout fxLayout="column">
+            <div>
+                <p fxLayout fxLayout="row" fxLayoutAlign="center" class="title">Books</p>
+            </div>
+            <mat-form-field class="types" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
+                <mat-label>Type</mat-label>
+                <mat-select [formControl]="types" multiple>
+                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="types" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
+                <mat-label>Authors</mat-label>
+                <mat-select [formControl]="types" multiple>
+                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="types" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
+                <mat-label>Books</mat-label>
+                <mat-select [formControl]="types" multiple>
+                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div fxLayout fxLayout="row" fxLayoutAlign="center" >
+                <button mat-button class="search">Search</button>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
+
+<div class="footer">
+    <app-footer></app-footer>
+</div>
