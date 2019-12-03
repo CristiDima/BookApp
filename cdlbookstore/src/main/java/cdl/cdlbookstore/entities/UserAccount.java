@@ -10,18 +10,31 @@ public class UserAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String email;
-    private String password;
-    private boolean isValid;
-    private Date expirationDate;
-    private long idUser;
 
-    public UserAccount(String email, String password, boolean isValid, Date expirationDate, long idUser) {
+    @Column
+    private String email;
+
+    @Column
+    private String password;
+
+    @Column
+    private boolean isValid;
+
+    @Column
+    private Date expirationDate;
+
+    @Column
+    private long userId;
+
+    public  UserAccount() {
+    }
+
+    public UserAccount(String email, String password, boolean isValid, Date expirationDate, long userId) {
         this.email = email;
         this.password = password;
         this.isValid = isValid;
         this.expirationDate = expirationDate;
-        this.idUser = idUser;
+        this.userId = userId;
     }
 
     public long getId() {
@@ -60,11 +73,11 @@ public class UserAccount {
         this.expirationDate = expirationDate;
     }
 
-    public long getIdUser() {
-        return idUser;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
+    public void setUserId(long idUser) {
+        this.userId = idUser;
     }
 }

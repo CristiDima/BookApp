@@ -9,11 +9,24 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column
     private long authorId;
+
+    @Column
     private long typeId;
+
+    @Column
     private String name;
+
+    @Column
     private String description;
+
+    @Column
     private double rating;
+
+    public Book() {
+    }
 
     public Book(long authorId, long typeId, String name, String description) {
         this.authorId = authorId;

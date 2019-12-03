@@ -10,9 +10,18 @@ public class LoanedBook {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column
     private long userId;
+
+    @Column
     private long bookId;
+
+    @Column
     private Date dateToReturn;
+
+    private LoanedBook() {
+    }
 
     public LoanedBook(long userId, long bookId, Date dateToReturn) {
         this.userId = userId;

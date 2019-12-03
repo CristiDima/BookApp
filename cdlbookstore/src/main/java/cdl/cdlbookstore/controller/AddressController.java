@@ -14,7 +14,6 @@ public class AddressController {
 
     @GetMapping(path="/address")
     public Address getAddressDTO(){
-        Address address = addressService.getAddress(1);
-        return address;
+        return addressService.getAddress(1);
     }
 }

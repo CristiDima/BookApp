@@ -9,8 +9,15 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column
     private String name;
+
+    @Column
     private String description;
+
+    public Author() {
+    }
 
     public Author(String name) {
         this.name = name;

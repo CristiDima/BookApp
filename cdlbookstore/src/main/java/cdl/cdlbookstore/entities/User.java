@@ -21,11 +21,13 @@ public class User {
     @NotNull
     private String lastName;
 
-    private long addressId;
+    @Column
+    private int addressId;
+
+    @Column
     private boolean isAdmin;
 
     public User(){
-
     }
 
     public User(String firstName, String lastName, boolean isAdmin) {
@@ -34,7 +36,7 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    public User(String firstName, String lastName, long addressId, boolean isAdmin) {
+    public User(String firstName, String lastName, int addressId, boolean isAdmin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addressId = addressId;
@@ -61,11 +63,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public long getAddressId() {
+    public int getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(long addressId) {
+    public void setAddressId(int addressId) {
         this.addressId = addressId;
     }
 
