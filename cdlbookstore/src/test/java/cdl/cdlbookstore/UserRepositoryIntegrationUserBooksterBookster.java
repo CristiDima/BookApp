@@ -1,7 +1,7 @@
 package cdl.cdlbookstore;
 
-import cdl.cdlbookstore.entities.User;
-import cdl.cdlbookstore.repository.UserRepository;
+import cdl.cdlbookstore.entities.UserBookster;
+import cdl.cdlbookstore.repository.UserBooksterRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +15,16 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserRepositoryIntegrationUser {
+public class UserRepositoryIntegrationUserBooksterBookster {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserBooksterRepository userBooksterRepository;
 
     @Test
     public void whenCalledSave_thenCorrectNumberOfUsers() {
-        userRepository.save(new User("Bob", "James", false));
-        List<User> users = (List<User>) userRepository.findAll();
+        userBooksterRepository.save(new UserBookster("Bob", "James", false));
+        List<UserBookster> userBooksters = (List<UserBookster>) userBooksterRepository.findAll();
 
-        assertEquals(users.size(), 1);
+        assertEquals(userBooksters.size(), 1);
     }
 }

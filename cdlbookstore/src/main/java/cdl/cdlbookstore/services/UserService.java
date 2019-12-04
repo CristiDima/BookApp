@@ -1,10 +1,10 @@
 package cdl.cdlbookstore.services;
 
-import cdl.cdlbookstore.entities.User;
+import cdl.cdlbookstore.entities.UserBookster;
 
 public interface UserService {
 
-    User getUser( int id );
+    UserBookster getUser(int id );
 
-    Iterable<User> getUsers();
+    Iterable<UserBookster> getUsers();
 }

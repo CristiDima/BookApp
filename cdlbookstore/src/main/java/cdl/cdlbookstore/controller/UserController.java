@@ -1,6 +1,6 @@
 package cdl.cdlbookstore.controller;
 
-import cdl.cdlbookstore.entities.User;
+import cdl.cdlbookstore.entities.UserBookster;
 import cdl.cdlbookstore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +13,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(path="/user")
-    public User getUserDTO(){
-        User user = userService.getUser(1);
-        return user;
+    public UserBookster getUserDTO(){
+        UserBookster userBookster = userService.getUser(1);
+        return userBookster;
     }
 }

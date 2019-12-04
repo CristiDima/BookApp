@@ -30,7 +30,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `bsdb`.`Users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bsdb`.`Users` (
+CREATE TABLE IF NOT EXISTS `bsdb`.`UsersBookster` (
   `id` INT NOT NULL,
   `firstName` VARCHAR(45) NOT NULL,
   `lastName` VARCHAR(45) NOT NULL,

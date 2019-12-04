@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { LoginComponent } from '../login/login.component';
 import { PagesRouting } from '../shared/pages-routing.service';
 
 @Component({

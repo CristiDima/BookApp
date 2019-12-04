@@ -1,28 +1,27 @@
 package cdl.cdlbookstore.services.impl;
 
-import cdl.cdlbookstore.entities.User;
-import cdl.cdlbookstore.repository.UserRepository;
+import cdl.cdlbookstore.dto.UserBooksterDTO;
+import cdl.cdlbookstore.entities.UserBookster;
+import cdl.cdlbookstore.repository.UserBooksterRepository;
 import cdl.cdlbookstore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserBooksterRepository userBooksterRepository;
 
     @Override
-    public User getUser(int id) {
-        userRepository.findAll();
-        return userRepository.findUsersById( id );
+    public UserBookster getUser(int id) {
+        UserBooksterDTO user = new UserBooksterDTO();
+        return userBooksterRepository.findUsersById( id );
     }
 
     @Override
-    public Iterable<User> getUsers() {
-        return userRepository.findAll();
+    public Iterable<UserBookster> getUsers() {
+        return userBooksterRepository.findAll();
     }
 
 }
