@@ -16,6 +16,8 @@ import { BooksComponent } from './books/books.component';
 import { AccountComponent } from './account/account.component';
 import { AdminComponent } from './admin/admin.component';
 import { PagesRouting } from './shared/pages-routing.service';
+import { APIRequestService } from './shared/api-request.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,10 @@ import { PagesRouting } from './shared/pages-routing.service';
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule
   ],
-  providers: [PagesRouting],
+  providers: [PagesRouting, APIRequestService],
   bootstrap: [AppComponent, 
     HomePageComponent,
     HeaderComponent,

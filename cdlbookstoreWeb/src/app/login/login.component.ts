@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PagesRouting } from '../shared/pages-routing.service';
+import { APIRequestService } from '../shared/api-request.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   protected signinForm: FormGroup = null;
 
-  constructor(private _pagesRouting: PagesRouting) {}
+  constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService) {}
 
   ngOnInit() {
     this.signinForm = new FormGroup({
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   protected onSubmit() {
-    console.log(this.signinForm);
+    this.apiRequest.requst('GET', 'http://localhost:8080/user');
     // this.signinForm.reset();
   }
 
