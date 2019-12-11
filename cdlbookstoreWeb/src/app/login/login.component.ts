@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   protected onSubmit() {
-    this.apiRequest.requst('GET', 'http://localhost:8080/user');
+    this.apiRequest.requst('GET', 'http://localhost:8080/address');
     // this.signinForm.reset();
   }
 
