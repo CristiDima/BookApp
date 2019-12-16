@@ -16,8 +16,13 @@ mat-form-field.ng-invalid.ng-touched {
         margin: 0%;
     } 
 
+    .addbook {
+        margin: 2em;
+        display: flow-root;
+    }
+
     .form-group{
-        width: 20%;
+        width: 100%;
     }
 
     .save-button {
