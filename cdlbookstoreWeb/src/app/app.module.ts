@@ -18,6 +18,7 @@ import { AdminComponent } from './admin/admin.component';
 import { PagesRouting } from './shared/pages-routing.service';
 import { APIRequestService } from './shared/api-request.service';
 import { HttpClientModule } from '@angular/common/http';
+import { PathRequestService } from './shared/path-request.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     FlexLayoutModule,
     HttpClientModule
   ],
-  providers: [PagesRouting, APIRequestService],
+  providers: [PagesRouting, APIRequestService, PathRequestService],
   bootstrap: [AppComponent, 
     HomePageComponent,
     HeaderComponent,
