@@ -4,7 +4,7 @@ import { UserAddress } from './userAddress.model';
 export class User {
     private firstName: number = null;
     private lastName: number = null;
-    private idCNP: number = null;
+    private id: number = null;
     private email: string = null;
     private phoneNumber: number = null;
     private userAccount: UserAccount = null;

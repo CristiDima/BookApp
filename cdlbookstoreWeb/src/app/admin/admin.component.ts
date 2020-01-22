@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PagesRouting } from '../shared/pages-routing.service';
+import { APIRequestService } from '../shared/api-request.service';
+import { PathRequestService } from '../shared/path-request.service';
+import { Book } from '../models/book.model';
 
 @Component({
   selector: 'app-admin',
@@ -13,8 +16,10 @@ export class AdminComponent implements OnInit {
   protected isOnRemovePageMode: boolean = false;
 
   protected addbookForm: FormGroup = null;
+  protected typeList: string[] = ['Drama', 'Personal Development']
 
-  constructor(private _pagesRouting: PagesRouting) {}
+  constructor(private _pagesRouting: PagesRouting, private _apiRequest: APIRequestService,
+    private _pathRequest: PathRequestService) {}
 
   ngOnInit() {
     this.addbookForm = new FormGroup({
@@ -31,8 +36,12 @@ export class AdminComponent implements OnInit {
   }
 
   protected onSubmit() {
-    console.log(this.addbookForm);
-    // this.signinForm.reset();
+    const book: Book = new Book();
+    book.name = this.addbookForm.value.bookData.bookname;
+    book.description = this.addbookForm.value.bookData.description;
+    console.log(book);
+    this._apiRequest.requst('POST', this._pathRequest.saveBookPath, book);
+    // this.addbookForm.reset();
   }
 
   onCancel() {

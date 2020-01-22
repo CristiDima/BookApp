@@ -28,25 +28,21 @@
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="authorname">Author name:*</mat-label>
-                                <input matInput placeholder="Placeholder"
-                                type="text"
-                                id="authorname"
-                                formControlName="authorname"
-                                class="form-control">
+                                <mat-select [formControl]="authorname" multiple>
+                                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
+                                </mat-select>
                             </mat-form-field>
                             <span
-                            *ngIf="!addbookForm.get('bookData.authorname').valid && addbookForm.get('bookData.authorname').touched"
-                            class="help-block">
+                            *ngIf="!addbookForm.get('bookData.authorname').valid && addbookForm.get('bookData.authorname').touched &&
+                            addbookForm.get('bookData.authorname').touched"  class="help-block">
                             </span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="type">Type:*</mat-label>
-                                <input matInput placeholder="Placeholder"
-                                type="text"
-                                id="type"
-                                formControlName="type"
-                                class="form-control">
+                                <mat-select [formControl]="type" multiple>
+                                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
+                                </mat-select>
                             </mat-form-field>
                             <span
                             *ngIf="!addbookForm.get('bookData.type').valid && addbookForm.get('bookData.type').touched"
@@ -65,6 +61,31 @@
                             <span
                             *ngIf="!addbookForm.get('bookData.description').valid && addbookForm.get('bookData.description').touched"
                             class="help-block">
+                            </span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <button class="save-button" mat-raised-button type="submit">Save</button>
+                        <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
+                    </div>
+                </form>
+                <form [formGroup]="addbookForm" (ngSubmit)="onSubmit()" *ngIf="isOnRemovePageMode">
+                    <div formGroupName="bookData" fxLayout fxLayout="column" fxLayoutAlign="center">
+                        <div fxLayout="row" fxLayoutAlign="center">
+                            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                                <mat-label for="authorname">Author name:*</mat-label>
+                                <mat-select placeholder="Placeholder"
+                                type="text"
+                                id="authorname"
+                                formControlName="authorname"
+                                class="form-control">
+                                    <mat-option [value]="topping">type</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span
+                            *ngIf="!addbookForm.get('bookData.authorname').valid && addbookForm.get('bookData.authorname').touched &&
+                            addbookForm.get('bookData.authorname').touched"  class="help-block">
                             </span>
                         </div>
                     </div>

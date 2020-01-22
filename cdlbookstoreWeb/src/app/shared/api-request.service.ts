@@ -1,18 +1,20 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class APIRequestService {
-
+    private httpOptions = {
+        headers: new HttpHeaders({'Content-Type': 'application/json'})
+      }
     constructor(private httpClient: HttpClient) {
     }
 
-    public requst(requestType: string, url: string, data?: string) {
+    public requst(requestType: string, url: string, data?: any) {
         switch (requestType) {
             case 'PUT': this.putRequest(url, data);
                 break;
-            case 'POST': this.postRequest(url, data);
+            case 'POST': this.postRequest(url, JSON.stringify(data) );
                 break;
             case 'GET': this.getRequest(url);
                 break;
@@ -27,7 +29,6 @@ export class APIRequestService {
             .get(
                 url
             ).subscribe((responseData: any) =>{
-                console.log(responseData);
                 response = responseData;
             });
         return response;
@@ -37,29 +38,24 @@ export class APIRequestService {
         let response: any = null;
         this.httpClient
             .put(
-                url, data
+                url, data, this.httpOptions
             )
-            .pipe(
-                map(responseData => {
+            .subscribe((responseData: any) => {
                     response = responseData;
-                })
-            )
+            });
         return response;
     }
 
-    private postRequest(url: string, data: any) {
+    private postRequest(url: string, data: any): any {
         let response: any = null;
         this.httpClient
             .post(
-                url, data
+                url, data, this.httpOptions
             )
-            .pipe(
-                map(responseData => {
-                    response = responseData;
-                })
-            )
+            .subscribe((responseData: any) => {
+                response = responseData;
+            });
         return response;
-
     }
 
     private deleteRequest(url: string, data: any) {
