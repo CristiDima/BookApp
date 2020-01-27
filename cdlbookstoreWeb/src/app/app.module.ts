@@ -19,19 +19,17 @@ import { PagesRouting } from './shared/pages-routing.service';
 import { APIRequestService } from './shared/api-request.service';
 import { HttpClientModule } from '@angular/common/http';
 import { PathRequestService } from './shared/path-request.service';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
     AppComponent, 
     HomePageComponent,
-    HeaderComponent,
-    FooterComponent,
     UsersComponent,
     LoginComponent,
     SignupComponent,
     BooksComponent,
-    AccountComponent,
-    AdminComponent
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -39,13 +37,12 @@ import { PathRequestService } from './shared/path-request.service';
     MaterialModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    AdminModule
   ],
   providers: [PagesRouting, APIRequestService, PathRequestService],
   bootstrap: [AppComponent, 
     HomePageComponent,
-    HeaderComponent,
-    FooterComponent,
     LoginComponent]
 })
 export class AppModule { }

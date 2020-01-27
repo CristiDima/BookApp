@@ -1,0 +1,58 @@
+<div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
+    <div fxFlex="100%" class="addbook" fxLayoutAlign="center">
+        <mat-card>
+            <mat-card-header>
+                <div mat-card-avatar></div>
+                <mat-card-title *ngIf="isOnAddPageMode">Add new type</mat-card-title>
+                <mat-card-title *ngIf="!isOnAddPageMode">Delete type</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="addTypeForm" (ngSubmit)="onSubmit()">
+                    <div fxLayout fxLayout="column" fxLayoutAlign="center">
+                        <div fxLayout="row" fxLayoutAlign="center">
+                            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                                <mat-label for="description">Type name:*</mat-label>
+                                <input matInput placeholder="Placeholder"
+                                type="text"
+                                id="type"
+                                formControlName="type"
+                                class="form-control">
+                            </mat-form-field>
+                            <span
+                            *ngIf="!addTypeForm.get('type').valid && addTypeForm.get('type').touched &&
+                            addTypeForm.get('type').dirty"  class="help-block">
+                            </span>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="center">
+                            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                                <mat-label for="description">Description:*</mat-label>
+                                <input matInput placeholder="Placeholder"
+                                type="text"
+                                id="description"
+                                formControlName="description"
+                                class="form-control">
+                            </mat-form-field>
+                            <span
+                            *ngIf="!addTypeForm.get('description').valid && addTypeForm.get('description').touched &&
+                            addTypeForm.get('description').dirty" class="help-block"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <button class="save-button" mat-raised-button type="submit">Save</button>
+                        <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
+                    </div>
+                </form>
+                <hr>
+                <div class="mode" fxLayout fxLayout="column" fxLayoutAlign="center" >
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <button class="mode-button" mat-raised-button>
+                            <span *ngIf="isOnAddPageMode">Delete</span>
+                            <span *ngIf="!isOnAddPageMode">Add</span>
+                        </button>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
