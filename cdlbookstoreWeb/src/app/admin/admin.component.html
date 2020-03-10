@@ -1,15 +1,16 @@
 <div class="header">
     <app-header></app-header>
 </div>
-<div class="container" fxLayout="row" fxLayoutAlign="center center">
-    <button class="standard-button" [disabled]="isBookAction" mat-raised-button (click)="onChangeBookAction()">Add book</button>
-    <button class="standard-button" [disabled]="isAuthorAction" mat-raised-button (click)="onChangeAuthorAction()">Add author</button>
-    <button class="standard-button" [disabled]="isTypeAction" mat-raised-button (click)="onChangeTypeAction()">Add type</button>
-</div>
-<div class="container" fxLayout="row" fxLayoutAlign="center center">
-    <app-addbook *ngIf="isBookAction"></app-addbook>
-    <app-addauthor *ngIf="isAuthorAction"></app-addauthor>
-    <app-addtype *ngIf="isTypeAction"></app-addtype>
+<div class="container" fxLayout fxLayout="row" fxLayoutAlign="center" fxFlex="50%">
+    <div >
+        <button class="standard-button" [disabled]="isBookAction" mat-raised-button (click)="onChangeBookAction()">Add book</button>
+        <button class="standard-button" [disabled]="isAuthorAction" mat-raised-button (click)="onChangeAuthorAction()">Add author</button>
+        <button class="standard-button" [disabled]="isTypeAction" mat-raised-button (click)="onChangeTypeAction()">Add type</button>
+    
+        <app-addbook *ngIf="isBookAction"></app-addbook>
+        <app-addauthor *ngIf="isAuthorAction"></app-addauthor>
+        <app-addtype *ngIf="isTypeAction"></app-addtype>
+    </div>
 </div>
 <div class="footer">
     <app-footer></app-footer>

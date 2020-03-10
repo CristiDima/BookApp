@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table( name = "read_books")
+@Table( name = "readBooks")
 @Data
 public class ReadBook {
 

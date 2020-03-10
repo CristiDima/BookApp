@@ -1,5 +1,5 @@
 <div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
-    <div fxFlex="100%" class="addbook" fxLayoutAlign="center">
+    <div fxFlex="100%" class="add-type" fxLayoutAlign="center">
         <mat-card>
             <mat-card-header>
                 <div mat-card-avatar></div>
@@ -43,10 +43,13 @@
                         <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
                     </div>
                 </form>
+                <div *ngIf="isOnRemovePageMode">
+                    <app-deletetype [isOnAddPageMode]="isOnAddPageMode" [isOnRemovePageMode]="isOnRemovePageMode"></app-deletetype>
+                </div>
                 <hr>
-                <div class="mode" fxLayout fxLayout="column" fxLayoutAlign="center" >
+                <div class="mode" fxLayout fxLayout="column" fxLayoutAlign="center">
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="mode-button" mat-raised-button>
+                        <button class="mode-button" mat-raised-button (click)="onChangeMode()">
                             <span *ngIf="isOnAddPageMode">Delete</span>
                             <span *ngIf="!isOnAddPageMode">Add</span>
                         </button>

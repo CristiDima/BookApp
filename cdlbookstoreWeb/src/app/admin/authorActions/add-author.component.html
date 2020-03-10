@@ -1,5 +1,5 @@
 <div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
-    <div fxFlex="100%" class="addbook" fxLayoutAlign="center">
+    <div fxFlex="100%" class="add-author" fxLayoutAlign="center">
         <mat-card>
             <mat-card-header>
                 <div mat-card-avatar></div>
@@ -7,7 +7,7 @@
                 <mat-card-title *ngIf="!isOnAddPageMode">Delete author</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <form [formGroup]="addAuthorForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="addAuthorForm" (ngSubmit)="onSubmit()" *ngIf="isOnAddPageMode">
                     <div fxLayout fxLayout="column" fxLayoutAlign="center">
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
@@ -43,10 +43,13 @@
                         <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
                     </div>
                 </form>
+                <div *ngIf="isOnRemovePageMode">
+                    <app-deleteauthor [isOnAddPageMode]="isOnAddPageMode" [isOnRemovePageMode]="isOnRemovePageMode"></app-deleteauthor>
+                </div>
                 <hr>
                 <div class="mode" fxLayout fxLayout="column" fxLayoutAlign="center" >
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="mode-button" mat-raised-button>
+                        <button class="mode-button" mat-raised-button (click)="onChangeMode()">
                             <span *ngIf="isOnAddPageMode">Delete</span>
                             <span *ngIf="!isOnAddPageMode">Add</span>
                         </button>

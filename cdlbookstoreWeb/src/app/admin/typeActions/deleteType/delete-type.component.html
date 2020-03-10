@@ -1,0 +1,25 @@
+<form [formGroup]="deleteTypeForm" (ngSubmit)="onSubmit()">
+    <div formGroupName="typeData" fxLayout fxLayout="column" fxLayoutAlign="center">
+        <div fxLayout="row" fxLayoutAlign="center">
+            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                <mat-label for="typename">Type name:*</mat-label>
+                <mat-select placeholder="Placeholder"
+                type="text"
+                id="typename"
+                formControlName="typename"
+                class="form-control">
+                    <mat-option [value]="topping">type</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <span
+            *ngIf="!deleteTypeForm.get('bookData.typename').valid && deleteTypeForm.get('bookData.typename').touched &&
+            deleteTypeForm.get('typeData.typename').dirty"  class="help-block">
+            </span>
+        </div>
+    </div>
+    <hr>
+    <div fxLayout="row" fxLayoutAlign="center">
+        <button class="save-button" mat-raised-button type="submit">Save</button>
+        <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
+    </div>
+</form>

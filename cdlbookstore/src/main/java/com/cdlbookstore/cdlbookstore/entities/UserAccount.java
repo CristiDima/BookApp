@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table (name = "user_account")
+@Table (name = "userAccount")
 @Data
 public class UserAccount {
 

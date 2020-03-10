@@ -7,6 +7,9 @@ import { MaterialModule } from '../shared/material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { AddAuthorComponent } from './authorActions/add-author.component';
 import { AddTypeComponent } from './typeActions/add-type.component';
+import { DeleteBookComponent } from './bookActions/deleteBook/delete-book.component';
+import { DeleteAuthorComponent } from './authorActions/deleteAuthor/delete-author.component';
+import { DeleteTypeComponent } from './typeActions/deleteType/delete-type.component';
 
 @NgModule({
     declarations: [
@@ -14,6 +17,9 @@ import { AddTypeComponent } from './typeActions/add-type.component';
       AddBookComponent,
       AddAuthorComponent,
       AddTypeComponent,
+      DeleteBookComponent,
+      DeleteAuthorComponent,
+      DeleteTypeComponent,
       HeaderComponent,
       FooterComponent,
     ],

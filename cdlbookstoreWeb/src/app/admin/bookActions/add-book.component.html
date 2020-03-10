@@ -1,5 +1,5 @@
 <div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
-    <div fxFlex="100%" class="addbook" fxLayoutAlign="center">
+    <div fxFlex="100%" class="add-book" fxLayoutAlign="center">
         <mat-card>
             <mat-card-header>
                 <div mat-card-avatar></div>
@@ -68,31 +68,9 @@
                         <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
                     </div>
                 </form>
-                <form [formGroup]="addbookForm" (ngSubmit)="onSubmit()" *ngIf="isOnRemovePageMode">
-                    <div formGroupName="bookData" fxLayout fxLayout="column" fxLayoutAlign="center">
-                        <div fxLayout="row" fxLayoutAlign="center">
-                            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="authorname">Author name:*</mat-label>
-                                <mat-select placeholder="Placeholder"
-                                type="text"
-                                id="authorname"
-                                formControlName="authorname"
-                                class="form-control">
-                                    <mat-option [value]="topping">type</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <span
-                            *ngIf="!addbookForm.get('bookData.authorname').valid && addbookForm.get('bookData.authorname').touched &&
-                            addbookForm.get('bookData.authorname').touched"  class="help-block">
-                            </span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="save-button" mat-raised-button type="submit">Save</button>
-                        <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
-                    </div>
-                </form>
+                <div *ngIf="isOnRemovePageMode">
+                    <app-deletebook [isOnAddPageMode]="isOnAddPageMode" [isOnRemovePageMode]="isOnRemovePageMode"></app-deletebook>
+                </div>
                 <hr>
                 <div class="mode" fxLayout fxLayout="column" fxLayoutAlign="center" >
                     <div fxLayout="row" fxLayoutAlign="center">

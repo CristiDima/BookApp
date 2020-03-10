@@ -17,10 +17,10 @@ public class Book {
     private String name;
 
     @Column
-    private int author_id;
+    private int authorId;
 
     @Column
-    private int type_id;
+    private int typeId;
 
     @Column
     private String description;
@@ -33,8 +33,8 @@ public class Book {
 
     public Book(String name, int authorId, int typeId, String description, double rating) {
         this.name = name;
-        this.author_id = authorId;
-        this.type_id = typeId;
+        this.authorId = authorId;
+        this.typeId = typeId;
         this.description = description;
         this.rating = rating;
     }
@@ -47,12 +47,12 @@ public class Book {
         return name;
     }
 
-    public int getAuthor_id() {
-        return author_id;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public int getType_id() {
-        return type_id;
+    public int getTypeId() {
+        return typeId;
     }
 
     public String getDescription() {
@@ -67,12 +67,12 @@ public class Book {
         this.name = name;
     }
 
-    public void setAuthor_id(int authorId) {
-        this.author_id = authorId;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 
-    public void setType_id(int typeId) {
-        this.type_id = typeId;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public void setDescription(String description) {

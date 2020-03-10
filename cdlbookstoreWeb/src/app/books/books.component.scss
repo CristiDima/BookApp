@@ -1,12 +1,13 @@
 .container {
-    .books-container {
-        position: fixed;
+    position: fixed;
         top: 60px;
         bottom: 20px;
-        right: 0;
-        width: 15%;
+        left: 0;
+        width: 25%;
         background: #000000;
-        z-index: 1;
+    .books-container {
+        top: 60px;
+        background: #000000;
 
         .title{
             color: #FFD700;
@@ -24,9 +25,14 @@
             background-color: #FFD700;
             color: #000000;
             margin: 1em;
-            width: 100px;
+            width: 100px auto;
         }
     }
+
+    // .mat-form-field {
+    //     width: auto;
+    // }
+
     // mat-icon-stepper selected color change 
 .mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
     background-color: #FFD700!important;
