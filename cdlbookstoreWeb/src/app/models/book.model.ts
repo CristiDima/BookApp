@@ -1,8 +1,8 @@
 export class Book {
   public id: number = 1;
-  public name: string = null;
-  public author_id: number = 1;
-  public type_id: number = 1;
-  public description: string = null
+  public name: string = '';
+  public authorId: number = 1;
+  public typeId: number = 1;
+  public description: string = ''
   public rating: number = 1;  
 }

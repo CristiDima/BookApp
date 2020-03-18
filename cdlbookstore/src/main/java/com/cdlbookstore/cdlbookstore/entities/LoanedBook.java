@@ -4,20 +4,20 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "loanedBooks")
+@Table(name = "loaned_books")
 public class LoanedBook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
+    @Column(name = "user_id")
     private int userId;
 
-    @Column
+    @Column(name = "book_id")
     private int bookId;
 
-    @Column
+    @Column(name = "date_to_return")
     private Date dateToReturn;
 
     public LoanedBook() {

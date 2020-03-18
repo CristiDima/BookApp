@@ -27,7 +27,7 @@
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="authorname">Author name:*</mat-label>
                                 <mat-select formArrayName="authorname" multiple>
-                                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
+                                    <mat-option *ngFor="let author of authorList" [value]="topping">{{author}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <span

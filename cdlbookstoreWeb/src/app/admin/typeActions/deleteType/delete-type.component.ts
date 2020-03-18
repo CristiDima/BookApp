@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TypeService } from 'src/app/shared/type.service';
 
 @Component({
     selector: 'app-deletetype',
@@ -11,8 +12,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     @Input() isOnRemovePageMode: boolean;
   
     protected deleteTypeForm: FormGroup = null;
+    protected typeList: string[] = [];
   
-    constructor() {}
+    constructor(private _bookTypeService: TypeService) {
+      this.getInitialData();
+    }
   
     ngOnInit() {
       this.deleteTypeForm = new FormGroup({
@@ -35,5 +39,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     onChangeMode() {
       this.isOnAddPageMode  = !this.isOnAddPageMode;
       this.isOnRemovePageMode = !this.isOnRemovePageMode;
+    }
+
+    private getInitialData(): void {
+      this.typeList = this._bookTypeService.typesName;
     }
   }

@@ -16,19 +16,15 @@ public class Address {
     private int id;
 
     @Column
-    @NotNull
     private String street;
 
     @Column
-    @NotNull
     private int number;
 
     @Column
-    @NotNull
     private String city;
 
     @Column
-    @NotNull
     private String district;
 
     public Address(){

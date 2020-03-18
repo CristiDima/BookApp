@@ -17,6 +17,9 @@ import { APIRequestService } from './shared/api-request.service';
 import { HttpClientModule } from '@angular/common/http';
 import { PathRequestService } from './shared/path-request.service';
 import { AdminModule } from './admin/admin.module';
+import { AuthorService } from './shared/author.service';
+import { BookService } from './shared/book.service';
+import { TypeService } from './shared/type.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,7 @@ import { AdminModule } from './admin/admin.module';
     HttpClientModule,
     AdminModule
   ],
-  providers: [PagesRouting, APIRequestService, PathRequestService],
+  providers: [PagesRouting, APIRequestService, PathRequestService, AuthorService, BookService, TypeService],
   bootstrap: [AppComponent, 
     HomePageComponent,
     LoginComponent]

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthorService } from 'src/app/shared/author.service';
+import { BookService } from 'src/app/shared/book.service';
 
 @Component({
     selector: 'app-deletebook',
@@ -11,8 +13,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     @Input() isOnRemovePageMode: boolean;
   
     protected deleteBookForm: FormGroup = null;
-  
-    constructor() {}
+    protected booksList: string[] = [];
+
+    constructor(private _bookService: BookService) {
+      this.getInitialData();
+    }
   
     ngOnInit() {
       this.deleteBookForm = new FormGroup({
@@ -35,5 +40,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
     onChangeMode() {
       this.isOnAddPageMode  = !this.isOnAddPageMode;
       this.isOnRemovePageMode = !this.isOnRemovePageMode;
+    }
+
+    private getInitialData(): void {
+      this.booksList = this._bookService.booksName;
     }
   }

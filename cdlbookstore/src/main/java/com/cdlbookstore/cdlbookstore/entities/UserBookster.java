@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table( name = "userBookstore")
+@Table( name = "user_bookstore")
 @Data
 public class UserBookster {
 
@@ -13,16 +13,16 @@ public class UserBookster {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column
+    @Column(name = "address_id")
     private int addressId;
 
-    @Column
+    @Column(name = "is_admin")
     private boolean isAdmin;
 
     public UserBookster() {

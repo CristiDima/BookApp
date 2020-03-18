@@ -16,10 +16,10 @@ public class Book {
     @Column
     private String name;
 
-    @Column
+    @Column(name = "author_id")
     private int authorId;
 
-    @Column
+    @Column(name = "type_id")
     private int typeId;
 
     @Column

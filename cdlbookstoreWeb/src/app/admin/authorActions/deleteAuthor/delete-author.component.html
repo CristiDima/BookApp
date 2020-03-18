@@ -3,23 +3,19 @@
         <div fxLayout="row" fxLayoutAlign="center">
             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                 <mat-label for="authorname">Author name:*</mat-label>
-                <mat-select placeholder="Placeholder"
-                type="text"
-                id="authorname"
-                formControlName="authorname"
-                class="form-control">
-                    <mat-option [value]="topping">type</mat-option>
+                <mat-select formControlName="authorname" class="form-control">
+                    <mat-option *ngFor="let author of authorList" [value]="topping">{{author}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <span
             *ngIf="!deleteAuthorForm.get('authorData.authorname').valid && deleteAuthorForm.get('authorData.authorname').touched &&
-            deleteAuthorForm.get('authorData.authorname').touched" class="help-block">
+            deleteAuthorForm.get('authorData.authorname').dirty" class="help-block">
             </span>
         </div>
     </div>
     <hr>
     <div fxLayout="row" fxLayoutAlign="center">
-        <button class="save-button" mat-raised-button type="submit">Save</button>
+        <button class="save-button" mat-raised-button type="submit"  click="onSubmit()">Save</button>
         <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
     </div>
 </form>

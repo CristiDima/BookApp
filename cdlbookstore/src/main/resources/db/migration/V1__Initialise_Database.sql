@@ -12,14 +12,14 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`address` (
 -- -----------------------------------------------------
 -- Table `cdlstore`.`user_bookstore`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`userBookstore` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
   `id` INT NOT NULL,
-  `firstName` VARCHAR(45) NOT NULL,
-  `lastName` VARCHAR(45) NOT NULL,
-  `addressId` INT NULL,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `address_id` INT NULL,
   `admin` boolean NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (addressId) REFERENCES address(id));
+  FOREIGN KEY (address_id) REFERENCES address(id));
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`Authors`
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`author` (
 -- -----------------------------------------------------
 -- Table `cdlstore`.`Types`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`bookType` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`book_type` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(1045) NULL,
@@ -46,59 +46,60 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`bookType` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `authorId` INT NOT NULL,
-  `typeId` INT NOT NULL,
+  `author_id` INT NOT NULL,
+  `type_id` INT NOT NULL,
   `description` VARCHAR(1000) NULL,
   `rating` DOUBLE NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (authorId) REFERENCES author(id),
-  FOREIGN KEY (typeId) REFERENCES bookType(id));
+  FOREIGN KEY (author_id) REFERENCES author(id),
+  FOREIGN KEY (type_id) REFERENCES book_type(id));
 
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`LoanedBooks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`loanedBooks` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`loaned_books` (
   `id` INT NOT NULL,
-  `userId` INT NULL,
-  `bookId` INT NULL,
-  `dateToReturn` DATE NULL,
+  `user_id` INT NULL,
+  `book_id` INT NULL,
+  `date_to_return` DATE NULL,
   PRIMARY KEY (`id`),
-   FOREIGN KEY (userId) REFERENCES userBookstore(id),
-  FOREIGN KEY (bookId) REFERENCES book(id));
+   FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
+  FOREIGN KEY (book_id) REFERENCES book(id));
 
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`UserAccount`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`userAccount` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account` (
   `id` INT NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `isValid` boolean NULL,
-  `expirationDate` date NULL,
-  `userId` INT NOT NULL,
+  `is_valid` boolean NULL,
+  `expiration_date` date NULL,
+  `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (userId) REFERENCES userBookstore(id));
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
 
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`ReadBooks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`readBooks` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`read_books` (
   `id` INT NOT NULL,
-  `bookId` INT NOT NULL,
-  `userId` INT NOT NULL,
-  `readPages` INT NULL,
+  `book_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `read_pages` INT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (bookId) REFERENCES book(id),
-  FOREIGN KEY (userid) REFERENCES userBookstore(id));
+  FOREIGN KEY (book_id) REFERENCES book(id),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
 
 -- --------------------------------------------------------
 -- Initial inserts into db
 -- --------------------------------------------------------
+
 INSERT INTO address(`id`, `street`, `number`, `city`, `district`) VALUES  (1, 'George Enescu', 1, 'Craiova', 'Dolj');
 
-INSERT INTO userBookstore(`id`, `firstName`, `lastName`, `addressId`, `admin`) VALUES  (1, 'Cristian', 'Dima', 1, true);
+INSERT INTO user_bookstore(`id`, `first_name`, `last_name`, `address_id`, `admin`) VALUES  (1, 'Cristian', 'Dima', 1, true);
 
-INSERT INTO userAccount(`id`, `email`, `password`, `isValid`, `expirationDate`, `userId`) VALUES  (1, 'cristiandima30@gmail.com', 'testpass', true, null, 1);
+INSERT INTO user_account(`id`, `email`, `password`, `is_valid`, `expiration_Date`, `user_id`) VALUES  (1, 'cristiandima30@gmail.com', 'testpass', true, null, 1);

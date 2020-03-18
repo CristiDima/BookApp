@@ -8,7 +8,7 @@
                 id="typename"
                 formControlName="typename"
                 class="form-control">
-                    <mat-option [value]="topping">type</mat-option>
+                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <span

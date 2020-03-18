@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table( name = "readBooks")
+@Table( name = "read_books")
 @Data
 public class ReadBook {
 
@@ -15,16 +15,13 @@ public class ReadBook {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
-    @NotNull
+    @Column (name = "book_id")
     private int bookId;
 
-    @Column
-    @NotNull
+    @Column(name = "user_id")
     private int userId;
 
-    @Column
-    @NotNull
+    @Column(name = "read_pages")
     private int readPages;
 
     public ReadBook() {

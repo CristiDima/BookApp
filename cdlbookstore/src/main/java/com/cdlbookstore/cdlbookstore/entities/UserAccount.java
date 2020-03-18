@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table (name = "userAccount")
+@Table (name = "user_account")
 @Data
 public class UserAccount {
 
@@ -22,14 +22,13 @@ public class UserAccount {
     @NotNull
     private String password;
 
-    @Column
+    @Column(name = "is_valid")
     private boolean isValid;
 
-    @Column
+    @Column(name = "expiration_date")
     private Date expirationDate;
 
-    @Column
-    @NotNull
+    @Column(name = "user_id")
     private int userId;
 
     public UserAccount() {
