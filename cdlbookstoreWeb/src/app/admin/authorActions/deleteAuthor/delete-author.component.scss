@@ -4,6 +4,10 @@
     margin: 1em;
     width: 100px;
 }
+.save-button:disabled {
+    color: #FFD700;
+    background-color: #707B7C ;
+}
 
 .form-group{
     width: 100%;

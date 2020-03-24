@@ -9,4 +9,5 @@ public interface BookTypeService {
     BookType getBookTypeById(int id);
     List<BookType> getBookTypes();
     void saveBookType(BookType bookType);
+    void deleteBookType(BookType bookType);
 }

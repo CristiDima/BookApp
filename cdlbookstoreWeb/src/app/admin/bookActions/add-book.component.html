@@ -8,64 +8,40 @@
             </mat-card-header>
             <mat-card-content>
                 <form [formGroup]="addbookForm" (ngSubmit)="onSubmit()" *ngIf="isOnAddPageMode">
-                    <div formGroupName="bookData" fxLayout fxLayout="column" fxLayoutAlign="center">
+                    <div fxLayout fxLayout="column" fxLayoutAlign="center">
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="bookname">Book Name:*</mat-label>
-                                <input matInput placeholder="Placeholder"
-                                type="text"
-                                id="bookname"
-                                formControlName="bookname"
-                                class="form-control">
+                                <input matInput formControlName="bookname" class="form-control">
                             </mat-form-field>
-                            <span
-                            *ngIf="!addbookForm.get('bookData.bookname').valid && addbookForm.get('bookData.bookname').touched"
-                            class="help-block">
-                            </span>
                         </div>
-                        <div fxLayout="row" fxLayoutAlign="center">
+                        <div fxLayout="row" fxLayoutAlign="center" >
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="authorname">Author name:*</mat-label>
-                                <mat-select formArrayName="authorname" multiple>
-                                    <mat-option *ngFor="let author of authorList" [value]="topping">{{author}}</mat-option>
+                                <mat-label for="authorName">Author name:*</mat-label>
+                                <mat-select [formControl]="selectedAuthors"  multiple>
+                                    <mat-option *ngFor="let author of authorList" [value]="author">{{author}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <span
-                            *ngIf="!addbookForm.get('bookData.authorname').valid && addbookForm.get('bookData.authorname').touched &&
-                            addbookForm.get('bookData.authorname').touched"  class="help-block">
-                            </span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="type">Type:*</mat-label>
-                                <mat-select formArrayName="type" multiple>
-                                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
+                                <mat-select [formControl]="selectedTypes" multiple>
+                                    <mat-option *ngFor="let type of typeList" [value]="type">{{type}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <span
-                            *ngIf="!addbookForm.get('bookData.type').valid && addbookForm.get('bookData.type').touched"
-                            class="help-block">
-                            </span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="description">Description:*</mat-label>
-                                <input matInput placeholder="Placeholder"
-                                type="text"
-                                id="description"
-                                formControlName="description"
-                                class="form-control">
+                                <input matInput formControlName="description" class="form-control">
                             </mat-form-field>
-                            <span
-                            *ngIf="!addbookForm.get('bookData.description').valid && addbookForm.get('bookData.description').touched"
-                            class="help-block">
-                            </span>
                         </div>
                     </div>
                     <hr>
                     <div fxLayout="row" fxLayoutAlign="center">
                         <button class="save-button" mat-raised-button type="submit">Save</button>
-                        <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
+                        <button [disabled]="!addbookForm.valid" class="save-button" mat-raised-button type="reset" click="onCancel()">Cancel</button>
                     </div>
                 </form>
                 <div *ngIf="isOnRemovePageMode">

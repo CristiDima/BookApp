@@ -1,8 +1,8 @@
-mat-form-field.ng-invalid.ng-touched.ng-dirty {
-    border: 0px solid red;
-    margin: 0%;
-    padding: 0%;
-}
+// mat-form-field.ng-invalid.ng-touched.ng-dirty {
+//     border: 0px solid red;
+//     margin: 0%;
+//     padding: 0%;
+// }
 
 .container {
     position: fixed;
@@ -26,6 +26,10 @@ mat-form-field.ng-invalid.ng-touched.ng-dirty {
         background-color: #000000;
         margin: 1em;
         width: 100px;
+    }
+    .save-button:disabled {
+        color: #FFD700;
+        background-color: #707B7C ;
     }
 }
 

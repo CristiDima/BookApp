@@ -24,26 +24,27 @@ import { Author } from 'src/app/models/author.model';
   
     ngOnInit() {
       this.deleteAuthorForm = new FormGroup({
-        'authorData': new FormGroup({
-          'authorname': new FormControl(null, [Validators.required]),
-        })
+        'authorName': new FormControl(null, [Validators.required])
       });
     }
   
     protected onSubmit() {
-      const authorName: string = this.deleteAuthorForm.value.authorData.authorName;
+      const authorName: string = this.deleteAuthorForm.value.authorName;
       const author: Author = this._authorService.getAuthorByName(authorName);
-        this._apiRequest.requst('DELETE', this._pathRequest.authorPath, author).subscribe((responseData: Author) => {
+        this._apiRequest.requst('DELETE', this._pathRequest.authorPath, author.id).subscribe((responseData: Author) => {
+            this.deleteAuthorForm.reset();
             const index: number = this._authorService.authors.indexOf(responseData);
             this._authorService.authors.splice(index, 1);
+            this.authorList = this._authorService.authorsName;
         });
     }
   
-    onCancel() {
+    protected onCancel() {
+      console.log('test');
       this.deleteAuthorForm.reset();
     }
   
-    onChangeMode() {
+    protected onChangeMode() {
       this.isOnAddPageMode  = !this.isOnAddPageMode;
       this.isOnRemovePageMode = !this.isOnRemovePageMode;
     }

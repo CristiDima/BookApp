@@ -32,4 +32,9 @@ public class BookTypeServiceImpl implements BookTypeService {
     public void saveBookType(BookType bookType) {
         bookTypeRepository.save(bookType);
     }
+
+    @Override
+    public void deleteBookType(BookType bookType) {
+        bookTypeRepository.delete(bookType);
+    }
 }

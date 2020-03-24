@@ -12,35 +12,20 @@
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="description">Author name:*</mat-label>
-                                <input matInput placeholder="Placeholder"
-                                type="text"
-                                id="authorname"
-                                formControlName="authorname"
-                                class="form-control">
+                                <input matInput formControlName="authorname" class="form-control">
                             </mat-form-field>
-                            <span
-                            *ngIf="!addAuthorForm.get('authorname').valid && addAuthorForm.get('authorname').touched &&
-                            addAuthorForm.get('authorname').dirty"  class="help-block">
-                            </span>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="description">Description:*</mat-label>
-                                <input matInput placeholder="Placeholder"
-                                type="text"
-                                id="description"
-                                formControlName="description"
-                                class="form-control">
+                                <input matInput formControlName="description" class="form-control">
                             </mat-form-field>
-                            <span
-                            *ngIf="!addAuthorForm.get('description').valid && addAuthorForm.get('description').touched &&
-                            addAuthorForm.get('description').dirty" class="help-block"></span>
                         </div>
                     </div>
                     <hr>
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="save-button" mat-raised-button type="submit">Save</button>
-                        <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
+                        <button [disabled]="!addAuthorForm.valid" class="save-button" mat-raised-button type="submit">Save</button>
+                        <button [disabled]="!addAuthorForm.valid" class="save-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
                     </div>
                 </form>
                 <div *ngIf="isOnRemovePageMode">

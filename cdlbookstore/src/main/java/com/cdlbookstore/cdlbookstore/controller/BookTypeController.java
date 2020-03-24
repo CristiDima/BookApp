@@ -23,4 +23,12 @@ public class BookTypeController {
     private List<BookType> getBookTypes() {
         return bookTypeService.getBookTypes();
     }
+
+    @DeleteMapping("/type/{id}")
+    private BookType deleteBookType(@PathVariable("id") int id){
+       BookType bookType = this.bookTypeService.getBookTypeById(id);
+       this.bookTypeService.deleteBookType(bookType);
+
+       return  bookType;
+    }
 }

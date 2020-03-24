@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { PagesRouting } from 'src/app/shared/pages-routing.service';
+import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { Book } from 'src/app/models/book.model';
 import { AuthorService as AuthorService } from 'src/app/shared/author.service';
-import { Author } from 'src/app/models/author.model';
 import { TypeService } from 'src/app/shared/type.service';
+import { BookService } from 'src/app/shared/book.service';
 
 @Component({
     selector: 'app-addbook',
@@ -20,37 +19,43 @@ import { TypeService } from 'src/app/shared/type.service';
     protected addbookForm: FormGroup = null;
     protected typeList: string[] = [];
     protected authorList: string[] = [];
+    protected authors: string[] = [];
+    protected selectedAuthors = new FormControl([Validators.required]);
+    protected selectedTypes = new FormControl([Validators.required]);
   
     constructor(private _authorService: AuthorService, private _apiRequest: APIRequestService,
-                private _pathRequest: PathRequestService, private _bookTypeService: TypeService) {
+                private _pathRequest: PathRequestService, private _bookTypeService: TypeService,
+                private _bookService: BookService, public fb: FormBuilder) {
       this.getInitialData();
     }
   
     ngOnInit() {
-      
-      this.addbookForm = new FormGroup({
-        'bookData': new FormGroup({
-          'bookname': new FormControl(null, [Validators.required]),
-          'authorname': new FormControl(null, [Validators.required]),
-          'type': new FormControl(null, [Validators.required]),
-          'description': new FormControl(null, [Validators.required])
-        })
+      this.addbookForm = this.fb.group({
+        'bookname': new FormControl(null, [Validators.required]),
+        'authorsName': this.selectedAuthors,
+        'typesArray': this.selectedTypes,
+        'description': new FormControl(null, [Validators.required])
       });
     }
   
     protected onSubmit() {
       const book: Book = new Book();
-      book.name = this.addbookForm.value.bookData.bookname;
-      book.description = this.addbookForm.value.bookData.description;
-      this._apiRequest.requst('POST', this._pathRequest.bookPath, book);
+      book.name = this.addbookForm.value.bookname;
+      book.description = this.addbookForm.value.description;
+      console.log(this.addbookForm.value);
+      book.authorId = this._authorService.getAuthorByName(this.addbookForm.value.authorname).id;
+      book.authorId = this._bookTypeService.getTypeByName(this.addbookForm.value.type).id;
+      this._apiRequest.requst('POST', this._pathRequest.bookPath, book).subscribe((responseData: Book) => {
+        this._bookService.books.push(responseData);
+        this.addbookForm.reset();
+      });
+    }
+  
+    protected onCancel() {
       this.addbookForm.reset();
     }
   
-    onCancel() {
-      this.addbookForm.reset();
-    }
-  
-    onChangeMode() {
+    protected onChangeMode() {
       this.isOnAddPageMode  = !this.isOnAddPageMode;
       this.isOnRemovePageMode = !this.isOnRemovePageMode;
     }

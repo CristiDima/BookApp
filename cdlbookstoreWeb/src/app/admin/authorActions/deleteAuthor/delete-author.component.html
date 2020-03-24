@@ -1,21 +1,15 @@
 <form [formGroup]="deleteAuthorForm" (ngSubmit)="onSubmit()">
-    <div formGroupName="authorData" fxLayout fxLayout="column" fxLayoutAlign="center">
-        <div fxLayout="row" fxLayoutAlign="center">
-            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                <mat-label for="authorname">Author name:*</mat-label>
-                <mat-select formControlName="authorname" class="form-control">
-                    <mat-option *ngFor="let author of authorList" [value]="topping">{{author}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <span
-            *ngIf="!deleteAuthorForm.get('authorData.authorname').valid && deleteAuthorForm.get('authorData.authorname').touched &&
-            deleteAuthorForm.get('authorData.authorname').dirty" class="help-block">
-            </span>
-        </div>
+    <div fxLayout fxLayout="column" fxLayoutAlign="center">
+        <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+            <mat-label for="authorname">Author name:*</mat-label>
+            <mat-select formControlName="authorName" class="form-control">
+                <mat-option *ngFor="let author of authorList" [value]="author">{{author}}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <hr>
     <div fxLayout="row" fxLayoutAlign="center">
-        <button class="save-button" mat-raised-button type="submit"  click="onSubmit()">Save</button>
-        <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
+        <button [disabled]="!deleteAuthorForm.valid" class="save-button" mat-raised-button type="submit">Save</button>
+        <button [disabled]="!deleteAuthorForm.valid" class="save-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
     </div>
 </form>

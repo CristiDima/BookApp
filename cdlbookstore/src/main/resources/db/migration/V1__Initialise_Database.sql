@@ -46,13 +46,31 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book_type` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `author_id` INT NOT NULL,
-  `type_id` INT NOT NULL,
   `description` VARCHAR(1000) NULL,
   `rating` DOUBLE NULL,
+  PRIMARY KEY (`id`));
+
+-- -----------------------------------------------------
+-- Table `cdlstore`.`BookAuthors`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`book_authors` (
+  `id` INT NOT NULL,
+  `author_id` INT NOT NULL,
+  `book_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (author_id) REFERENCES author(id),
-  FOREIGN KEY (type_id) REFERENCES book_type(id));
+  FOREIGN KEY (book_id) REFERENCES book(id));
+
+  -- -----------------------------------------------------
+-- Table `cdlstore`.`BookTypes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`book_types` (
+  `id` INT NOT NULL,
+  `author_id` INT NOT NULL,
+  `type_id` INT NOT NULL,
+ PRIMARY KEY (`id`),
+ FOREIGN KEY (author_id) REFERENCES author(id),
+ FOREIGN KEY (type_id) REFERENCES book_type(id));
 
 
 -- -----------------------------------------------------

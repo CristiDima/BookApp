@@ -17,7 +17,6 @@ import { TypeService } from 'src/app/shared/type.service';
 
     constructor(private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
                 private bookTypeService: TypeService){
-
     }
 
     ngOnInit() {
@@ -27,7 +26,7 @@ import { TypeService } from 'src/app/shared/type.service';
         });
     }
 
-    protected onChangeMode() {
+    public onChangeMode() {
         this.isOnAddPageMode  = !this.isOnAddPageMode;
         this.isOnRemovePageMode = !this.isOnRemovePageMode;
     }
@@ -38,6 +37,7 @@ import { TypeService } from 'src/app/shared/type.service';
         bookType.description = this.addTypeForm.value.description;
         this._apiRequest.requst('POST', this._pathRequest.bookTypePath, bookType).subscribe((responseData: BookType) => {
             this.bookTypeService.types.push(responseData);
+            this.addTypeForm.reset();
         });
 
     }

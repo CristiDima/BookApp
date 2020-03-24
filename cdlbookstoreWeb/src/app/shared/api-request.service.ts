@@ -1,5 +1,4 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -33,7 +32,7 @@ export class APIRequestService {
         return this.httpClient.post(url, data, this.httpOptions);
     }
 
-    private deleteRequest(url: string, data: any): Observable<any> {
-        return this.httpClient .delete(url, data);
+    private deleteRequest(url: string, id: number): Observable<any> {
+        return this.httpClient.delete(url + '/' + id, this.httpOptions);
     }
 }

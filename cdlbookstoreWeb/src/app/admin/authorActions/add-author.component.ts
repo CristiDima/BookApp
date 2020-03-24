@@ -17,7 +17,9 @@ import { AuthorService } from 'src/app/shared/author.service';
     protected isOnRemovePageMode: boolean = false;
 
     constructor(private _authorService: AuthorService, private _apiRequest: APIRequestService,
-                private _pathRequest: PathRequestService) {}
+                private _pathRequest: PathRequestService) {
+    }
+        
     ngOnInit() {
         this.addAuthorForm = new FormGroup({
             'authorname': new FormControl(null, [Validators.required]),
@@ -25,7 +27,7 @@ import { AuthorService } from 'src/app/shared/author.service';
         });
     }
 
-    protected onChangeMode() {
+    public onChangeMode() {
         this.isOnAddPageMode  = !this.isOnAddPageMode;
         this.isOnRemovePageMode = !this.isOnRemovePageMode;
     }
@@ -36,6 +38,7 @@ import { AuthorService } from 'src/app/shared/author.service';
         author.description = this.addAuthorForm.value.description;
         this._apiRequest.requst('POST', this._pathRequest.authorPath, author).subscribe((responseData: Author) => {
             this._authorService.authors.push(responseData);
+            this.addAuthorForm.reset();
         });
     }
     
