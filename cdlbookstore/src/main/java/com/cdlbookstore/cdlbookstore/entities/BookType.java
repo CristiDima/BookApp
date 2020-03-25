@@ -1,12 +1,16 @@
 package com.cdlbookstore.cdlbookstore.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table( name = "book_type" )
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookType {
 
     @Id
@@ -19,11 +23,4 @@ public class BookType {
     @Column
     private String description;
 
-    public BookType() {
-    }
-
-    public BookType(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 }

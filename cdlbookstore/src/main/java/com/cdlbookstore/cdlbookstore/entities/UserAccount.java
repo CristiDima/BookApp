@@ -1,6 +1,8 @@
 package com.cdlbookstore.cdlbookstore.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +11,8 @@ import java.util.Date;
 @Entity
 @Table (name = "user_account")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserAccount {
 
     @Id
@@ -31,58 +35,4 @@ public class UserAccount {
     @Column(name = "user_id")
     private int userId;
 
-    public UserAccount() {
-    }
-
-    public UserAccount(String email, @NotNull String password, boolean isValid, Date expirationDate, @NotNull int userId) {
-        this.email = email;
-        this.password = password;
-        this.isValid = isValid;
-        this.expirationDate = expirationDate;
-        this.userId = userId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        isValid = valid;
-    }
-
-    public Date getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 }

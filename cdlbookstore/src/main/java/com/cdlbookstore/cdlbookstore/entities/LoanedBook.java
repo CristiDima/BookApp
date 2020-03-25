@@ -1,10 +1,17 @@
 package com.cdlbookstore.cdlbookstore.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "loaned_books")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoanedBook {
 
     @Id
@@ -20,40 +27,4 @@ public class LoanedBook {
     @Column(name = "date_to_return")
     private Date dateToReturn;
 
-    public LoanedBook() {
-    }
-
-    public LoanedBook(int userId, int bookId, Date dateToReturn) {
-        this.userId = userId;
-        this.bookId = bookId;
-        this.dateToReturn = dateToReturn;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
-    public Date getDateToReturn() {
-        return dateToReturn;
-    }
-
-    public void setDateToReturn(Date dateToReturn) {
-        this.dateToReturn = dateToReturn;
-    }
 }

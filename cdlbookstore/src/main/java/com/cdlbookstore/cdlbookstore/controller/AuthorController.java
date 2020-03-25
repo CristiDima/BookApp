@@ -15,11 +15,14 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
+    @Autowired
+    private AuthorMapper authorMapper;
+
     @PostMapping("/author")
-    public Author saveAuthor(@RequestBody Author author)
+    public AuthorDto saveAuthor(@RequestBody AuthorDto authorDto)
     {
-        authorService.saveAuthor(author);
-        return author;
+        authorService.saveAuthor(authorMapper.authorDtoToAuthor(authorDto));
+        return authorDto;
     }
 
     @GetMapping("/author")
@@ -30,9 +33,9 @@ public class AuthorController {
     }
 
     @DeleteMapping("/author/{id}")
-    public Author deleteAuthor(@PathVariable("id") int id) {
-        Author author = authorService.getAuthorById(id);
-        authorService.deleteAuthor(author);
-        return author;
+    public AuthorDto deleteAuthor(@PathVariable("id") int id) {
+        AuthorDto authorDto = authorService.getAuthorById(id);
+        authorService.deleteAuthor(authorMapper.authorDtoToAuthor(authorDto));
+        return authorDto;
     }
 }

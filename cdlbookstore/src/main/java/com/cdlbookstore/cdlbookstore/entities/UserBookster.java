@@ -1,12 +1,16 @@
 package com.cdlbookstore.cdlbookstore.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table( name = "user_bookstore")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserBookster {
 
     @Id
@@ -24,50 +28,4 @@ public class UserBookster {
 
     @Column(name = "is_admin")
     private boolean isAdmin;
-
-    public UserBookster() {
-    }
-
-    public UserBookster(String firstName, String lastName, int addressId, boolean isAdmin) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.addressId = addressId;
-        this.isAdmin = isAdmin;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public int getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
-
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
 }

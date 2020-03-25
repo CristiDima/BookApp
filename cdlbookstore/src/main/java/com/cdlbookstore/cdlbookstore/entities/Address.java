@@ -2,13 +2,17 @@ package com.cdlbookstore.cdlbookstore.entities;
 
 
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "address")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Address {
 
     @Id
@@ -27,49 +31,4 @@ public class Address {
     @Column
     private String district;
 
-    public Address(){
-    }
-
-    public Address(String street, int number, String city, String district) {
-        this.street = street;
-        this.number = number;
-        this.city = city;
-        this.district = district;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
 }

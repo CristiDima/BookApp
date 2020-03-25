@@ -39,10 +39,10 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author getAuthorById(int id) {
+    public AuthorDto getAuthorById(int id) {
         Optional<Author> authorOpt = this.authorRepository.findById(id);
         Author author = authorOpt.get();
-        return author;
+        return authorMapper.authorToAuthorDto(author);
     }
 
 }
