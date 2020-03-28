@@ -1,10 +1,8 @@
 package com.cdlbookstore.cdlbookstore.controller;
 
-import com.cdlbookstore.cdlbookstore.entities.Author;
 import com.cdlbookstore.cdlbookstore.entities.Book;
-import com.cdlbookstore.cdlbookstore.service.AuthorService;
+import com.cdlbookstore.cdlbookstore.mapper.TypeMapper;
 import com.cdlbookstore.cdlbookstore.service.BookService;
-import com.cdlbookstore.cdlbookstore.service.BookTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +17,7 @@ public class BookController {
     private BookService bookService;
 
     @Autowired
-    private BookTypeService bookTypeService;
-
-    @Autowired
-    private AuthorService authorService;
+    private TypeMapper typeMapper;
 
     @PostMapping("/book")
     public ResponseEntity<HttpStatus> saveBook(@RequestBody Book book)

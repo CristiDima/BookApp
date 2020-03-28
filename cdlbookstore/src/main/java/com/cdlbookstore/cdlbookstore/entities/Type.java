@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookType {
+public class Type {
 
     @Id
     @GeneratedValue ( strategy = GenerationType.AUTO )
