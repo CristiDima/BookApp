@@ -36,3 +36,13 @@
         width: 120px;
     }
 }
+
+.mat-form-field  .mat-form-field.ng-invalid.ng-touched {
+    border: 1px solid red;
+    border-bottom-width: 2px;
+  }
+  
+.mat-form-field  .mat-form-field.ng-valid.ng-touched.ng-dirty {
+    border: 1px solid green;
+    border-bottom-width: 2px;
+}

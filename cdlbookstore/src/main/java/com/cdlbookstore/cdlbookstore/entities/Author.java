@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "author")
@@ -22,4 +24,8 @@ public class Author {
 
     @Column
     private String description;
+
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books;
+
 }

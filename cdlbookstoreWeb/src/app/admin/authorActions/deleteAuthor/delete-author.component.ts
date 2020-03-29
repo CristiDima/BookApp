@@ -6,7 +6,7 @@ import { PathRequestService } from 'src/app/shared/path-request.service';
 import { Author } from 'src/app/models/author.model';
 
 @Component({
-    selector: 'app-deleteauthor',
+    selector: 'app-delete-author',
     templateUrl: './delete-author.component.html',
     styleUrls: ['./delete-author.component.scss']
   })
@@ -27,29 +27,41 @@ import { Author } from 'src/app/models/author.model';
         'authorName': new FormControl(null, [Validators.required])
       });
     }
-  
-    protected onSubmit() {
-      const authorName: string = this.deleteAuthorForm.value.authorName;
-      const author: Author = this._authorService.getAuthorByName(authorName);
-        this._apiRequest.requst('DELETE', this._pathRequest.authorPath, author.id).subscribe((responseData: Author) => {
-            this.deleteAuthorForm.reset();
-            const index: number = this._authorService.authors.indexOf(responseData);
-            this._authorService.authors.splice(index, 1);
-            this.authorList = this._authorService.authorsName;
-        });
-    }
-  
-    protected onCancel() {
-      console.log('test');
-      this.deleteAuthorForm.reset();
-    }
-  
-    protected onChangeMode() {
-      this.isOnAddPageMode  = !this.isOnAddPageMode;
-      this.isOnRemovePageMode = !this.isOnRemovePageMode;
-    }
 
     private getInitialData(): void {
       this.authorList = this._authorService.authorsName;
     }
+  
+    //region Events
+    protected onChangeMode(): void {
+      this.isOnAddPageMode  = !this.isOnAddPageMode;
+      this.isOnRemovePageMode = !this.isOnRemovePageMode;
+    }
+
+    protected onSubmit(): void {
+      const authorName: string = this.deleteAuthorForm.value.authorName;
+      const author: Author = this._authorService.getAuthorByName(authorName);
+      this.deleteAuthorRequest(author)
+    }
+  
+    protected onCancel(): void {
+      this.deleteAuthorForm.reset();
+    }
+    //endregion
+
+    //region Requests
+    private getAuthorsRequest(): void {
+      this._apiRequest.requst('GET', this._pathRequest.authorPath).subscribe((responseData: Author[]) => {
+        this._authorService.authors = responseData;
+        this.getInitialData();
+      });
+    }
+
+    private deleteAuthorRequest(author: Author): void {
+      this._apiRequest.requst('DELETE', this._pathRequest.authorPath, author.id).subscribe((responseData: Author) => {
+        this.deleteAuthorForm.reset();
+        this.getAuthorsRequest();
+      });
+    }
+    //endregion
   }

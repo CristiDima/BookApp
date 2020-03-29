@@ -1,25 +1,15 @@
 <form [formGroup]="deleteBookForm" (ngSubmit)="onSubmit()">
-    <div formGroupName="bookData" fxLayout fxLayout="column" fxLayoutAlign="center">
-        <div fxLayout="row" fxLayoutAlign="center">
-            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                <mat-label for="bookname">Book name:*</mat-label>
-                <mat-select placeholder="Placeholder"
-                type="text"
-                id="bookname"
-                formControlName="bookname"
-                class="form-control">
-                    <mat-option  *ngFor="let book of booksList" [value]="topping">{{book}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <span
-            *ngIf="!deleteBookForm.get('bookData.bookname').valid && deleteBookForm.get('bookData.bookname').touched &&
-            deleteBookForm.get('bookData.bookname').touched"  class="help-block">
-            </span>
-        </div>
+    <div  fxLayout fxLayout="column" fxLayoutAlign="center">
+        <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+            <mat-label for="bookname">Book name:*</mat-label>
+            <mat-select formControlName="bookName" class="form-control">
+                <mat-option *ngFor="let book of booksList" [value]="topping">{{book}}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <hr>
     <div fxLayout="row" fxLayoutAlign="center">
-        <button class="save-button" mat-raised-button type="submit">Save</button>
-        <button class="save-button" mat-raised-button click="onCancel()">Cancel</button>
+        <button [disabled]="!deleteBookForm.valid" class="save-button" mat-raised-button type="submit">Save</button>
+        <button [disabled]="!deleteBookForm.valid" class="save-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
     </div>
 </form>

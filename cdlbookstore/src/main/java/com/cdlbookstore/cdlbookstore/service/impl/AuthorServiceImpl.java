@@ -22,8 +22,10 @@ public class AuthorServiceImpl implements AuthorService {
     private AuthorMapper authorMapper;
 
     @Override
-    public void saveAuthor(Author author) {
-        authorRepository.save(author);
+    public AuthorDto getAuthorById(int id) {
+        Optional<Author> authorOpt = this.authorRepository.findById(id);
+        Author author = authorOpt.get();
+        return authorMapper.authorToAuthorDto(author);
     }
 
     @Override
@@ -34,15 +36,17 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void deleteAuthor(Author author){
-        authorRepository.delete(author);
+    public void saveAuthor(AuthorDto authorDto) {
+
+        authorRepository.save(authorMapper.authorDtoToAuthor(authorDto));
     }
 
     @Override
-    public AuthorDto getAuthorById(int id) {
-        Optional<Author> authorOpt = this.authorRepository.findById(id);
-        Author author = authorOpt.get();
-        return authorMapper.authorToAuthorDto(author);
+    public void deleteAuthor(AuthorDto authorDto){
+
+        authorRepository.delete(authorMapper.authorDtoToAuthor(authorDto));
     }
+
+
 
 }

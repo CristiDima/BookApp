@@ -1,11 +1,8 @@
 package com.cdlbookstore.cdlbookstore.controller;
 
-import com.cdlbookstore.cdlbookstore.entities.Book;
-import com.cdlbookstore.cdlbookstore.mapper.TypeMapper;
+import com.cdlbookstore.cdlbookstore.dto.BookDto;
 import com.cdlbookstore.cdlbookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,20 +13,26 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @Autowired
-    private TypeMapper typeMapper;
 
     @PostMapping("/book")
-    public ResponseEntity<HttpStatus> saveBook(@RequestBody Book book)
+    public BookDto saveBook(@RequestBody BookDto bookDto)
     {
-        bookService.saveBook(book);
-        return ResponseEntity.ok(HttpStatus.OK);
+        bookService.saveBook(bookDto);
+        return bookDto;
     }
 
     @GetMapping("/book")
-    public List<Book> getBooks()
+    public List<BookDto> getBooks()
     {
-        List<Book> books = bookService.getBooks();
+        List<BookDto> books = bookService.getBooks();
         return books;
+    }
+
+    @DeleteMapping("/book/{id}")
+    private BookDto deleteGenre(@PathVariable("id") int id){
+        BookDto bookDto = this.bookService.getBookById(id);
+        this.bookService.deleteBook(bookDto);
+
+        return bookDto;
     }
 }

@@ -5,5 +5,5 @@ import { environment } from 'src/environments/environment';
 export  class PathRequestService {
     public bookPath = environment.url +  '/book';
     public authorPath = environment.url +  '/author';
-    public bookTypePath = environment.url +  '/type';
+    public genrePath = environment.url +  '/genre';
 }

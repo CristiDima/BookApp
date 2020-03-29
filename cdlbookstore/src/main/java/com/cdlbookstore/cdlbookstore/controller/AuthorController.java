@@ -1,8 +1,6 @@
 package com.cdlbookstore.cdlbookstore.controller;
 
 import com.cdlbookstore.cdlbookstore.dto.AuthorDto;
-import com.cdlbookstore.cdlbookstore.entities.Author;
-import com.cdlbookstore.cdlbookstore.mapper.AuthorMapper;
 import com.cdlbookstore.cdlbookstore.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +13,10 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @Autowired
-    private AuthorMapper authorMapper;
-
     @PostMapping("/author")
     public AuthorDto saveAuthor(@RequestBody AuthorDto authorDto)
     {
-        authorService.saveAuthor(authorMapper.authorDtoToAuthor(authorDto));
+        authorService.saveAuthor(authorDto);
         return authorDto;
     }
 
@@ -35,7 +30,7 @@ public class AuthorController {
     @DeleteMapping("/author/{id}")
     public AuthorDto deleteAuthor(@PathVariable("id") int id) {
         AuthorDto authorDto = authorService.getAuthorById(id);
-        authorService.deleteAuthor(authorMapper.authorDtoToAuthor(authorDto));
+        authorService.deleteAuthor(authorDto);
         return authorDto;
     }
 }

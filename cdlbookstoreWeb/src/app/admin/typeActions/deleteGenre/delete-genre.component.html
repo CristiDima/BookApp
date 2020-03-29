@@ -1,0 +1,15 @@
+<form [formGroup]="deleteGenreForm" (ngSubmit)="onSubmit()">
+    <div fxLayout fxLayout="column" fxLayoutAlign="center">
+            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                <mat-label for="genrename">Type name:*</mat-label>
+                <mat-select formControlName="genreName" class="form-control">
+                    <mat-option *ngFor="let genre of genreList" [value]="type">{{genre}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+    </div>
+    <hr>
+    <div fxLayout="row" fxLayoutAlign="center">
+        <button [disabled]="!deleteGenreForm.valid" class="save-button" mat-raised-button type="submit">Save</button>
+        <button [disabled]="!deleteGenreForm.valid" class="save-button" mat-raised-button click="onCancel()" type="reset">Cancel</button>
+    </div>
+</form>

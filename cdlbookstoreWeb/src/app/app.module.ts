@@ -19,7 +19,7 @@ import { PathRequestService } from './shared/path-request.service';
 import { AdminModule } from './admin/admin.module';
 import { AuthorService } from './shared/author.service';
 import { BookService } from './shared/book.service';
-import { TypeService } from './shared/type.service';
+import { GenreService } from './shared/genre.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,7 @@ import { TypeService } from './shared/type.service';
     HttpClientModule,
     AdminModule
   ],
-  providers: [PagesRouting, APIRequestService, PathRequestService, AuthorService, BookService, TypeService],
+  providers: [PagesRouting, APIRequestService, PathRequestService, AuthorService, BookService, GenreService],
   bootstrap: [AppComponent, 
     HomePageComponent,
     LoginComponent]

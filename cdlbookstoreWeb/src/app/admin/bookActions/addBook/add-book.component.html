@@ -13,6 +13,7 @@
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="bookname">Book Name:*</mat-label>
                                 <input matInput formControlName="bookname" class="form-control">
+                                <mat-error *ngIf="hasValue">This book was already added</mat-error>
                             </mat-form-field>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center" >
@@ -40,12 +41,12 @@
                     </div>
                     <hr>
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="save-button" mat-raised-button type="submit">Save</button>
+                        <button [disabled]="!addbookForm.valid" class="save-button" mat-raised-button type="submit">Save</button>
                         <button [disabled]="!addbookForm.valid" class="save-button" mat-raised-button type="reset" click="onCancel()">Cancel</button>
                     </div>
                 </form>
                 <div *ngIf="isOnRemovePageMode">
-                    <app-deletebook [isOnAddPageMode]="isOnAddPageMode" [isOnRemovePageMode]="isOnRemovePageMode"></app-deletebook>
+                    <app-delete-book [isOnAddPageMode]="isOnAddPageMode" [isOnRemovePageMode]="isOnRemovePageMode"></app-delete-book>
                 </div>
                 <hr>
                 <div class="mode" fxLayout fxLayout="column" fxLayoutAlign="center" >

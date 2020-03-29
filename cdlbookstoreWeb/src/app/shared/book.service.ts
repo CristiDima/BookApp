@@ -18,8 +18,8 @@ export class BookService {
         return names;
     }
 
-    public getBookByName(name: string): Author {
-        let value: Author = null;
+    public getBookByName(name: string): Book {
+        let value: Book = null;
         this.books.forEach(book => {
             if (book.name === name) {
                 value = book;
@@ -29,8 +29,8 @@ export class BookService {
         return value;
     }
 
-    public getBookById(id: number): Author {
-        let value: Author = null;
+    public getBookById(id: number): Book {
+        let value: Book = null;
         this.books.forEach(book => {
             if (book.id === id) {
                 value = book;
@@ -42,5 +42,17 @@ export class BookService {
 
     public getAuthor(book: Book){
 
+    }
+
+    public hasValue (book: Book): boolean {
+        if (!book) {
+            return false;
+        }
+        
+        if (this.books.includes(book)) {
+            return true;
+        }
+
+        return false;
     }
 }

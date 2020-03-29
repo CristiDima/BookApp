@@ -5,11 +5,11 @@
     <div >
         <button class="standard-button" [disabled]="isBookAction" mat-raised-button (click)="onChangeBookAction()">Add book</button>
         <button class="standard-button" [disabled]="isAuthorAction" mat-raised-button (click)="onChangeAuthorAction()">Add author</button>
-        <button class="standard-button" [disabled]="isTypeAction" mat-raised-button (click)="onChangeTypeAction()">Add type</button>
+        <button class="standard-button" [disabled]="isTypeAction" mat-raised-button (click)="onChangeGenreAction()">Add type</button>
     
-        <app-addbook *ngIf="isBookAction"></app-addbook>
-        <app-addauthor *ngIf="isAuthorAction"></app-addauthor>
-        <app-addtype *ngIf="isTypeAction"></app-addtype>
+        <app-add-book *ngIf="isBookAction"></app-add-book>
+        <app-add-author *ngIf="isAuthorAction"></app-add-author>
+        <app-add-genre *ngIf="isGenreAction"></app-add-genre>
     </div>
 </div>
 <div class="footer">

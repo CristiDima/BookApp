@@ -42,4 +42,16 @@ export class AuthorService {
     public getBooks(author: Author) {
 
     }
+
+    public hasValue (author: Author): boolean {
+        if (!author) {
+            return false;
+        }
+        
+        if (this.authorsName.includes(author.name)) {
+            return true;
+        }
+
+        return false;
+    }
 }
