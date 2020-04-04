@@ -4,22 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountDto {
+public class OnlineBookDto {
 
     private int id;
 
-    private String email;
-
-    private String password;
-
-    private boolean isValid;
-
-    private Date expirationDate;
+    private int bookId;
 
     private int userId;
+
+    private int current_page;
 }

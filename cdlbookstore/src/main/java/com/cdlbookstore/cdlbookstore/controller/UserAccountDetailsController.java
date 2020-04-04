@@ -1,13 +1,12 @@
 package com.cdlbookstore.cdlbookstore.controller;
 
-import com.cdlbookstore.cdlbookstore.service.ReadBookService;
+import com.cdlbookstore.cdlbookstore.service.UserAccountDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ReadBookController {
+public class UserAccountDetailsController {
 
     @Autowired
-    private ReadBookService readBookService;
+    private UserAccountDetailsService userAccountDetailsService;
 }

@@ -17,12 +17,46 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
   `first_name` VARCHAR(200) NOT NULL,
   `last_name` VARCHAR(200) NOT NULL,
   `address_id` INT NULL,
-  `admin` boolean NOT NULL,
+  `is_admin` boolean NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (address_id) REFERENCES address(id));
 
+  -- -----------------------------------------------------
+-- Table `cdlstore`.`account_details`
 -- -----------------------------------------------------
--- Table `cdlstore`.`Authors`
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account_details` (
+  `id` INT NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(50) NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
+
+-- -----------------------------------------------------
+-- Table `cdlstore`.`account_valability`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account_valability` (
+  `id` INT NOT NULL,
+  `is_valid` boolean NULL,
+  `expiration_date` date NULL,
+  `account_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (account_id) REFERENCES user_account_details(id));
+
+    -- -----------------------------------------------------
+-- Table `cdlstore`.`user_session`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_session` (
+  `id` INT NOT NULL,
+  `token` VARCHAR(100) NOT NULL,
+  `expiration_date` date NOT NULL,
+  `is_valid` date NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
+
+-- -----------------------------------------------------
+-- Table `cdlstore`.`author`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`author` (
   `id` INT NOT NULL,
@@ -31,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`author` (
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`Genres`
+-- Table `cdlstore`.`genre`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`genre` (
   `id` INT NOT NULL,
@@ -41,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`genre` (
 
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`Books`
+-- Table `cdlstore`.`book`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   `id` INT NOT NULL,
@@ -51,7 +85,18 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`BookAuthors`
+-- Table `cdlstore`.`available_books`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`available_books` (
+  `id` INT NOT NULL,
+  `book_id` INT NOT NULL,
+  `total` INT NULL,
+  `loaned` INT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (book_id) REFERENCES book(id));
+
+-- -----------------------------------------------------
+-- Table `cdlstore`.`book_authors`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`book_authors` (
   `author_id` INT NOT NULL,
@@ -60,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book_authors` (
   FOREIGN KEY (book_id) REFERENCES book(id));
 
   -- -----------------------------------------------------
--- Table `cdlstore`.`BookGenres`
+-- Table `cdlstore`.`book_genres`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`book_genres` (
   `book_id` INT NOT NULL,
@@ -70,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book_genres` (
 
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`LoanedBooks`
+-- Table `cdlstore`.`loaned_books`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`loaned_books` (
   `id` INT NOT NULL,
@@ -78,32 +123,18 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`loaned_books` (
   `book_id` INT NULL,
   `date_to_return` DATE NULL,
   PRIMARY KEY (`id`),
-   FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
   FOREIGN KEY (book_id) REFERENCES book(id));
 
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`UserAccount`
+-- Table `cdlstore`.`online_books`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account` (
-  `id` INT NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
-  `password` VARCHAR(50) NOT NULL,
-  `is_valid` boolean NULL,
-  `expiration_date` date NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
-
-
--- -----------------------------------------------------
--- Table `cdlstore`.`ReadBooks`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`read_books` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`online_books` (
   `id` INT NOT NULL,
   `book_id` INT NOT NULL,
   `user_id` INT NOT NULL,
-  `read_pages` INT NULL,
+  `current_page` INT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (book_id) REFERENCES book(id),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
@@ -114,6 +145,6 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`read_books` (
 
 INSERT INTO address(`id`, `street`, `number`, `city`, `district`) VALUES  (1, 'George Enescu', 1, 'Craiova', 'Dolj');
 
-INSERT INTO user_bookstore(`id`, `first_name`, `last_name`, `address_id`, `admin`) VALUES  (1, 'Cristian', 'Dima', 1, true);
+INSERT INTO user_bookstore(`id`, `first_name`, `last_name`, `address_id`, `is_admin`) VALUES  (1, 'Cristian', 'Dima', 1, true);
 
-INSERT INTO user_account(`id`, `email`, `password`, `is_valid`, `expiration_Date`, `user_id`) VALUES  (1, 'cristiandima30@gmail.com', 'testpass', true, null, 1);
+INSERT INTO user_account_details(`id`, `email`, `password`,  `user_id`) VALUES  (1, 'cristiandima30@gmail.com', 'b7e055c6165da55c3e12c49ae5207455', 1);

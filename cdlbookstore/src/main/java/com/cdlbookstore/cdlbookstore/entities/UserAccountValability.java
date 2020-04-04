@@ -9,30 +9,25 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table (name = "user_account")
+@Table( name = "user_account_valability")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccount {
+public class UserAccountValability {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     private int id;
 
     @Column
-    private String email;
+    @NotNull
+    private boolean isValid;
 
     @Column
     @NotNull
-    private String password;
-
-    @Column(name = "is_valid")
-    private boolean isValid;
-
-    @Column(name = "expiration_date")
     private Date expirationDate;
 
-    @Column(name = "user_id")
-    private int userId;
-
+    @Column(name = "account_id")
+    @NotNull
+    private int accountId;
 }

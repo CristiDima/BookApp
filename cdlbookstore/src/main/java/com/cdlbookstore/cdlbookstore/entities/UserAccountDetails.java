@@ -1,0 +1,34 @@
+package com.cdlbookstore.cdlbookstore.entities;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+
+@Entity
+@Table (name = "user_account_details")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserAccountDetails {
+
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO )
+    private int id;
+
+    @Column
+    @NotNull
+    private String email;
+
+    @Column
+    @NotNull
+    private String password;
+
+    @Column(name = "user_id")
+    @NotNull
+    private int userId;
+
+}

@@ -4,16 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReadBookDto {
+public class UserAccountValabilityDto {
 
     private int id;
 
-    private int bookId;
+    private boolean isValid;
 
-    private int userId;
+    private Date expirationDate;
 
-    private int readPages;
+    private int accountId;
 }

@@ -7,27 +7,27 @@ export class PagesRouting {
     constructor (private _router: Router){
     }
 
-    public get HomePage(): any {
+    public HomePage(): any {
         return this._router.navigate(['home']);
     }
 
-    public get LoginPage(): any {
+    public LoginPage(): any {
         return this._router.navigate(['home/login']);
     }
 
-    public get SignUpPage(): any {
+    public SignUpPage(): any {
         return this._router.navigate(['home/signup']);
     }
 
-    public get BooksPage(): any {
+    public BooksPage(): any {
         return this._router.navigate(['home/books']);
     }
 
-    public get AdminPage(): any {
+    public AdminPage(): any {
         return this._router.navigate(['home/admin']);
     }
 
-    public get UserAccountPage(): any {
+    public UserAccountPage(): any {
         return this._router.navigate(['home/account']);
     }
 }

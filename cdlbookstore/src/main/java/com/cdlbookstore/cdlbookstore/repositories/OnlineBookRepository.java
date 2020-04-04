@@ -1,9 +1,9 @@
 package com.cdlbookstore.cdlbookstore.repositories;
 
-import com.cdlbookstore.cdlbookstore.entities.UserAccount;
+import com.cdlbookstore.cdlbookstore.entities.OnlineBook;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserAccountRepository extends CrudRepository<UserAccount, Integer> {
+public interface OnlineBookRepository extends CrudRepository<OnlineBook, Integer> {
 }

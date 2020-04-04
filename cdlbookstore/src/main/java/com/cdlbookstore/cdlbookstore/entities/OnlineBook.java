@@ -9,11 +9,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table( name = "read_books")
+@Table( name = "online_books")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReadBook {
+public class OnlineBook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class ReadBook {
     @Column(name = "user_id")
     private int userId;
 
-    @Column(name = "read_pages")
-    private int readPages;
+    @Column(name = "current_page")
+    private int current_page;
 
 }

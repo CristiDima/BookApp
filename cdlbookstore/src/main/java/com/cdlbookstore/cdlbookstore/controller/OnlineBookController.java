@@ -1,13 +1,12 @@
 package com.cdlbookstore.cdlbookstore.controller;
 
-import com.cdlbookstore.cdlbookstore.entities.UserAccount;
-import com.cdlbookstore.cdlbookstore.service.UserAccountService;
+import com.cdlbookstore.cdlbookstore.service.OnlineBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserAccountController {
+public class OnlineBookController {
 
     @Autowired
-    private UserAccountService userAccountService;
+    private OnlineBookService onlineBookService;
 }
