@@ -12,22 +12,27 @@ export class PagesRouting {
     }
 
     public LoginPage(): any {
-        return this._router.navigate(['home/login']);
+        console.log('test');
+        return this._router.navigate(['login']);
     }
 
     public SignUpPage(): any {
-        return this._router.navigate(['home/signup']);
+        return this._router.navigate(['signup']);
+    }
+
+    public ResetPasswordPage(): any {
+        return this._router.navigate(['reset-password']);
     }
 
     public BooksPage(): any {
-        return this._router.navigate(['home/books']);
+        return this._router.navigate(['books']);
     }
 
     public AdminPage(): any {
-        return this._router.navigate(['home/admin']);
+        return this._router.navigate(['admin']);
     }
 
     public UserAccountPage(): any {
-        return this._router.navigate(['home/account']);
+        return this._router.navigate(['account']);
     }
 }

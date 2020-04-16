@@ -25,6 +25,9 @@ public class UserAccountValability {
 
     @Column
     @NotNull
+    private Date created;
+
+    @Column
     private Date expirationDate;
 
     @Column(name = "account_id")

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,9 +21,11 @@ public class Author {
     private int id;
 
     @Column
+    @NotNull
     private String name;
 
     @Column
+    @NotNull
     private String description;
 
     @ManyToMany(mappedBy = "authors")

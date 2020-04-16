@@ -11,9 +11,7 @@ public class AddressDto {
 
     private int id;
 
-    private String street;
-
-    private int number;
+    private String address;
 
     private String city;
 

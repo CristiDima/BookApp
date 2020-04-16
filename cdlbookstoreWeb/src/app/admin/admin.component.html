@@ -5,7 +5,7 @@
     <div >
         <button class="standard-button" [disabled]="isBookAction" mat-raised-button (click)="onChangeBookAction()">Add book</button>
         <button class="standard-button" [disabled]="isAuthorAction" mat-raised-button (click)="onChangeAuthorAction()">Add author</button>
-        <button class="standard-button" [disabled]="isTypeAction" mat-raised-button (click)="onChangeGenreAction()">Add type</button>
+        <button class="standard-button" [disabled]="isGenreAction" mat-raised-button (click)="onChangeGenreAction()">Add type</button>
     
         <app-add-book *ngIf="isBookAction"></app-add-book>
         <app-add-author *ngIf="isAuthorAction"></app-add-author>

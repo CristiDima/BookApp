@@ -14,7 +14,7 @@ public class UserSessionDto {
 
     private String token;
 
-    private Date expirationDate;
+    private Date created;
 
     private boolean isValid;
 

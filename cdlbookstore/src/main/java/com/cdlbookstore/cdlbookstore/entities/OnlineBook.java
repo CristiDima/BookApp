@@ -20,9 +20,11 @@ public class OnlineBook {
     private int id;
 
     @Column (name = "book_id")
+    @NotNull
     private int bookId;
 
     @Column(name = "user_id")
+    @NotNull
     private int userId;
 
     @Column(name = "current_page")

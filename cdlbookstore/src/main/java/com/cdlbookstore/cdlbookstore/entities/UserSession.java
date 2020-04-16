@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -19,14 +20,18 @@ public class UserSession {
     private int id;
 
     @Column
+    @NotNull
     private String token;
 
-    @Column(name = "expiration_date")
-    private Date expirationDate;
+    @Column
+    @NotNull
+    private Date created;
 
     @Column(name = "is_valid")
+    @NotNull
     private boolean isValid;
 
     @Column(name = "user_id")
+    @NotNull
     private int userId;
 }

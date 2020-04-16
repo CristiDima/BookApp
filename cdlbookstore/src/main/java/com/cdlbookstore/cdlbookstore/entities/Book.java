@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -19,9 +20,11 @@ public class Book {
     private int id;
 
     @Column
+    @NotNull
     private String name;
 
     @Column
+    @NotNull
     private String description;
 
     @Column

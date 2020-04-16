@@ -21,6 +21,12 @@ import { AuthorService } from './shared/author.service';
 import { BookService } from './shared/book.service';
 import { GenreService } from './shared/genre.service';
 import { AuthenticationService } from './shared/authentication.service';
+import { UserSessionService } from './shared/user-session.service';
+import { AuthGuard } from './guards/auth-guard.service';
+import { AdminGuard } from './guards/admin-guard.service';
+import { CustomValidatorService } from './validators/custom-validator.service';
+import { ResetPasswordComponent } from './login/resetPassword/reset-password.component';
+import { NewPasswordComponent } from './login/new-password/new-password.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,9 @@ import { AuthenticationService } from './shared/authentication.service';
     LoginComponent,
     SignupComponent,
     BooksComponent,
-    AccountComponent
+    AccountComponent,
+    ResetPasswordComponent,
+    NewPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +50,8 @@ import { AuthenticationService } from './shared/authentication.service';
     AdminModule
   ],
   providers: [PagesRouting, APIRequestService, PathRequestService, 
-              AuthorService, BookService, GenreService, AuthenticationService],
+              AuthorService, BookService, GenreService, AuthenticationService,
+              UserSessionService, AuthGuard, AdminGuard, CustomValidatorService],
   bootstrap: [AppComponent, 
     HomePageComponent,
     LoginComponent]

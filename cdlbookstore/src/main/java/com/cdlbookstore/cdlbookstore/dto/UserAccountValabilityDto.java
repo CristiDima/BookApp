@@ -15,6 +15,8 @@ public class UserAccountValabilityDto {
 
     private boolean isValid;
 
+    private Date created;
+
     private Date expirationDate;
 
     private int accountId;

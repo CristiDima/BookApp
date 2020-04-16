@@ -23,4 +23,11 @@ public class UserBooksterServiceImpl implements UserBooksterService {
 
         return userBooksterMapper.userBooksterToUserBooksterDto(userBookster);
     }
+
+    @Override
+    public UserBooksterDto saveUser(UserBooksterDto userBooksterDto) {
+        UserBookster userBookster = userBooksterRepository.save(userBooksterMapper.userBooksterDtoToUserBookster(userBooksterDto));
+
+        return userBooksterMapper.userBooksterToUserBooksterDto(userBookster);
+    }
 }

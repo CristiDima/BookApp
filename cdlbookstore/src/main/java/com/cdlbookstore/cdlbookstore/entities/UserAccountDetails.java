@@ -13,10 +13,11 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@TableGenerator(name = "user_account_details_val", initialValue = 2)
 public class UserAccountDetails {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_account_details_val")
     private int id;
 
     @Column

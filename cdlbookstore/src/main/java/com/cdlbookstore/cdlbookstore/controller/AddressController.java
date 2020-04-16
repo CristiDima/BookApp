@@ -1,5 +1,6 @@
 package com.cdlbookstore.cdlbookstore.controller;
 
+import com.cdlbookstore.cdlbookstore.dto.AddressDto;
 import com.cdlbookstore.cdlbookstore.entities.Address;
 import com.cdlbookstore.cdlbookstore.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,8 @@ public class AddressController {
     private AddressService addressService;
 
     @GetMapping("/address")
-    public Address getAddress()
+    public AddressDto getAddress()
     {
-        Address address = new Address();
         return addressService.getAddress(1);
     }
 }

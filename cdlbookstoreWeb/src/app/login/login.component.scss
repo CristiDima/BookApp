@@ -31,10 +31,15 @@ mat-form-field.ng-invalid.ng-touched {
         width: 100px;
     }
 
-    .account-button {
+    .standard-button {
         color: #FFD700;
         background-color: #000000;
         margin: 1em;
-        width: auto;
+        width: 150px;
+    }
+
+    .standard-button:disabled {
+        color: #FFD700;
+        background-color: #A9A9A9;
     }
 }

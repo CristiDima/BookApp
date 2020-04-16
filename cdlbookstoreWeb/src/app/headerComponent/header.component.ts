@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { PagesRouting } from '../shared/pages-routing.service';
+import { UserSessionService } from '../shared/user-session.service';
+import { AuthenticationService } from '../shared/authentication.service';
+import { User } from '../models/user.model';
 
 @Component({
     selector: 'app-header',
@@ -9,25 +12,41 @@ import { PagesRouting } from '../shared/pages-routing.service';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-    constructor(private _router: Router, private _dialog: MatDialog, private _pagesRouting: PagesRouting) {}
+    constructor(private _authService: AuthenticationService, private _pagesRouting: PagesRouting,
+                private _userService: UserSessionService) {
+    }
 
-    protected onLoginPage(): any {
+    public isAdmin(): boolean {
+        return this._userService.isAdmin();
+    }
+
+    public isLoggedId(): boolean {
+        return this._userService.isLoggedIn();
+    }
+
+    //region events
+    protected onLogin(): void {
         this._pagesRouting.LoginPage();
     }
 
-    protected onHomePage(): any {
+    protected onLogout():void {
+        this._authService.logout();
+    }
+
+    protected onHomePage(): void {
         this._pagesRouting.HomePage();
     }
 
-    protected onBooksPage(): any {
+    protected onBooksPage(): void {
         this._pagesRouting.BooksPage();
     }
 
-    protected onAccountPage(): any {
+    protected onAccountPage(): void {
         this._pagesRouting.UserAccountPage();
     }
 
     protected onAdminPage(): any {
         this._pagesRouting.AdminPage();
     }
+    //endregion
 }

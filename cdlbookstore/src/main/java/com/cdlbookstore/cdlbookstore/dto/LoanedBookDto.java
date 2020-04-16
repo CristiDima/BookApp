@@ -17,5 +17,7 @@ public class LoanedBookDto {
 
     private int bookId;
 
+    private Date loanedAt;
+
     private Date dateToReturn;
 }

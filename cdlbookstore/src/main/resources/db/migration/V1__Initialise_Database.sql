@@ -3,10 +3,9 @@
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`address` (
   `id` INT NOT NULL,
-  `street` VARCHAR(200) NOT NULL,
-  `number` INT NULL,
-  `city` VARCHAR(100) NULL,
-  `district` VARCHAR(100) NULL,
+  `address` VARCHAR(200) NOT NULL,
+  `city` VARCHAR(100) NOT NULL,
+  `district` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
@@ -16,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
   `id` INT NOT NULL,
   `first_name` VARCHAR(200) NOT NULL,
   `last_name` VARCHAR(200) NOT NULL,
-  `address_id` INT NULL,
+  `address_id` INT NOT NULL,
   `is_admin` boolean NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (address_id) REFERENCES address(id));
@@ -37,7 +36,8 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account_details` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account_valability` (
   `id` INT NOT NULL,
-  `is_valid` boolean NULL,
+  `is_valid` boolean NOT NULL,
+  `created` date NOT NULL,
   `expiration_date` date NULL,
   `account_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account_valability` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_session` (
   `id` INT NOT NULL,
   `token` VARCHAR(100) NOT NULL,
-  `expiration_date` date NOT NULL,
+  `created` date NOT NULL,
   `is_valid` date NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_session` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`author` (
   `id` INT NOT NULL,
   `name` VARCHAR(200) NOT NULL,
-  `description` TEXT NULL,
+  `description` TEXT NOT NULL,
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`genre` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   `id` INT NOT NULL,
   `name` VARCHAR(200) NOT NULL,
-  `description` TEXT NULL,
+  `description` TEXT NOT NULL NULL,
   `rating` DOUBLE NULL,
   PRIMARY KEY (`id`));
 
@@ -119,9 +119,10 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book_genres` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`loaned_books` (
   `id` INT NOT NULL,
-  `user_id` INT NULL,
-  `book_id` INT NULL,
-  `date_to_return` DATE NULL,
+  `user_id` INT NOT NULL,
+  `book_id` INT NOT NULL,
+  `loaned_at` DATE NOT NULL,
+  `date_to_return` DATE NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
   FOREIGN KEY (book_id) REFERENCES book(id));
@@ -143,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`online_books` (
 -- Initial inserts into db
 -- --------------------------------------------------------
 
-INSERT INTO address(`id`, `street`, `number`, `city`, `district`) VALUES  (1, 'George Enescu', 1, 'Craiova', 'Dolj');
+INSERT INTO address(`id`, `address`, `city`, `district`) VALUES  (1, 'George Enescu, nr 1', 'Craiova', 'Dolj');
 
 INSERT INTO user_bookstore(`id`, `first_name`, `last_name`, `address_id`, `is_admin`) VALUES  (1, 'Cristian', 'Dima', 1, true);
 

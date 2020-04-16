@@ -13,22 +13,23 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@TableGenerator(name = "address_val", initialValue = 2)
 public class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "address_val")
     private int id;
 
     @Column
-    private String street;
+    @NotNull
+    private String address;
 
     @Column
-    private int number;
-
-    @Column
+    @NotNull
     private String city;
 
     @Column
+    @NotNull
     private String district;
 
 }

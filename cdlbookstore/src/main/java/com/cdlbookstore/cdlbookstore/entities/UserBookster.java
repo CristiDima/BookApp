@@ -5,27 +5,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table( name = "user_bookstore")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@TableGenerator(name = "user_bookstore_val", initialValue = 2)
 public class UserBookster {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_bookstore_val")
     private int id;
 
     @Column(name = "first_name")
+    @NotNull
     private String firstName;
 
     @Column(name = "last_name")
+    @NotNull
     private String lastName;
 
     @Column(name = "address_id")
+    @NotNull
     private int addressId;
 
     @Column(name = "is_admin")
+    @NotNull
     private boolean isAdmin;
 }

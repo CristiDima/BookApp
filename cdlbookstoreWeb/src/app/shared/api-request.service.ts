@@ -13,7 +13,7 @@ export class APIRequestService {
     public requst(requestType: string, url: string, data?: any): Observable<any> {
         switch (requestType) {
             case 'PUT': return this.putRequest(url, data);
-            case 'POST': return this.postRequest(url, JSON.stringify(data));
+            case 'POST': return this.postRequest(url, data);
             case 'GET': return this.getRequest(url);
             case 'DELETE': return this.deleteRequest(url, data);
             default: return null;
