@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Entity
 @Table( name = "user_bookstore")
@@ -31,7 +32,14 @@ public class UserBookster {
     @NotNull
     private int addressId;
 
+    @Column(name = "phone_number")
+    @NotNull
+    private  String phoneNumber;
+
     @Column(name = "is_admin")
     @NotNull
     private boolean isAdmin;
+
+    @Column(name = "total_books")
+    private int totalBooks;
 }

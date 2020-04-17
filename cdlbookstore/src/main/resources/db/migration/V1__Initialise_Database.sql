@@ -16,14 +16,16 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
   `first_name` VARCHAR(200) NOT NULL,
   `last_name` VARCHAR(200) NOT NULL,
   `address_id` INT NOT NULL,
+  `phone_number` VARCHAR(10),
   `is_admin` boolean NOT NULL,
+  `total_books` INT NULL DEFAULT 5,
   PRIMARY KEY (`id`),
   FOREIGN KEY (address_id) REFERENCES address(id));
 
   -- -----------------------------------------------------
--- Table `cdlstore`.`account_details`
+-- Table `cdlstore`.`user_credentials`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account_details` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_credentials` (
   `id` INT NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
@@ -32,18 +34,30 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account_details` (
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`account_valability`
+-- Table `cdlstore`.`user_online_account`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`user_account_valability` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_online_account` (
   `id` INT NOT NULL,
   `is_valid` boolean NOT NULL,
-  `created` date NOT NULL,
-  `expiration_date` date NULL,
-  `account_id` INT NOT NULL,
+  `activated_at` date NOT NULL,
+  `expires_at` date NULL,
+  `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (account_id) REFERENCES user_account_details(id));
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
 
-    -- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Table `cdlstore`.`user_physical_account`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_physical_account` (
+  `id` INT NOT NULL,
+  `is_valid` boolean NOT NULL,
+  `activated_at` date NOT NULL,
+  `expires_at` date NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
+
+-- -----------------------------------------------------
 -- Table `cdlstore`.`user_session`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_session` (
@@ -82,6 +96,8 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   `name` VARCHAR(200) NOT NULL,
   `description` TEXT NOT NULL NULL,
   `rating` DOUBLE NULL,
+  `pages` INT NULL,
+  `year` int NULL,
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
@@ -140,12 +156,23 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`online_books` (
   FOREIGN KEY (book_id) REFERENCES book(id),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
 
+-- -- -----------------------------------------------------
+-- -- Table `cdlstore`.`read_list`
+-- -- -----------------------------------------------------
+-- CREATE TABLE IF NOT EXISTS `cdlstore`.`read_list` (
+--   `id` INT NOT NULL,
+--   `book_id` INT NOT NULL,
+--   `user_id` INT NOT NULL,
+--   PRIMARY KEY (`id`),
+--   FOREIGN KEY (book_id) REFERENCES book(id),
+--   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
+
 -- --------------------------------------------------------
 -- Initial inserts into db
 -- --------------------------------------------------------
 
 INSERT INTO address(`id`, `address`, `city`, `district`) VALUES  (1, 'George Enescu, nr 1', 'Craiova', 'Dolj');
 
-INSERT INTO user_bookstore(`id`, `first_name`, `last_name`, `address_id`, `is_admin`) VALUES  (1, 'Cristian', 'Dima', 1, true);
+INSERT INTO user_bookstore(`id`, `first_name`, `last_name`, `address_id`, `phone_number`, `is_admin`) VALUES  (1, 'Cristian', 'Dima', 1, '0123456789', true);
 
-INSERT INTO user_account_details(`id`, `email`, `password`,  `user_id`) VALUES  (1, 'cristiandima30@gmail.com', 'b7e055c6165da55c3e12c49ae5207455', 1);
+INSERT INTO user_credentials(`id`, `email`, `password`,  `user_id`) VALUES  (1, 'cristiandima30@gmail.com', 'b7e055c6165da55c3e12c49ae5207455', 1);

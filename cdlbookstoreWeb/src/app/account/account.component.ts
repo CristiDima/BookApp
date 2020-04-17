@@ -36,7 +36,7 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  //region events
+  //region eventshttps-proxy-agent
   protected onSubmit():void {
     this.isOnEditMode = false;
     this.formReset();

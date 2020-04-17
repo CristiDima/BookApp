@@ -19,6 +19,10 @@ public class BookDto {
 
     private double rating;
 
+    private int pages;
+
+    private int year;
+
     private Set<AuthorDto> authors;
 
     private Set<GenreDto> genres;

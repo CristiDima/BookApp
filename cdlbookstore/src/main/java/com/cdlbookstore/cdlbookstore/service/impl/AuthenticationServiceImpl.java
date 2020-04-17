@@ -1,15 +1,14 @@
 package com.cdlbookstore.cdlbookstore.service.impl;
 
 import com.cdlbookstore.cdlbookstore.dto.AddressDto;
-import com.cdlbookstore.cdlbookstore.dto.UserAccountDetailsDto;
+import com.cdlbookstore.cdlbookstore.dto.UserCredentialsDto;
 import com.cdlbookstore.cdlbookstore.dto.UserBooksterDto;
 import com.cdlbookstore.cdlbookstore.entities.Address;
-import com.cdlbookstore.cdlbookstore.entities.UserAccountDetails;
+import com.cdlbookstore.cdlbookstore.entities.UserCredentials;
 import com.cdlbookstore.cdlbookstore.entities.UserBookster;
-import com.cdlbookstore.cdlbookstore.entities.UserSession;
 import com.cdlbookstore.cdlbookstore.forms.LoginForm;
 import com.cdlbookstore.cdlbookstore.mapper.AddressMapper;
-import com.cdlbookstore.cdlbookstore.mapper.UserAccountDetailsMapper;
+import com.cdlbookstore.cdlbookstore.mapper.UserCredentialsMapper;
 import com.cdlbookstore.cdlbookstore.mapper.UserBooksterMapper;
 import com.cdlbookstore.cdlbookstore.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ import java.util.UUID;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
-    UserAccountDetailsService userAccountDetailsService;
+    UserCredentialsService userCredentialsService;
 
     @Autowired
     AddressService addressService;
@@ -37,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     EmailService emailService;
 
     @Autowired
-    UserAccountDetailsMapper userAccountDetailsMapper;
+    UserCredentialsMapper userCredentialsMapper;
 
     @Autowired
     AddressMapper addressMapper;
@@ -47,10 +46,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Map<String, Object> login(LoginForm loginForm) {
-        UserAccountDetailsDto userAccountDetailsDto =  userAccountDetailsService.getUserAccountByCredentials(loginForm);
-        if (userAccountDetailsDto != null) {
+        UserCredentialsDto userCredentialsDto =  userCredentialsService.getUserAccountByCredentials(loginForm);
+        if (userCredentialsDto != null) {
             UUID token = UUID.randomUUID();
-            UserBooksterDto userBooksterDto = userBooksterService.getUserById(userAccountDetailsDto.getId());
+            UserBooksterDto userBooksterDto = userBooksterService.getUserById(userCredentialsDto.getId());
             AddressDto addressDto = addressService.getAddress(userBooksterDto.getId());
             Map<String, Object> userDetails = new HashMap<String, Object>();
             userDetails.put("user", userBooksterDto);
@@ -62,9 +61,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public ResponseEntity signup(Map<String, String> userDetails) {
-        UserAccountDetailsDto userAccountDetailsDto = userAccountDetailsService.findUserByEmail(userDetails.get("email"));
+        UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByEmail(userDetails.get("email"));
 
-        if (userDetails.get("email") != null && userAccountDetailsDto != null) {
+        if (userDetails.get("email") != null && userCredentialsDto != null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("An account with this email address already exist");
         }
 
@@ -95,20 +94,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userBookster.setAddressId(addressDto.getId());
         userBooksterDto = userBooksterService.saveUser(userBooksterMapper.userBooksterToUserBooksterDto(userBookster));
 
-        UserAccountDetails userAccountDetails = new UserAccountDetails();
-        userAccountDetails.setUserId(userBooksterDto.getId());
-        userAccountDetails.setEmail(userDetails.get("email"));
-        userAccountDetails.setPassword(userDetails.get("password"));
-        userAccountDetailsService.saveUserAccountDetails(userAccountDetailsMapper.userAccountDetailsToUserAccountDetailsDto(userAccountDetails));
-        emailService.sendCreateAccountEmail(userAccountDetails.getEmail());
+        UserCredentials userCredentials = new UserCredentials();
+        userCredentials.setUserId(userBooksterDto.getId());
+        userCredentials.setEmail(userDetails.get("email"));
+        userCredentials.setPassword(userDetails.get("password"));
+        userCredentialsService.saveUserAccountDetails(userCredentialsMapper.userCredentialsToUserCredentialsDto(userCredentials));
+        emailService.sendCreateAccountEmail(userCredentials.getEmail());
         return ResponseEntity.status(HttpStatus.CREATED).body("The account was created");
     }
 
     @Override
     public ResponseEntity resetPassword(String email) {
-        UserAccountDetailsDto userAccountDetailsDto = userAccountDetailsService.findUserByEmail(email);
+        UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByEmail(email);
 
-        if (userAccountDetailsDto == null) {
+        if (userCredentialsDto == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Is not any account with this email");
         }
 

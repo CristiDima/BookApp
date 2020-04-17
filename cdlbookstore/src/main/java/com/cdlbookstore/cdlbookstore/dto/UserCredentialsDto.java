@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountDetailsDto {
+public class UserCredentialsDto {
 
     private int id;
 

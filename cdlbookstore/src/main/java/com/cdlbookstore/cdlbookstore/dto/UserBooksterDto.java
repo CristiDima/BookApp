@@ -17,5 +17,9 @@ public class UserBooksterDto {
 
     private int addressId;
 
+    private  String phoneNumber;
+
     private boolean isAdmin;
+
+    private int totalBooks;
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableGenerator(name = "user_account_details_val", initialValue = 2)
-public class UserAccountDetails {
+public class UserCredentials {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "user_account_details_val")

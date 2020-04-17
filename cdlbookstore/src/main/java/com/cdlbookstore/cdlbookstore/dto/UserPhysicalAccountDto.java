@@ -9,15 +9,15 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountValabilityDto {
+public class UserPhysicalAccountDto {
 
     private int id;
 
     private boolean isValid;
 
-    private Date created;
+    private Date activatedAt;
 
-    private Date expirationDate;
+    private Date expiresAt;
 
     private int accountId;
 }

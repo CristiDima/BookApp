@@ -9,11 +9,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table( name = "user_account_valability")
+@Table( name = "user_physical_account")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountValability {
+public class UserPhysicalAccount {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
@@ -23,12 +23,12 @@ public class UserAccountValability {
     @NotNull
     private boolean isValid;
 
-    @Column
+    @Column (name = "activated_at")
     @NotNull
-    private Date created;
+    private Date activatedAt;
 
-    @Column
-    private Date expirationDate;
+    @Column(name = "expires_at")
+    private Date expiresAt;
 
     @Column(name = "account_id")
     @NotNull

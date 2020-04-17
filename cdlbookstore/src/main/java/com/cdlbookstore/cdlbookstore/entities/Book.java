@@ -30,6 +30,12 @@ public class Book {
     @Column
     private double rating;
 
+    @Column
+    private int pages;
+
+    @Column
+    private int year;
+
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "book_authors",
