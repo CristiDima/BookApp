@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './shared/material.module';
-import { HomePageComponent } from './homePage/homePage.component';
+import { HomePageComponent } from './home-page/home-page.component';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'

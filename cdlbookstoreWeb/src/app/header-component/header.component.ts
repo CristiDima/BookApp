@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
 import { PagesRouting } from '../shared/pages-routing.service';
 import { UserSessionService } from '../shared/user-session.service';
 import { AuthenticationService } from '../shared/authentication.service';
-import { User } from '../models/user.model';
 
 @Component({
     selector: 'app-header',
