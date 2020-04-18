@@ -175,4 +175,4 @@ INSERT INTO address(`id`, `address`, `city`, `district`) VALUES  (1, 'George Ene
 
 INSERT INTO user_bookstore(`id`, `first_name`, `last_name`, `address_id`, `phone_number`, `is_admin`) VALUES  (1, 'Cristian', 'Dima', 1, '0123456789', true);
 
-INSERT INTO user_credentials(`id`, `email`, `password`,  `user_id`) VALUES  (1, 'cristiandima30@gmail.com', 'b7e055c6165da55c3e12c49ae5207455', 1);
+INSERT INTO user_credentials(`id`, `email`, `password`,  `user_id`) VALUES  (1, 'cristiandima30@gmail.com', '6a5eb5561b803c80d91ca7a62a7e24e7', 1);

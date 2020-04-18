@@ -1,3 +1,5 @@
+@import "src/styles.scss";
+
 .container {
     margin-top: 60px;
     position: fixed;
@@ -10,25 +12,9 @@
         margin: 0%;
     } 
 
-    .form-group{
-        width: 100%;
-        margin-right: 0.5em;
-    }
-
     .signup {
         margin: 2em;
         display: flow-root;
-    }
-
-    .login-buttons {
-        color: #FFD700;
-        background-color: #000000;
-        margin: 1em;
-        width: 100px;
-    }
-    .login-buttons:disabled {
-        color: #FFD700;
-        background-color: #707B7C ;
     }
 
 }

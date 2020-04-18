@@ -4,7 +4,7 @@
 
 <div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
     <div fxFlex="100%" class="signup" fxLayoutAlign="center">
-        <mat-card>
+        <mat-card class="mat-card">
             <mat-card-header>
                 <div mat-card-avatar></div>
                 <mat-card-title>Bookster</mat-card-title>
@@ -26,6 +26,10 @@
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                                 <mat-label for="email">Email:*</mat-label>
                                 <input matInput formControlName="email" class="form-control">
+                            </mat-form-field>
+                            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                                <mat-label for="phoneNumber">Phone number:*</mat-label>
+                                <input matInput formControlName="phoneNumber" class="form-control">
                             </mat-form-field>
                         </div>
                         <div fxLayout fxLayout="row" fxLayoutAlign="center">
@@ -57,8 +61,8 @@
                     </div>
                     <hr>
                     <div fxLayout fxLayout="row" fxLayoutAlign="center">
-                        <button [disabled]="!signupForm.valid" class="login-buttons" mat-raised-button type="submit">Save</button>
-                        <button class="login-buttons" mat-raised-button click="onCancel()">Cancel</button>
+                        <button [disabled]="!signupForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
+                        <button class="standard-button" mat-raised-button click="onCancel()">Cancel</button>
                     </div>
                     <mat-error *ngIf="hasError">{{errorMessage}}</mat-error>
                 </form>

@@ -3,7 +3,7 @@
 </div>
 <div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
     <div fxFlex="100%" class="login" fxLayoutAlign="center">
-        <mat-card>
+        <mat-card class="mat-card">
             <mat-card-header>
                 <div mat-card-avatar></div>
                 <mat-card-title>Bookster</mat-card-title>
@@ -11,10 +11,11 @@
             <mat-card-content>
                 <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
                     <div fxLayout fxLayout="column" fxLayoutAlign="center">
+                        <mat-error *ngIf="_authenticationService.incorrectCredentials">Email or password are incorrect</mat-error>
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="username">Username</mat-label>
-                                <input matInput formControlName="username" class="form-control">
+                                <mat-label for="email">Email</mat-label>
+                                <input matInput formControlName="email" class="form-control">
                             </mat-form-field>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center">
@@ -26,13 +27,13 @@
                     </div>
                     <hr>
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="login-buttons" mat-raised-button type="submit">LogIn</button>
-                        <button class="login-buttons" mat-raised-button (click)="onCancel()">Cancel</button>
+                        <button class="standard-button" mat-raised-button type="submit">Log in</button>
+                        <button class="standard-button" mat-raised-button (click)="onCancel()">Cancel</button>
                     </div>
                     <hr>
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="standard-button" mat-raised-button (click)="onSignUpPage()">Create an account</button>
-                        <button class="standard-button" mat-raised-button (click)="onResetPasswordPage()">Reset password</button>
+                        <button class="large-button" mat-raised-button (click)="onSignUpPage()">Create an account</button>
+                        <button class="large-button" mat-raised-button (click)="onResetPasswordPage()">Reset password</button>
                     </div>
                 </form>
             </mat-card-content>

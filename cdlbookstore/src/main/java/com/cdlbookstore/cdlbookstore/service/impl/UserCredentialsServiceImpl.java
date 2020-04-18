@@ -20,19 +20,13 @@ public class UserCredentialsServiceImpl implements UserCredentialsService {
 
     @Override
     public UserCredentialsDto getUserAccountByCredentials(LoginForm loginForm) {
-        UserCredentials userCredentials =
-                userCredentialsRepository.findByEmailAndPassword(loginForm.getUsername(), loginForm.getPassword()).get();
+        UserCredentials userCredentials =  userCredentialsRepository.findByEmailAndPassword(loginForm.getUsername(), loginForm.getPassword());
         return userCredentialsMapper.userCredentialsToUserCredentialsDto(userCredentials);
     }
 
     @Override
     public UserCredentialsDto findUserByEmail(String email) {
-        UserCredentials userCredentials = null;
-        try {
-            userCredentials = userCredentialsRepository.findByEmail(email).get();
-        } catch (Exception e) {
-            return null;
-        }
+        UserCredentials userCredentials = userCredentialsRepository.findByEmail(email);
         return userCredentialsMapper.userCredentialsToUserCredentialsDto(userCredentials);
     }
 

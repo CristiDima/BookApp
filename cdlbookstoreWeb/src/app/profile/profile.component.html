@@ -4,7 +4,14 @@
 
 <div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
     <div fxFlex="100%" class="signup" fxLayoutAlign="center">
-        <mat-card>
+        <button class="large-button" mat-raised-button>Details</button>
+        <button class="large-button" mat-raised-button>Payment</button>
+        <button class="large-button" mat-raised-button>Read List</button>
+        <button class="large-button" mat-raised-button>Loanned books</button>
+        <button class="large-button" mat-raised-button>Online books</button>
+    </div>
+    <div fxFlex="100%" class="signup" fxLayoutAlign="center">
+        <mat-card class="mat-card">
             <mat-card-header>
                 <div mat-card-avatar></div>
                 <mat-card-title>Bookster</mat-card-title>
@@ -27,6 +34,10 @@
                                 <mat-label for="email">Email:*</mat-label>
                                 <input matInput formControlName="email" class="form-control">
                             </mat-form-field>
+                            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                                <mat-label for="phoneNumber">Phone number:*</mat-label>
+                                <input matInput formControlName="phoneNumber" class="form-control">
+                            </mat-form-field>
                         </div>
                         <div fxLayout fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
@@ -47,11 +58,11 @@
                     </div>
                     <hr>
                     <div *ngIf="isOnEditMode" fxLayout fxLayout="row" fxLayoutAlign="center">
-                        <button [disabled]="!userInfoForm.valid" class="login-buttons" mat-raised-button type="submit">Save</button>
-                        <button class="login-buttons" mat-raised-button (click)="onCancel()">Cancel</button>
+                        <button [disabled]="!userInfoForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
+                        <button class="standard-button" mat-raised-button (click)="onCancel()">Cancel</button>
                     </div>
                     <div *ngIf="!isOnEditMode" fxLayout fxLayout="row" fxLayoutAlign="center">
-                        <button class="login-buttons" mat-raised-button (click)="onEdit()">Edit</button>
+                        <button class="standard-button" mat-raised-button (click)="onEdit()">Edit</button>
                     </div>
                 </form>
             </mat-card-content>

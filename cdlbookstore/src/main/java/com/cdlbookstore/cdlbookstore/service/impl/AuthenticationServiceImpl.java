@@ -6,16 +6,19 @@ import com.cdlbookstore.cdlbookstore.dto.UserBooksterDto;
 import com.cdlbookstore.cdlbookstore.entities.Address;
 import com.cdlbookstore.cdlbookstore.entities.UserCredentials;
 import com.cdlbookstore.cdlbookstore.entities.UserBookster;
+import com.cdlbookstore.cdlbookstore.entities.UserSession;
 import com.cdlbookstore.cdlbookstore.forms.LoginForm;
 import com.cdlbookstore.cdlbookstore.mapper.AddressMapper;
 import com.cdlbookstore.cdlbookstore.mapper.UserCredentialsMapper;
 import com.cdlbookstore.cdlbookstore.mapper.UserBooksterMapper;
+import com.cdlbookstore.cdlbookstore.mapper.UserSessionMapper;
 import com.cdlbookstore.cdlbookstore.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -36,6 +39,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     EmailService emailService;
 
     @Autowired
+    UserSessionService userSessionService;
+
+    @Autowired
     UserCredentialsMapper userCredentialsMapper;
 
     @Autowired
@@ -44,16 +50,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     UserBooksterMapper userBooksterMapper;
 
+    @Autowired
+    UserSessionMapper userSessionMapper;
+
     @Override
     public Map<String, Object> login(LoginForm loginForm) {
         UserCredentialsDto userCredentialsDto =  userCredentialsService.getUserAccountByCredentials(loginForm);
         if (userCredentialsDto != null) {
             UUID token = UUID.randomUUID();
+            UserSession userSession = new UserSession();
             UserBooksterDto userBooksterDto = userBooksterService.getUserById(userCredentialsDto.getId());
             AddressDto addressDto = addressService.getAddress(userBooksterDto.getId());
+            if (userBooksterDto != null) {
+                userSession.setUserId(userBooksterDto.getId());
+                userSession.setCreated(new Date());
+                userSession.setToken(token.toString());
+                userSessionService.saveUserSession(userSessionMapper.userSessionToUserSessionDto(userSession));
+            }
+
             Map<String, Object> userDetails = new HashMap<String, Object>();
             userDetails.put("user", userBooksterDto);
             userDetails.put("address", addressDto);
+            userDetails.put("token", userSession.getToken());
             return  userDetails;
         }
         return null;
@@ -71,7 +89,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("User fields are empty");
         }
 
-        if(userDetails.get("firstname") == null || userDetails.get("lastname") == null) {
+        if(userDetails.get("firstname") == null || userDetails.get("lastname") == null || userDetails.get("phoneNumber") == null) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("User fields are empty");
         }
 
@@ -91,6 +109,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userBookster.setAdmin(false);
         userBookster.setFirstName(userDetails.get("firstname"));
         userBookster.setLastName(userDetails.get("lastname"));
+        userBookster.setPhoneNumber(userDetails.get("phoneNumber"));
         userBookster.setAddressId(addressDto.getId());
         userBooksterDto = userBooksterService.saveUser(userBooksterMapper.userBooksterToUserBooksterDto(userBookster));
 

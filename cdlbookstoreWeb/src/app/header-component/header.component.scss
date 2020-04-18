@@ -1,5 +1,7 @@
+@import "src/styles.scss";
+
 .header {
-    background-color: #FFD700;
+    background-color: $app-primary;
     padding: 0%;
     margin: 0%;
     position: fixed;
@@ -7,7 +9,7 @@
     left: 0;
     height: 60px;
     z-index: 100;;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid $app-secondary;
 
     .home {
         cursor: pointer;
@@ -24,10 +26,5 @@
 .right {
     position: fixed;
     right: 1%;
-    .login {
-        background-color: #000000;
-        color: #FFD700;
-        margin: 0.5em;
-    }
 }
 

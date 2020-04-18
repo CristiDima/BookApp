@@ -12,7 +12,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary: #FFD700;
+$app-primary: /*#FFD700;*/ 	#ffffb3;
+$app-secondary: #595959;
 $app-accent:  mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -26,4 +27,43 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 * {
     margin: 0;
     padding: 0;
+}
+
+.mat-card {
+    width: 500px;
+}
+
+.form-group{
+    width: 100%;
+    margin: 0.5em;
+}
+
+.standard-button {
+    color: $app-primary;
+    background-color: $app-secondary;
+    margin: 1em;
+    width: 100px;
+}
+.standard-button:disabled {
+    color: $app-primary;
+    background-color: #d9d9d9;
+}
+.standard-button:hover {
+    color: $app-primary;
+    background-color: #000000;
+}
+
+.large-button {
+    color: $app-primary;
+    background-color: $app-secondary;
+    margin: 1em;
+    width: 150px;
+}
+.large-button:disabled {
+    color: $app-primary;
+    background-color: #d9d9d9;
+}
+.large-button:hover {
+    color: $app-primary;
+    background-color: #000000;
 }

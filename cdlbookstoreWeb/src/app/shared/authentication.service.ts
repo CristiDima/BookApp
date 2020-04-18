@@ -1,31 +1,44 @@
 import { Injectable } from '@angular/core';
-import { UserLoginDetails, User } from '../models/user.model';
+import { UserCredentials, User, UserSession } from '../models/user.model';
 import { APIRequestService } from './api-request.service';
 import { PathRequestService } from './path-request.service';
 import { UserSessionService } from './user-session.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { PagesRouting } from './pages-routing.service';
 
 @Injectable()
 export class AuthenticationService {
     
+    private incorrectCredentials: boolean = false;
+
     constructor(private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
                 private _userSessionService: UserSessionService, private _pagesRouting: PagesRouting) {
     }
 
-
     //login region
-    public login(userLoginDetails: UserLoginDetails): void {
-        this._apiRequest.requst('POST', this._pathRequest.loginPath, userLoginDetails).subscribe((responseData: Map<string, any>) => {
-            this._userSessionService.user = responseData['user'];
-            this._userSessionService.userAddress = responseData['address'];
-            if ( this._userSessionService.user) {
-              this._userSessionService.user.email = userLoginDetails.username;
-              const userDetails: any = {'user': this._userSessionService.user, 'address': this._userSessionService.userAddress}
-              this.setLocalStorageValue('currentUser', userDetails);
+    public login(userCredentials: UserCredentials): void {
+        this._apiRequest.requst('POST', this._pathRequest.loginPath, userCredentials).subscribe((responseData: Map<string, any>) => {
+            if (responseData) {
+              this._userSessionService.user = responseData['user'];
+              this._userSessionService.address = responseData['address'];
+              this._userSessionService.userSession = new UserSession();
+              
+              if ( this._userSessionService.user) {
+                this._pagesRouting.HomePage();
+                this._userSessionService.userSession.token =  responseData['token'];
+                this._userSessionService.userSession.userId = this._userSessionService.user.id;
+                this._userSessionService.user.email = userCredentials.username;
+                const userDetails: any = {'user': this._userSessionService.user, 'address': this._userSessionService.address, 
+                                          'token': this._userSessionService.userSession.token}
+                this.setLocalStorageValue('currentUser', userDetails);
+                this.incorrectCredentials = false;
+              }
+
+            } else {
+              this.incorrectCredentials = true;
             }
-            this._pagesRouting.HomePage();
-        });
+        }, error => {
+          // this.incorrectCredentials = true;
+      });
     }
 
     public logout(): void {

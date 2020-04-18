@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PagesRouting } from '../shared/pages-routing.service';
 import { APIRequestService } from '../shared/api-request.service';
-import { UserLoginDetails } from '../models/user.model';
+import { UserCredentials } from '../models/user.model';
 import {Md5} from "md5-typescript";
 import { AuthenticationService } from '../shared/authentication.service';
 
@@ -15,13 +15,14 @@ import { AuthenticationService } from '../shared/authentication.service';
 export class LoginComponent implements OnInit {
 
   protected signinForm: FormGroup = null;
+  
 
   constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService,
      private _authenticationService: AuthenticationService) {}
 
   ngOnInit() {
     this.signinForm = new FormGroup({
-        'username': new FormControl(null, [Validators.required]),
+        'email': new FormControl(null, [Validators.required]),
         'password': new FormControl(null, [Validators.required])
     });
   }
@@ -29,10 +30,10 @@ export class LoginComponent implements OnInit {
 
   //region events
   protected onSubmit() {
-    const userLoginDetails: UserLoginDetails = new UserLoginDetails();
-    userLoginDetails.username = this.signinForm.value.username;
-    userLoginDetails.password = Md5.init(this.signinForm.value.password);
-    this._authenticationService.login(userLoginDetails);
+    const userCredentials: UserCredentials = new UserCredentials();
+    userCredentials.username = this.signinForm.value.email;
+    userCredentials.password = Md5.init(this.signinForm.value.password);
+    this._authenticationService.login(userCredentials);
     this.signinForm.reset();
   }
 

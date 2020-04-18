@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from
 import { PagesRouting } from '../shared/pages-routing.service';
 import { APIRequestService } from '../shared/api-request.service';
 import { PathRequestService } from '../shared/path-request.service';
-import { User, UserAddress, UserLoginDetails } from '../models/user.model';
 import { Md5 } from 'md5-typescript';
 import { CustomValidatorService } from '../validators/custom-validator.service';
 
@@ -17,6 +16,7 @@ export class SignupComponent implements OnInit {
   protected signupForm: FormGroup = null;
   protected hasError: boolean = false;
   protected errorMessage: string = '';
+  private phoneNumberRegex: any = /^(?:(?:(?:00\s?|\+)40\s?|0)(?:7\d{2}\s?\d{3}\s?\d{3}|(21|31)\d{1}\s?\d{3}\s?\d{3}|((2|3)[3-7]\d{1})\s?\d{3}\s?\d{3}|(8|9)0\d{1}\s?\d{3}\s?\d{3}))$/;
 
   constructor(private _pagesRouting: PagesRouting, private _apiRequest: APIRequestService,
     private _pathRequest: PathRequestService, private customValidatorsService: CustomValidatorService) {}
@@ -28,6 +28,7 @@ export class SignupComponent implements OnInit {
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'repeatPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'email': new FormControl(null, [Validators.required, Validators.email]),
+      'phoneNumber': new FormControl(null, [Validators.required, Validators.pattern(this.phoneNumberRegex)]),
       'address': new FormControl(null, [Validators.required]),
       'city': new FormControl(null, [Validators.required]),
       'district': new FormControl(null, [Validators.required])

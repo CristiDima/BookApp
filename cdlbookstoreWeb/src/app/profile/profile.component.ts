@@ -4,14 +4,16 @@ import { UserSessionService } from '../shared/user-session.service';
 
 @Component({
   selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class ProfieComponent implements OnInit {
 
   protected userInfo: FormGroup = null;
   protected isOnEditMode: boolean = false;
   protected userInfoForm: FormGroup = null;
+  private phoneNumberRegex: any = /^(?:(?:(?:00\s?|\+)40\s?|0)(?:7\d{2}\s?\d{3}\s?\d{3}|(21|31)\d{1}\s?\d{3}\s?\d{3}|((2|3)[3-7]\d{1})\s?\d{3}\s?\d{3}|(8|9)0\d{1}\s?\d{3}\s?\d{3}))$/;
+
 
   constructor(private _userSessionService: UserSessionService) { }
 
@@ -27,11 +29,13 @@ export class AccountComponent implements OnInit {
                   [Validators.required]),
       'email': new FormControl({value: this._userSessionService.user.email, disabled: !this.isOnEditMode},
                   [Validators.required, Validators.email]),
-      'address': new FormControl({value: this._userSessionService.userAddress.address, disabled: !this.isOnEditMode},
+      'phoneNumber': new FormControl({value: this._userSessionService.user.phoneNumber, disabled: !this.isOnEditMode},
+                  [Validators.required, Validators.email, Validators.pattern(this.phoneNumberRegex)]),
+      'address': new FormControl({value: this._userSessionService.address.address, disabled: !this.isOnEditMode},
                   [Validators.required]),
-      'city': new FormControl({value: this._userSessionService.userAddress.city, disabled: !this.isOnEditMode},
+      'city': new FormControl({value: this._userSessionService.address.city, disabled: !this.isOnEditMode},
                   [Validators.required]),
-      'district': new FormControl({value: this._userSessionService.userAddress.district, disabled: !this.isOnEditMode},
+      'district': new FormControl({value: this._userSessionService.address.district, disabled: !this.isOnEditMode},
                   [Validators.required])
     });
   }

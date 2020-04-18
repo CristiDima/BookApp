@@ -1,4 +1,4 @@
-import { User, UserAddress } from '../models/user.model';
+import { User, UserAddress as Address, UserSession } from '../models/user.model';
 import { Injectable } from '@angular/core';
 import * as _ from "lodash";
 
@@ -6,13 +6,20 @@ import * as _ from "lodash";
 export class UserSessionService {
     
     public user: User = null;
-    public userAddress: UserAddress = null;
+    public address: Address = null;
+    public userSession: UserSession = null;
     
     constructor(){
         const userDetails = JSON.parse(localStorage.getItem('currentUser'));
         if (userDetails) {
             this.user = userDetails['user'];
-            this.userAddress = userDetails['address'];
+            this.address = userDetails['address'];
+            this.userSession = new UserSession();
+            this.userSession.token = userDetails['token'];
+        }
+
+        if (this.userSession && this.user) {
+            this.userSession.userId = this.user.id;
         }
     }
 

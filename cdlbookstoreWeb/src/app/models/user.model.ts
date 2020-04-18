@@ -3,26 +3,24 @@ export class User {
     public firstName: number;
     public lastName: number;
     public email: string;
-    // public phoneNumber: number;
-    // public userBankAccount: UserBankAccount = null;
+    public phoneNumber: number;
     public addressId: number;
     public admin: boolean;
-    // public booksPerMount: number = 0;
+    public booksPerMount: number = 5;
 }
-
-// export class UserBankAccount {
-//     public accountNumber: number = null;
-//     public cvs: number = null;
-//     public expirationDate: Date = null;
-// }
 
 export class UserAddress {
-    public id: number = null;
-    public address: string = null;
-    public city: string = null;
-    public district: string = null;
+    public id: number;
+    public address: string;
+    public city: string;
+    public district: string;
 }
-export class UserLoginDetails {
-    public username: string = '';
-    public password: string = ''; 
+export class UserCredentials {
+    public username: string;
+    public password: string; 
+}
+
+export class UserSession {
+    public token: string;
+    public userId: number;
 }

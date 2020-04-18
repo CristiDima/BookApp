@@ -11,7 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { SignupComponent } from './signup/signup.component';
 import { BooksComponent } from './books/books.component';
-import { AccountComponent } from './account/account.component';
+import { ProfieComponent } from './profile/profile.component';
 import { PagesRouting } from './shared/pages-routing.service';
 import { APIRequestService } from './shared/api-request.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,6 +27,10 @@ import { AdminGuard } from './guards/admin-guard.service';
 import { CustomValidatorService } from './validators/custom-validator.service';
 import { ResetPasswordComponent } from './login/resetPassword/reset-password.component';
 import { NewPasswordComponent } from './login/new-password/new-password.component';
+import { LoannedBooksComponent } from './profile/loanned-books/loanned-books.component';
+import { OnlineBooksComponent } from './profile/online-books/online-books.component';
+import { PaymentComponent } from './profile/payment/payment.component';
+import { ReadListComponent } from './profile/read-list/read-list.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +40,13 @@ import { NewPasswordComponent } from './login/new-password/new-password.componen
     LoginComponent,
     SignupComponent,
     BooksComponent,
-    AccountComponent,
+    ProfieComponent,
     ResetPasswordComponent,
-    NewPasswordComponent
+    NewPasswordComponent,
+    LoannedBooksComponent,
+    OnlineBooksComponent,
+    PaymentComponent,
+    ReadListComponent
   ],
   imports: [
     BrowserModule,
