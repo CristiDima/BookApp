@@ -16,9 +16,21 @@ export class UserDetailsService {
     public readList: Book[] = [];
     public address: UserAddress = null;
 
+    private isUserOnlineSubscriptionRequestFinish: boolean = false;
+    private isUserPhysicalSubscriptionRequestFinish: boolean = false;
+    private isLoannedBooksRequestFinish: boolean = false;
+    private isOnlineBooksRequestFinish: boolean = false;
+    private isAddressRequestFinish: boolean = false;
+    // private isReadListRequestFinish: boolean = false;
+
     constructor(private userSession: UserSessionService, private pathRequest: PathRequestService,
                 private apiRequest: APIRequestService, private spinner: NgxSpinnerService) {
         this.getUserDetails();
+    }
+
+    public get isLoadedInitialData(): boolean {
+        return (this.isUserOnlineSubscriptionRequestFinish && this.isUserPhysicalSubscriptionRequestFinish &&
+            this.isLoannedBooksRequestFinish && this.isOnlineBooksRequestFinish && this.isAddressRequestFinish)
     }
 
     //event region
@@ -53,6 +65,7 @@ export class UserDetailsService {
                 this.userOnlineSubscription = responseData;
             }
             this.spinner.hide();
+            this.isUserOnlineSubscriptionRequestFinish = true;
         });
     }
 
@@ -63,6 +76,7 @@ export class UserDetailsService {
                 this.userPhysicalSubscription = responseData;
             }
             this.spinner.hide();
+            this.isUserPhysicalSubscriptionRequestFinish = true;
         });
     }
 
@@ -73,6 +87,7 @@ export class UserDetailsService {
                 this.loannedBooks = responseData;
             }
             this.spinner.hide();
+            this.isLoannedBooksRequestFinish = true;
         });
     }
 
@@ -83,6 +98,7 @@ export class UserDetailsService {
                 this.onlineBooks = responseData;
             }
             this.spinner.hide();
+            this.isOnlineBooksRequestFinish = true;
         });
     }
 
@@ -103,6 +119,7 @@ export class UserDetailsService {
                 this.address = responseData;
             }
             this.spinner.hide();
+            this.isAddressRequestFinish = true;
         });
     }
     //endregion

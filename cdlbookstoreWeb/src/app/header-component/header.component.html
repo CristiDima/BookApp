@@ -1,13 +1,20 @@
 <mat-toolbar class="header">  
     <mat-toolbar-row>
         <div>
-            <span class="home" (click)="onHomePage()">BookStore
+            <!-- <span class="home" (click)="onHomePage()">BookStore
                 <img class="logo" src="assets/img/logo.png">
-            </span>
-
+            </span> -->
+            
+            <button title="Home" class="home icon-button" mat-icon-button >
+                <mat-icon>local_library</mat-icon>
+            </button>
+            
         </div>
+        
         <div class="right">
-            <button class="standard-button" mat-button [matMenuTriggerFor]="menu">Menu</button>
+            <button title="Menu" class="icon-button" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>list</mat-icon>
+            </button>
             <mat-menu #menu="matMenu" xPosition="before">
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAdminPage()">Admin</button>
                 <button *ngIf="isLoggedId()"mat-menu-item class="standard-button" (click)="onBooksPage()">Books</button>

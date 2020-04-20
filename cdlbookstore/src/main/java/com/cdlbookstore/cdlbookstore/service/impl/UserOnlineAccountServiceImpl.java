@@ -23,7 +23,7 @@ public class UserOnlineAccountServiceImpl implements UserOnlineAccountService {
     @Override
     public UserOnlineAccountDto getByUserId(int userId) {
         UserOnlineAccount userOnlineAccount = this.userOnlineAccountRepository.findByUserId(userId);
-        if (userOnlineAccount != null && userOnlineAccount.getExpiresAt() != null && userOnlineAccount.getExpiresAt().after(new Date())) {
+        if (userOnlineAccount != null && userOnlineAccount.getExpiresAt() != null && userOnlineAccount.getExpiresAt().before(new Date())) {
             userOnlineAccount.setValid(false);
             userOnlineAccountRepository.updateUserOnlineAccount(userOnlineAccount.isValid(), userId);
         }

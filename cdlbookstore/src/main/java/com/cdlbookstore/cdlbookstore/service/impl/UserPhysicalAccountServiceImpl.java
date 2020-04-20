@@ -24,7 +24,7 @@ public class UserPhysicalAccountServiceImpl implements UserPhysicalAccountServic
     public UserPhysicalAccountDto getByUserId(int userId) {
         UserPhysicalAccount userPhysicalAccount = this.userPhysicalAccountRepository.findByUserId(userId);
         if (userPhysicalAccount != null && userPhysicalAccount.getExpiresAt() != null &&
-                userPhysicalAccount.getExpiresAt().after(new Date())) {
+                userPhysicalAccount.getExpiresAt().before(new Date())) {
             userPhysicalAccount.setValid(false);
             userPhysicalAccountRepository.updateUserPhysicalAccount(userPhysicalAccount.isValid(), userId);
         }
