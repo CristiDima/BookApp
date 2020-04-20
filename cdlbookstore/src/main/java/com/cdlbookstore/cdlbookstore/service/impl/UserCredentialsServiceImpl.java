@@ -34,4 +34,14 @@ public class UserCredentialsServiceImpl implements UserCredentialsService {
     public void saveUserAccountDetails(UserCredentialsDto userCredentialsDto) {
         userCredentialsRepository.save(userCredentialsMapper.UserCredentialsDtoToUserCredentials(userCredentialsDto));
     }
+
+    @Override
+    public void updateEmailByUserId(String email, Integer userId) {
+        userCredentialsRepository.updateEmailByUserId(email, userId);
+    }
+
+    @Override
+    public void updatePasswordByUserId(String password, Integer userId) {
+        userCredentialsRepository.updatePasswordByUserId(password, userId);
+    }
 }

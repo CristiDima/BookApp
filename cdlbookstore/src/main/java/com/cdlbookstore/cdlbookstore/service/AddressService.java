@@ -7,4 +7,5 @@ public interface AddressService {
 
     AddressDto getAddress(Integer id);
     AddressDto saveAddress(AddressDto addressDto);
+    void updateAddressById(String address, String city, String district, Integer addressId);
 }

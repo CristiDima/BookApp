@@ -6,14 +6,12 @@ import * as _ from "lodash";
 export class UserSessionService {
     
     public user: User = null;
-    public address: Address = null;
     public userSession: UserSession = null;
     
     constructor(){
         const userDetails = JSON.parse(localStorage.getItem('currentUser'));
         if (userDetails) {
             this.user = userDetails['user'];
-            this.address = userDetails['address'];
             this.userSession = new UserSession();
             this.userSession.token = userDetails['token'];
         }

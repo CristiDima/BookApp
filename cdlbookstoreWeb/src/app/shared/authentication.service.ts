@@ -4,31 +4,32 @@ import { APIRequestService } from './api-request.service';
 import { PathRequestService } from './path-request.service';
 import { UserSessionService } from './user-session.service';
 import { PagesRouting } from './pages-routing.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable()
 export class AuthenticationService {
     
     private incorrectCredentials: boolean = false;
 
-    constructor(private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
-                private _userSessionService: UserSessionService, private _pagesRouting: PagesRouting) {
+    constructor(private apiRequest: APIRequestService, private pathRequest: PathRequestService,
+                private userSessionService: UserSessionService, private _pagesRouting: PagesRouting,
+                private spinner: NgxSpinnerService) {
     }
 
     //login region
     public login(userCredentials: UserCredentials): void {
-        this._apiRequest.requst('POST', this._pathRequest.loginPath, userCredentials).subscribe((responseData: Map<string, any>) => {
+       this.spinner.show();
+        this.apiRequest.requst('POST', this.pathRequest.loginPath, userCredentials).subscribe((responseData: Map<string, any>) => {
             if (responseData) {
-              this._userSessionService.user = responseData['user'];
-              this._userSessionService.address = responseData['address'];
-              this._userSessionService.userSession = new UserSession();
+              this.userSessionService.user = responseData['user'];
+              this.userSessionService.userSession = new UserSession();
               
-              if ( this._userSessionService.user) {
+              if ( this.userSessionService.user) {
                 this._pagesRouting.HomePage();
-                this._userSessionService.userSession.token =  responseData['token'];
-                this._userSessionService.userSession.userId = this._userSessionService.user.id;
-                this._userSessionService.user.email = userCredentials.username;
-                const userDetails: any = {'user': this._userSessionService.user, 'address': this._userSessionService.address, 
-                                          'token': this._userSessionService.userSession.token}
+                this.userSessionService.userSession.token =  responseData['token'];
+                this.userSessionService.userSession.userId = this.userSessionService.user.id;
+                this.userSessionService.user.email = userCredentials.username;
+                const userDetails: any = {'user': this.userSessionService.user,'token': this.userSessionService.userSession.token}
                 this.setLocalStorageValue('currentUser', userDetails);
                 this.incorrectCredentials = false;
               }
@@ -36,26 +37,29 @@ export class AuthenticationService {
             } else {
               this.incorrectCredentials = true;
             }
-        }, error => {
-          // this.incorrectCredentials = true;
-      });
+            this.spinner.hide();
+        });
     }
 
     public logout(): void {
       this.removeLocalStorageValue('currentUser');
-      this._userSessionService.user = null;
+      this.userSessionService.user = null;
       this._pagesRouting.HomePage();
     }
 
     public resetPassword(email: string): void {
-      this._apiRequest.requst('POST', this._pathRequest.resetPasswordPath, email).subscribe((responseDate: string) => {
+      this.spinner.show();
+      this.apiRequest.requst('POST', this.pathRequest.resetPasswordPath, email).subscribe((responseDate: string) => {
 
+        this.spinner.hide();
       });
     }
 
     public changePassword(password: string): void {
-      this._apiRequest.requst('PUT', this._pathRequest.changePasswordPath, password).subscribe((responseDate: string) => {
+      this.spinner.show();
+      this.apiRequest.requst('PUT', this.pathRequest.changePasswordPath, password).subscribe((responseDate: string) => {
 
+        this.spinner.hide();
       });
     }
     //end region
@@ -65,7 +69,7 @@ export class AuthenticationService {
         const promise = new Promise<boolean>(
             (resolve, reject) => {
               setTimeout(() => {
-                resolve(this._userSessionService.isLoggedIn());
+                resolve(this.userSessionService.isLoggedIn());
               }, 800);
             }
           );
@@ -76,7 +80,7 @@ export class AuthenticationService {
       const promise = new Promise<boolean>(
           (resolve, reject) => {
             setTimeout(() => {
-              resolve(this._userSessionService.isAdmin());
+              resolve(this.userSessionService.isAdmin());
             }, 800);
           }
         );

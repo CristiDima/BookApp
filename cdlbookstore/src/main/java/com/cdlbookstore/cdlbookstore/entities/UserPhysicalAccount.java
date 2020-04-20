@@ -30,7 +30,7 @@ public class UserPhysicalAccount {
     @Column(name = "expires_at")
     private Date expiresAt;
 
-    @Column(name = "account_id")
+    @Column(name = "user_id")
     @NotNull
-    private int accountId;
+    private int userId;
 }

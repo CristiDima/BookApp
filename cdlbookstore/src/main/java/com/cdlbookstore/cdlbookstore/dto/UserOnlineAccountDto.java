@@ -19,5 +19,5 @@ public class UserOnlineAccountDto {
 
     private Date expiresAt;
 
-    private int accountId;
+    private int userId;
 }

@@ -11,7 +11,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { SignupComponent } from './signup/signup.component';
 import { BooksComponent } from './books/books.component';
-import { ProfieComponent } from './profile/profile.component';
 import { PagesRouting } from './shared/pages-routing.service';
 import { APIRequestService } from './shared/api-request.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,10 +26,9 @@ import { AdminGuard } from './guards/admin-guard.service';
 import { CustomValidatorService } from './validators/custom-validator.service';
 import { ResetPasswordComponent } from './login/resetPassword/reset-password.component';
 import { NewPasswordComponent } from './login/new-password/new-password.component';
-import { LoannedBooksComponent } from './profile/loanned-books/loanned-books.component';
-import { OnlineBooksComponent } from './profile/online-books/online-books.component';
-import { PaymentComponent } from './profile/payment/payment.component';
-import { ReadListComponent } from './profile/read-list/read-list.component';
+import { ProfileModule } from './profile/profile.module';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { UserDetailsService } from './shared/user-details.service';
 
 @NgModule({
   declarations: [
@@ -40,13 +38,8 @@ import { ReadListComponent } from './profile/read-list/read-list.component';
     LoginComponent,
     SignupComponent,
     BooksComponent,
-    ProfieComponent,
     ResetPasswordComponent,
     NewPasswordComponent,
-    LoannedBooksComponent,
-    OnlineBooksComponent,
-    PaymentComponent,
-    ReadListComponent
   ],
   imports: [
     BrowserModule,
@@ -55,9 +48,11 @@ import { ReadListComponent } from './profile/read-list/read-list.component';
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    AdminModule
+    AdminModule,
+    ProfileModule,
+    NgxSpinnerModule
   ],
-  providers: [PagesRouting, APIRequestService, PathRequestService, 
+  providers: [PagesRouting, APIRequestService, PathRequestService, UserDetailsService,
               AuthorService, BookService, GenreService, AuthenticationService,
               UserSessionService, AuthGuard, AdminGuard, CustomValidatorService],
   bootstrap: [AppComponent, 

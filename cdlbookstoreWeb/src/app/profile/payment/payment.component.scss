@@ -1,0 +1,30 @@
+@import "src/styles.scss";
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .required-field {
+        padding: 0%;
+        margin: 0%;
+    } 
+
+    .standard-button {
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+    }
+
+    .inside-mat-card {
+        width: auto;
+        height: 100px;
+        padding: 1em;
+        margin: 1em;
+    }
+
+    .large-button:disabled {
+        color: $app-primary;
+        background-color: #d9d9d9;
+    }
+    
+}

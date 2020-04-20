@@ -28,4 +28,9 @@ public class AddressServiceImpl implements AddressService {
         Address address = this.addressRepository.save(addressMapper.addressDtoToAddress(addressDto));
         return this.addressMapper.addressToAddressDto(address);
     }
+
+    @Override
+    public void updateAddressById(String address, String city, String district, Integer addressId) {
+        addressRepository.updateAddressById(address, city, district, addressId);
+    }
 }

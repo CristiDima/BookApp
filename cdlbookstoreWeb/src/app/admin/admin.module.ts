@@ -28,8 +28,7 @@ import { DeleteGenreComponent } from './type-actions/delete-genre/delete-genre.c
     ],
     providers: [],
     bootstrap: [],
-    exports: [HeaderComponent,
-        FooterComponent]
+    exports: [HeaderComponent,  FooterComponent]
   })
   export class AdminModule { }
   

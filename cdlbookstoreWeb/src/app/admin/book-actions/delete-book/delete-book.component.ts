@@ -26,9 +26,6 @@ import { Book } from 'src/app/models/book.model';
       this.deleteBookForm = new FormGroup({
           'bookName': new FormControl(null, [Validators.required])
       });
-      this.deleteBookForm.statusChanges.subscribe(
-        (status) => console.log(status)
-      );
     }
 
     private getInitialData(): void {

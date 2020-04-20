@@ -1,59 +1,64 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserSessionService } from '../shared/user-session.service';
+import { UserDetailsService } from '../shared/user-details.service';
 
 @Component({
-  selector: 'app-account',
+  selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfieComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
-  protected userInfo: FormGroup = null;
-  protected isOnEditMode: boolean = false;
-  protected userInfoForm: FormGroup = null;
-  private phoneNumberRegex: any = /^(?:(?:(?:00\s?|\+)40\s?|0)(?:7\d{2}\s?\d{3}\s?\d{3}|(21|31)\d{1}\s?\d{3}\s?\d{3}|((2|3)[3-7]\d{1})\s?\d{3}\s?\d{3}|(8|9)0\d{1}\s?\d{3}\s?\d{3}))$/;
+  public isOnDetailsPage: boolean = false;
+  public isOnPaymentPage: boolean = false;
+  public isOnLoannedBooksPage: boolean = false;
+  public isOnOnlineBooksPage: boolean = false;
+  public isOnReadListPage: boolean = false;
 
+  constructor(private userDetailsService: UserDetailsService) { }
 
-  constructor(private _userSessionService: UserSessionService) { }
+  ngOnInit(){
 
-  ngOnInit() {
-    this.formReset();
   }
 
-  protected formReset(): void {
-    this.userInfoForm = new FormGroup({
-      'firstname': new FormControl({value: this._userSessionService.user.firstName, disabled: !this.isOnEditMode}, 
-                  [Validators.required]),
-      'lastname': new FormControl({value: this._userSessionService.user.lastName, disabled: !this.isOnEditMode},
-                  [Validators.required]),
-      'email': new FormControl({value: this._userSessionService.user.email, disabled: !this.isOnEditMode},
-                  [Validators.required, Validators.email]),
-      'phoneNumber': new FormControl({value: this._userSessionService.user.phoneNumber, disabled: !this.isOnEditMode},
-                  [Validators.required, Validators.email, Validators.pattern(this.phoneNumberRegex)]),
-      'address': new FormControl({value: this._userSessionService.address.address, disabled: !this.isOnEditMode},
-                  [Validators.required]),
-      'city': new FormControl({value: this._userSessionService.address.city, disabled: !this.isOnEditMode},
-                  [Validators.required]),
-      'district': new FormControl({value: this._userSessionService.address.district, disabled: !this.isOnEditMode},
-                  [Validators.required])
-    });
+  //region Events
+  public onDetailsPage() {
+    this.isOnDetailsPage = true;
+    this.isOnPaymentPage = false;
+    this.isOnLoannedBooksPage = false;
+    this.isOnOnlineBooksPage = false;
+    this.isOnReadListPage = false;
   }
 
-  //region eventshttps-proxy-agent
-  protected onSubmit():void {
-    this.isOnEditMode = false;
-    this.formReset();
+  public onPaymentPage() {
+    this.isOnDetailsPage = false;
+    this.isOnPaymentPage = true;
+    this.isOnLoannedBooksPage = false;
+    this.isOnOnlineBooksPage = false;
+    this.isOnReadListPage = false;
   }
 
-  protected onCancel(): void {
-    this.isOnEditMode = false;
-    this.formReset();
+  public onLoannedBooksPage() {
+    this.isOnDetailsPage = false;
+    this.isOnPaymentPage = false;
+    this.isOnLoannedBooksPage = true;
+    this.isOnOnlineBooksPage = false;
+    this.isOnReadListPage = false;
   }
 
-  protected onEdit(): void {
-    this.isOnEditMode = true;
-    this.formReset();
+  public onOnlineBooksPage() {
+    this.isOnDetailsPage = false;
+    this.isOnPaymentPage = false;
+    this.isOnLoannedBooksPage = false;
+    this.isOnOnlineBooksPage = true;
+    this.isOnReadListPage = false;
+  }
+
+  public onReadListPage() {
+    this.isOnDetailsPage = false;
+    this.isOnPaymentPage = false;
+    this.isOnLoannedBooksPage = false;
+    this.isOnOnlineBooksPage = false;
+    this.isOnReadListPage = true;
   }
   //endregion
 

@@ -19,5 +19,5 @@ public class UserPhysicalAccountDto {
 
     private Date expiresAt;
 
-    private int accountId;
+    private int userId;
 }

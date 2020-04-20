@@ -5,6 +5,7 @@ import { APIRequestService } from '../shared/api-request.service';
 import { UserCredentials } from '../models/user.model';
 import {Md5} from "md5-typescript";
 import { AuthenticationService } from '../shared/authentication.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   
 
   constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService,
-     private _authenticationService: AuthenticationService) {}
+     private _authenticationService: AuthenticationService, private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.signinForm = new FormGroup({
@@ -29,12 +30,13 @@ export class LoginComponent implements OnInit {
 
 
   //region events
-  protected onSubmit() {
+  protected async onSubmit() {
     const userCredentials: UserCredentials = new UserCredentials();
     userCredentials.username = this.signinForm.value.email;
     userCredentials.password = Md5.init(this.signinForm.value.password);
-    this._authenticationService.login(userCredentials);
-    this.signinForm.reset();
+    this.spinner.show();
+    await this._authenticationService.login(userCredentials);
+    this.spinner.hide();
   }
 
   protected onCancel() {

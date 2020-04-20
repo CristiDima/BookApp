@@ -12,7 +12,6 @@ export class PagesRouting {
     }
 
     public LoginPage(): any {
-        console.log('test');
         return this._router.navigate(['login']);
     }
 
