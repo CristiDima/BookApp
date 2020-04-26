@@ -2,7 +2,9 @@ package com.cdlbookstore.cdlbookstore.service;
 
 import com.cdlbookstore.cdlbookstore.dto.UserPhysicalAccountDto;
 
+import java.util.Optional;
+
 public interface UserPhysicalAccountService {
-    UserPhysicalAccountDto getByUserId(int userId);
-    UserPhysicalAccountDto setUserOnlineAccountDto(int userId);
+    Optional<UserPhysicalAccountDto> getByUserId(int userId);
+    Optional<UserPhysicalAccountDto> setUserOnlineAccountDto(int userId);
 }

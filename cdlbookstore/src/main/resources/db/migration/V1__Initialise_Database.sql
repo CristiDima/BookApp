@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_credentials` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_online_account` (
   `id` INT NOT NULL,
   `is_valid` boolean NOT NULL,
-  `activated_at` date NOT NULL,
-  `expires_at` date NULL,
+  `activated_at` DATETIME NOT NULL,
+  `expires_at` DATETIME NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_online_account` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_physical_account` (
   `id` INT NOT NULL,
   `is_valid` boolean NOT NULL,
-  `activated_at` date NOT NULL,
-  `expires_at` date NULL,
+  `activated_at` DATETIME NOT NULL,
+  `expires_at` DATETIME NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_physical_account` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_session` (
   `id` INT NOT NULL,
   `token` VARCHAR(100) NOT NULL,
-  `created` date NOT NULL,
-  `is_valid` date NOT NULL,
+  `created` DATETIME NOT NULL,
+  `is_valid` boolean NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
@@ -137,8 +137,8 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`loaned_books` (
   `id` INT NOT NULL,
   `user_id` INT NOT NULL,
   `book_id` INT NOT NULL,
-  `loaned_at` DATE NOT NULL,
-  `date_to_return` DATE NOT NULL,
+  `loaned_at` DATETIME NOT NULL,
+  `date_to_return` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
   FOREIGN KEY (book_id) REFERENCES book(id));

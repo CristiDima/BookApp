@@ -12,8 +12,9 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary: /*#FFD700;*/ 	#ffffb3;
-$app-secondary: #595959;
+$app-primary: /*#FFD700;*/ 	#fae596;
+$app-secondary: #173e43;
+$background-color: #dddfd4;
 $app-accent:  mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -23,10 +24,28 @@ $app-warn:    mat-palette($mat-red);
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
 // Include theme styles for core and each component used in your app.
+body { 
+    margin: 0; 
+    padding: 0;
+} 
 
+html { background-color: $background-color; }
 
 .mat-card {
+    background-color: $app-primary;
     width: 500px;
+    mat-label {
+        color: $app-secondary;
+    }
+    mat-form-field {
+        color: $app-secondary;
+    }
+
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 0 3px 3px 0 $app-secondary, 
+                0 3px 3px 0 $app-secondary;
 }
 
 .form-group{
@@ -51,6 +70,35 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 .icon-button {
     color: $app-primary;
     background-color: $app-secondary;
+}
+
+.icon-card {
+    color: $app-primary;
+    background-color: $app-secondary;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+}
+
+.book-card {
+    width: 250px;
+    height: 200px;
+    background-color: $app-primary;
+    margin: 0.5em;
+    .book-card-content {
+        display: flow-root;
+    }
+}
+
+.small-book-card {
+    width: 250px;
+    height: 130px;
+    background-color: $app-primary;
+    margin: 0.5em;
+    .book-card-content {
+        margin: 0.2em;
+        display: flow-root;
+    }
 }
 
 .standard-button {

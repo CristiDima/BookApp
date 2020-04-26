@@ -1,27 +1,23 @@
 package com.cdlbookstore.cdlbookstore.service.impl;
 
 import com.cdlbookstore.cdlbookstore.dto.AddressDto;
+import com.cdlbookstore.cdlbookstore.dto.UserBookstoreDto;
 import com.cdlbookstore.cdlbookstore.dto.UserCredentialsDto;
-import com.cdlbookstore.cdlbookstore.dto.UserBooksterDto;
+import com.cdlbookstore.cdlbookstore.dto.UserSessionDto;
 import com.cdlbookstore.cdlbookstore.entities.Address;
+import com.cdlbookstore.cdlbookstore.entities.UserBookstore;
 import com.cdlbookstore.cdlbookstore.entities.UserCredentials;
-import com.cdlbookstore.cdlbookstore.entities.UserBookster;
 import com.cdlbookstore.cdlbookstore.entities.UserSession;
 import com.cdlbookstore.cdlbookstore.forms.LoginForm;
 import com.cdlbookstore.cdlbookstore.mapper.AddressMapper;
+import com.cdlbookstore.cdlbookstore.mapper.UserBookstoreMapper;
 import com.cdlbookstore.cdlbookstore.mapper.UserCredentialsMapper;
-import com.cdlbookstore.cdlbookstore.mapper.UserBooksterMapper;
 import com.cdlbookstore.cdlbookstore.mapper.UserSessionMapper;
 import com.cdlbookstore.cdlbookstore.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -33,7 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     AddressService addressService;
 
     @Autowired
-    UserBooksterService userBooksterService;
+    UserBookstoreService userBookstoreService;
 
     @Autowired
     EmailService emailService;
@@ -48,53 +44,62 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     AddressMapper addressMapper;
 
     @Autowired
-    UserBooksterMapper userBooksterMapper;
+    UserBookstoreMapper userBookstoreMapper;
 
     @Autowired
     UserSessionMapper userSessionMapper;
 
     @Override
-    public Map<String, Object> login(LoginForm loginForm) {
-        UserCredentialsDto userCredentialsDto =  userCredentialsService.getUserAccountByCredentials(loginForm);
+    public Optional<Map<String, Object>> login(LoginForm loginForm) {
+        UserCredentialsDto userCredentialsDto = userCredentialsService.getUserAccountByCredentials(loginForm);
         if (userCredentialsDto != null) {
             UUID token = UUID.randomUUID();
             UserSession userSession = new UserSession();
-            UserBooksterDto userBooksterDto = userBooksterService.getUserById(userCredentialsDto.getId());
-            AddressDto addressDto = addressService.getAddress(userBooksterDto.getId());
-            if (userBooksterDto != null) {
-                userSession.setUserId(userBooksterDto.getId());
+            UserBookstoreDto userBookstoreDto = userBookstoreService.getUserById(userCredentialsDto.getId()).orElse(null);
+            if (userBookstoreDto != null) {
+                userSession.setUserId(userBookstoreDto.getId());
                 userSession.setCreated(new Date());
                 userSession.setToken(token.toString());
                 userSessionService.saveUserSession(userSessionMapper.userSessionToUserSessionDto(userSession));
             }
 
             Map<String, Object> userDetails = new HashMap<String, Object>();
-            userDetails.put("user", userBooksterDto);
-            userDetails.put("address", addressDto);
+            userDetails.put("user", userBookstoreDto);
             userDetails.put("token", userSession.getToken());
-            return  userDetails;
+            return Optional.ofNullable(userDetails);
         }
-        return null;
+        return Optional.ofNullable(null);
     }
 
     @Override
-    public ResponseEntity signup(Map<String, String> userDetails) {
+    public Optional<UserSessionDto> logout(String token) {
+        UserSessionDto userSessionDto = userSessionService.findUserSessionByToken(token);
+        if (userSessionDto != null) {
+            userSessionDto.setValid(false);
+            userSessionService.updateUserSession(userSessionDto.isValid(), userSessionDto.getUserId());
+            return Optional.ofNullable(userSessionDto);
+        }
+        return Optional.ofNullable(null);
+    }
+
+    @Override
+    public Optional<Map<String, String>> signUp(Map<String, String> userDetails) {
         UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByEmail(userDetails.get("email"));
 
         if (userDetails.get("email") != null && userCredentialsDto != null) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("An account with this email address already exist");
+            return Optional.ofNullable(null);
         }
 
         if (userDetails.get("address") == null || userDetails.get("city") == null && userDetails.get("district") == null) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("User fields are empty");
+            return Optional.ofNullable(null);
         }
 
-        if(userDetails.get("firstname") == null || userDetails.get("lastname") == null || userDetails.get("phoneNumber") == null) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("User fields are empty");
+        if(userDetails.get("firstName") == null || userDetails.get("lastName") == null || userDetails.get("phoneNumber") == null) {
+            return Optional.ofNullable(null);
         }
 
         if(userDetails.get("email") == null || userDetails.get("password") == null) {
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("User fields are empty");
+            return Optional.ofNullable(null);
         }
 
         AddressDto addressDto = null;
@@ -104,34 +109,52 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         address.setDistrict(userDetails.get("district"));
         addressDto = addressService.saveAddress(addressMapper.addressToAddressDto(address));
 
-        UserBooksterDto userBooksterDto = null;
-        UserBookster userBookster = new UserBookster();
-        userBookster.setAdmin(false);
-        userBookster.setFirstName(userDetails.get("firstname"));
-        userBookster.setLastName(userDetails.get("lastname"));
-        userBookster.setPhoneNumber(userDetails.get("phoneNumber"));
-        userBookster.setAddressId(addressDto.getId());
-        userBooksterDto = userBooksterService.saveUser(userBooksterMapper.userBooksterToUserBooksterDto(userBookster));
+        UserBookstoreDto userBookstoreDto = null;
+        UserBookstore userBookstore = new UserBookstore();
+        userBookstore.setAdmin(false);
+        userBookstore.setFirstName(userDetails.get("firstName"));
+        userBookstore.setLastName(userDetails.get("lastName"));
+        userBookstore.setPhoneNumber(userDetails.get("phoneNumber"));
+        userBookstore.setAddressId(addressDto.getId());
+        userBookstoreDto = userBookstoreService.saveUser(userBookstoreMapper.userBookstoreToUserBookstoreDto(userBookstore));
 
         UserCredentials userCredentials = new UserCredentials();
-        userCredentials.setUserId(userBooksterDto.getId());
+        userCredentials.setUserId(userBookstoreDto.getId());
         userCredentials.setEmail(userDetails.get("email"));
         userCredentials.setPassword(userDetails.get("password"));
         userCredentialsService.saveUserAccountDetails(userCredentialsMapper.userCredentialsToUserCredentialsDto(userCredentials));
         emailService.sendCreateAccountEmail(userCredentials.getEmail());
-        return ResponseEntity.status(HttpStatus.CREATED).body("The account was created");
+        return Optional.ofNullable(userDetails);
     }
 
     @Override
-    public ResponseEntity resetPassword(String email) {
+    public Optional<String> resetPassword(String email) {
         UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByEmail(email);
 
         if (userCredentialsDto == null) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Is not any account with this email");
+            return Optional.ofNullable(null);
         }
 
         emailService.resetPasswordEmail(email);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("An email to reset your password was send to the email: " + email);
+        return Optional.ofNullable(email);
     }
+
+    @Override
+    public Optional<String> heartbeat(String token) {
+        UserSessionDto userSessionDto = userSessionService.findUserSessionByToken(token);
+        if (userSessionDto == null) {
+            return Optional.ofNullable(null);
+        }
+
+        if (userSessionDto.getCreated().before(new Date())) {
+            userSessionDto.setValid(false);
+            userSessionService.updateUserSession(userSessionDto.isValid(), userSessionDto.getUserId());
+            return Optional.ofNullable(null);
+        }
+
+        userSessionService.updateUserSession(new Date(), userSessionDto.getUserId());
+        return Optional.ofNullable(token);
+    }
+
 }

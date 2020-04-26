@@ -30,13 +30,11 @@ export class LoginComponent implements OnInit {
 
 
   //region events
-  protected async onSubmit() {
+  protected onSubmit() {
     const userCredentials: UserCredentials = new UserCredentials();
     userCredentials.username = this.signinForm.value.email;
     userCredentials.password = Md5.init(this.signinForm.value.password);
-    this.spinner.show();
-    await this._authenticationService.login(userCredentials);
-    this.spinner.hide();
+    this._authenticationService.login(userCredentials);
   }
 
   protected onCancel() {

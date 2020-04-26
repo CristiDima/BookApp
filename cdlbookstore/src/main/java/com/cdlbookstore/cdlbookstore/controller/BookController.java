@@ -3,6 +3,7 @@ package com.cdlbookstore.cdlbookstore.controller;
 import com.cdlbookstore.cdlbookstore.dto.BookDto;
 import com.cdlbookstore.cdlbookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,24 +16,25 @@ public class BookController {
 
 
     @PostMapping("/book")
-    public BookDto saveBook(@RequestBody BookDto bookDto)
+    public ResponseEntity<BookDto> saveBook(@RequestBody BookDto bookDto)
     {
-        bookService.saveBook(bookDto);
-        return bookDto;
+        return bookService.saveBook(bookDto)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/book")
-    public List<BookDto> getBooks()
+    public ResponseEntity<List<BookDto>> getBooks()
     {
-        List<BookDto> books = bookService.getBooks();
-        return books;
+        return bookService.getBooks()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/book/{id}")
-    private BookDto deleteGenre(@PathVariable("id") int id){
-        BookDto bookDto = this.bookService.getBookById(id);
-        this.bookService.deleteBook(bookDto);
-
-        return bookDto;
+    private ResponseEntity<BookDto> deleteGenre(@PathVariable("id") int id) {
+        return  this.bookService.deleteBook(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

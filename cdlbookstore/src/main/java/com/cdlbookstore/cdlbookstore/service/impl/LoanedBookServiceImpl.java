@@ -1,9 +1,7 @@
 package com.cdlbookstore.cdlbookstore.service.impl;
 
 import com.cdlbookstore.cdlbookstore.dto.BookDto;
-import com.cdlbookstore.cdlbookstore.entities.Book;
 import com.cdlbookstore.cdlbookstore.entities.LoanedBook;
-import com.cdlbookstore.cdlbookstore.mapper.LoanedBookMapper;
 import com.cdlbookstore.cdlbookstore.repositories.LoanedBookRepository;
 import com.cdlbookstore.cdlbookstore.service.BookService;
 import com.cdlbookstore.cdlbookstore.service.LoanedBookService;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LoanedBookServiceImpl implements LoanedBookService {
@@ -20,19 +19,16 @@ public class LoanedBookServiceImpl implements LoanedBookService {
     private LoanedBookRepository loanedBookRepository;
 
     @Autowired
-    private LoanedBookMapper loanedBookMapper;
-
-    @Autowired
     private BookService bookService;
 
     @Override
-    public List<BookDto> getLoannedBooks(int userId){
-        List<LoanedBook> loannedBooks = new ArrayList<>();
-        loanedBookRepository.findByUserId(userId).forEach(loannedBooks::add);
+    public Optional<List<BookDto>> getLoanedBooks(int userId){
+        List<LoanedBook> loanedBooks = new ArrayList<>();
+        loanedBookRepository.findByUserId(userId).forEach(loanedBooks::add);
         List<BookDto> books = new ArrayList<>();
-        loannedBooks.forEach(loanedBook ->
+        loanedBooks.forEach(loanedBook ->
             books.add(bookService.getBookById(loanedBook.getBookId()))
         );
-        return books;
+        return Optional.ofNullable(books);
     }
 }

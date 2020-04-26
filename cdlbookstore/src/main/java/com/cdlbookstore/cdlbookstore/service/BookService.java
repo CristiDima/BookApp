@@ -1,15 +1,14 @@
 package com.cdlbookstore.cdlbookstore.service;
 
 import com.cdlbookstore.cdlbookstore.dto.BookDto;
-import com.cdlbookstore.cdlbookstore.entities.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
 
     BookDto getBookById(int id);
-    List<BookDto> getBooks ();
-
-    void saveBook(BookDto bookDto);
-    void deleteBook (BookDto bookDto);
+    Optional<List<BookDto>> getBooks ();
+    Optional<BookDto> saveBook(BookDto bookDto);
+    Optional<BookDto> deleteBook (int id);
 }

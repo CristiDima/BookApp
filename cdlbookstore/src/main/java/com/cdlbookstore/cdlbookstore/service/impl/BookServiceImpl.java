@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -27,19 +28,22 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> getBooks() {
+    public Optional<List<BookDto>> getBooks() {
         List<Book> books = new ArrayList<>();
         bookRepository.findAll().forEach(books::add);
-        return bookMapper.bookDoBookDto(books);
+        return Optional.ofNullable(bookMapper.bookDoBookDto(books));
     }
 
     @Override
-    public void saveBook(BookDto bookDto) {
+    public Optional<BookDto> saveBook(BookDto bookDto) {
         bookRepository.save(bookMapper.bookDtoToBook(bookDto));
+        return Optional.ofNullable(bookDto);
     }
 
     @Override
-    public void deleteBook (BookDto bookDto){
+    public Optional<BookDto> deleteBook (int id) {
+        BookDto bookDto = getBookById(id);
         bookRepository.delete(bookMapper.bookDtoToBook(bookDto));
+        return Optional.ofNullable(bookDto);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserPhysicalAccountServiceImpl implements UserPhysicalAccountService {
@@ -21,18 +22,18 @@ public class UserPhysicalAccountServiceImpl implements UserPhysicalAccountServic
     UserPhysicalAccountMapper userPhysicalAccountMapper;
 
     @Override
-    public UserPhysicalAccountDto getByUserId(int userId) {
+    public  Optional<UserPhysicalAccountDto> getByUserId(int userId) {
         UserPhysicalAccount userPhysicalAccount = this.userPhysicalAccountRepository.findByUserId(userId);
         if (userPhysicalAccount != null && userPhysicalAccount.getExpiresAt() != null &&
                 userPhysicalAccount.getExpiresAt().before(new Date())) {
             userPhysicalAccount.setValid(false);
             userPhysicalAccountRepository.updateUserPhysicalAccount(userPhysicalAccount.isValid(), userId);
         }
-        return userPhysicalAccountMapper.userPhysicalAccountToUserPhysicalAccountDto(userPhysicalAccount);
+        return Optional.ofNullable(userPhysicalAccountMapper.userPhysicalAccountToUserPhysicalAccountDto(userPhysicalAccount));
     }
 
     @Override
-    public UserPhysicalAccountDto setUserOnlineAccountDto(int userId) {
+    public Optional<UserPhysicalAccountDto> setUserOnlineAccountDto(int userId) {
         UserPhysicalAccount userPhysicalAccount = this.userPhysicalAccountRepository.findByUserId(userId);
         Calendar c = Calendar.getInstance();
         Date date = c.getTime();
@@ -45,7 +46,7 @@ public class UserPhysicalAccountServiceImpl implements UserPhysicalAccountServic
             date = c.getTime();
             userPhysicalAccount.setExpiresAt(date);
             this.userPhysicalAccountRepository.save(userPhysicalAccount);
-            return userPhysicalAccountMapper.userPhysicalAccountToUserPhysicalAccountDto(userPhysicalAccount);
+            return Optional.ofNullable(userPhysicalAccountMapper.userPhysicalAccountToUserPhysicalAccountDto(userPhysicalAccount));
         } else {
             userPhysicalAccount.setActivatedAt(date);
             c.add(Calendar.DATE, 30);
@@ -54,7 +55,7 @@ public class UserPhysicalAccountServiceImpl implements UserPhysicalAccountServic
             userPhysicalAccount.setValid(true);
             userPhysicalAccountRepository.updateUserPhysicalAccount(userPhysicalAccount.getActivatedAt(), userPhysicalAccount.getExpiresAt(),
                     userPhysicalAccount.isValid(), userId);
-            return userPhysicalAccountMapper.userPhysicalAccountToUserPhysicalAccountDto(userPhysicalAccount);
+            return Optional.ofNullable(userPhysicalAccountMapper.userPhysicalAccountToUserPhysicalAccountDto(userPhysicalAccount));
         }
     }
 }

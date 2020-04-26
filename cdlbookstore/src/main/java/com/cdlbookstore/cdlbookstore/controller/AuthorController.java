@@ -3,6 +3,7 @@ package com.cdlbookstore.cdlbookstore.controller;
 import com.cdlbookstore.cdlbookstore.dto.AuthorDto;
 import com.cdlbookstore.cdlbookstore.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,23 +15,23 @@ public class AuthorController {
     private AuthorService authorService;
 
     @PostMapping("/author")
-    public AuthorDto saveAuthor(@RequestBody AuthorDto authorDto)
-    {
-        authorService.saveAuthor(authorDto);
-        return authorDto;
+    public ResponseEntity<AuthorDto> saveAuthor(@RequestBody AuthorDto authorDto) {
+        return authorService.saveAuthor(authorDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/author")
-    public List<AuthorDto> getAuthors()
-    {
-        List<AuthorDto> authors = authorService.getAuthors();
-        return authors;
+    public ResponseEntity<List<AuthorDto>> getAuthors() {
+        return authorService.getAuthors()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/author/{id}")
-    public AuthorDto deleteAuthor(@PathVariable("id") int id) {
-        AuthorDto authorDto = authorService.getAuthorById(id);
-        authorService.deleteAuthor(authorDto);
-        return authorDto;
+    public ResponseEntity<AuthorDto> deleteAuthor(@PathVariable("id") int id) {
+        return authorService.deleteAuthor(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

@@ -11,7 +11,6 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\AddressMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\repositories\OnlineBookRepository.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\UserCredentials.java
-D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\UserBooksterMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\UserCredentialsServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\repositories\UserPhysicalAccountRepository.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\LoanedBookMapper.java
@@ -20,11 +19,12 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\OnlineBookDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\AddressDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\Author.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\UserBookstoreMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\UserSessionDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\OnlineBookMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\Address.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\OnlineBook.java
-D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\repositories\UserBooksterRepository.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\UserBookstore.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\AuthorServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\WebConfig.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\CdlbookstoreApplication.java
@@ -32,7 +32,6 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\AuthorService.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\LoanedBookController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\UserSessionServiceImpl.java
-D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\TestController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\EmailServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\UserPhysicalAccountDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\BookServiceImpl.java
@@ -43,6 +42,7 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\UserPhysicalAccount.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\EmailService.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\AuthorDto.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\repositories\UserBookstoreRepository.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\UserOnlineAccountServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\AuthenticationService.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\BookMapper.java
@@ -52,17 +52,16 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\repositories\GenreRepository.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\repositories\LoanedBookRepository.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\GenreMapper.java
-D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\UserBooksterService.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\GenreController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\UserCredentialsMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\LoanedBook.java
-D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\UserBooksterServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\AuthenticationController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\UserPhysicalAccountMapper.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\UserBookstoreServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\repositories\BookRepository.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\UserOnlineAccountDto.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\UserBookstoreController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\UserOnlineAccount.java
-D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\UserBooksterDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\OnlineBookServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\LoanedBookService.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\OnlineBookController.java
@@ -70,9 +69,10 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\UserOnlineAccountController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\GenreDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\UserCredentialsService.java
-D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\UserBooksterController.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\UserBookstoreDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\AuthorMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\repositories\UserCredentialsRepository.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\UserBookstoreService.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\BookController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\UserSession.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\LoanedBookServiceImpl.java
@@ -80,5 +80,4 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\dto\LoanedBookDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\mapper\UserOnlineAccountMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\service\impl\AddressServiceImpl.java
-D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\entities\UserBookster.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\cdlbookstore\cdlbookstore\controller\AuthorController.java

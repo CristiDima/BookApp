@@ -2,44 +2,44 @@
     <app-header></app-header>
 </div>
 <div class="container" fxLayout fxLayoutAlign="center">
-    <img class="logo" src="assets/img/start_page.jpeg">
+    <slideshow [imageUrls]="imageUrlArray" [showArrows]="true" [autoPlay]="true" [showDots]="true" [arrowSize]="'15px'">
+        <p>“A reader lives a thousand lives before he dies . . . The man who never reads lives only one.” – George R.R. Martin</p>
+    </slideshow>
 </div>
-<div class="about-us" fxLayout fxLayoutAlign="center">
-    <div fxFlex="50%" class="card" fxLayoutAlign="center">
-        <mat-card>
+<div class="about-us" fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout fxLayout="row" *ngFor="let i of [1, 2, 3, 4, 5]">
+        <mat-card class="book-card">
             <mat-card-header>
-                <div mat-card-avatar></div>
-                <mat-card-title>Bookster</mat-card-title>
+                <button class="icon-card" mat-icon-button mat-card-avatar>
+                    <mat-icon>local_library</mat-icon>
+                </button>
+              <mat-card-title>The Idiot</mat-card-title>
+              <mat-card-subtitle>Fyodor Dostoievski</mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content>
-                <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
-                    a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, 
-                    remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing 
-                    Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions 
-                    of Lorem Ipsum.
-                </p>
-            </mat-card-content>
-        </mat-card>
+            <mat-card-content class="book-card-content">
+                <p> <b>Rating:</b> 9.7/10 </p>
+                <p> <b>Year:</b> 1980 </p>
+                <p> <b>Type:</b> Thriler</p>
+              </mat-card-content>
+            <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+              <button mat-button class="standard-button">Details</button>
+            </mat-card-actions>
+          </mat-card>
     </div>
-    <div fxFlex="50%" fxLayoutAlign="center" class="card">
-        <mat-card>
+</div>
+<div class="about-us" fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout fxLayout="row" *ngFor="let quote of famousQuotes">
+        <mat-card class="small-book-card">
             <mat-card-header>
-                <div mat-card-avatar></div>
-                <mat-card-title>Bookster</mat-card-title>
+                <button class="icon-card" mat-icon-button mat-card-avatar>
+                    <mat-icon>edit</mat-icon>
+                </button>
+              <mat-card-title>{{quote.author}}</mat-card-title>
             </mat-card-header>
-            <mat-card-content>
-                <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
-                a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, 
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing 
-                Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions 
-                of Lorem Ipsum.
-                </p>
-            </mat-card-content>
-        </mat-card>
+            <mat-card-content class="book-card-content">
+                <p>{{quote.quote}}</p>
+              </mat-card-content>
+          </mat-card>
     </div>
 </div>
 <div class="footer">

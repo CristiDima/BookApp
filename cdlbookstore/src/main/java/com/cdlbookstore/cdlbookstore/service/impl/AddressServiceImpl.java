@@ -8,6 +8,8 @@ import com.cdlbookstore.cdlbookstore.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AddressServiceImpl implements AddressService {
 
@@ -18,9 +20,9 @@ public class AddressServiceImpl implements AddressService {
     private AddressMapper addressMapper;
 
     @Override
-    public AddressDto getAddress(Integer id) {
-        Address address = addressRepository.findById(id).get();
-        return addressMapper.addressToAddressDto(address);
+    public Optional<AddressDto> getAddress(Integer id) {
+        Address address = addressRepository.findById(id).orElse(null);
+        return Optional.ofNullable(addressMapper.addressToAddressDto(address));
     }
 
     @Override

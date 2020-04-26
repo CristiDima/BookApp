@@ -29,21 +29,23 @@ export class DetailsComponent implements OnInit {
   }
 
   protected formReset(): void {
+    const firstName: string = this.userSessionService.user ? this.userSessionService.user.firstName : null;
+    const lastName: string = this.userSessionService.user ? this.userSessionService.user.lastName : null;
+    const email: string = this.userSessionService.user ? this.userSessionService.user.email : null;
+    const phoneNumber: number = this.userSessionService.user ? this.userSessionService.user.phoneNumber : null;
+    const address: string = this.userDetailsService.address ? this.userDetailsService.address.address : null;
+    const city: string = this.userDetailsService.address ? this.userDetailsService.address.city : null;
+    const district: string = this.userDetailsService.address ? this.userDetailsService.address.district : null;
+
     this.userInfoForm = new FormGroup({
-      'firstName': new FormControl({value: this.userSessionService.user.firstName, disabled: !this.isOnEditMode}, 
-                  [Validators.required]),
-      'lastName': new FormControl({value: this.userSessionService.user.lastName, disabled: !this.isOnEditMode},
-                  [Validators.required]),
-      'email': new FormControl({value: this.userSessionService.user.email, disabled: !this.isOnEditMode},
-                  [Validators.required, Validators.email]),
-      'phoneNumber': new FormControl({value: this.userSessionService.user.phoneNumber, disabled: !this.isOnEditMode},
-                  [Validators.required, Validators.pattern(this.phoneNumberRegex)]),
-      'address': new FormControl({value: this.userDetailsService.address.address, disabled: !this.isOnEditMode},
-                  [Validators.required]),
-      'city': new FormControl({value: this.userDetailsService.address.city, disabled: !this.isOnEditMode},
-                  [Validators.required]),
-      'district': new FormControl({value: this.userDetailsService.address.district, disabled: !this.isOnEditMode},
-                  [Validators.required])
+      'firstName': new FormControl({value: firstName, disabled: !this.isOnEditMode}, [Validators.required]),
+      'lastName': new FormControl({value: lastName, disabled: !this.isOnEditMode}, [Validators.required]),
+      'email': new FormControl({value: email, disabled: !this.isOnEditMode}, [Validators.required, Validators.email]),
+      'phoneNumber': new FormControl({value: phoneNumber, disabled: !this.isOnEditMode},
+                    [Validators.required, Validators.pattern(this.phoneNumberRegex)]),
+      'address': new FormControl({value: address, disabled: !this.isOnEditMode}, [Validators.required]),
+      'city': new FormControl({value: city, disabled: !this.isOnEditMode}, [Validators.required]),
+      'district': new FormControl({value: district, disabled: !this.isOnEditMode}, [Validators.required])
     });
   }
 
@@ -95,7 +97,7 @@ export class DetailsComponent implements OnInit {
     }, 
     error => {
       this.hasError = true;
-      this.errorMessage = error.error.message;
+      this.errorMessage = error.error;
       this.spinner.hide();
   });
   }

@@ -57,6 +57,8 @@ export class PaymentComponent implements OnInit {
         this.isOnlineSubscriptions = true;
       }
       this.spinner.hide();
+    }, error => {
+      
     });
   }
 
@@ -69,6 +71,8 @@ export class PaymentComponent implements OnInit {
         this.isPhysicalSubscriptions = true;
       }
       this.spinner.hide();
+    }, error => {
+      
     });
   }
   //endregion

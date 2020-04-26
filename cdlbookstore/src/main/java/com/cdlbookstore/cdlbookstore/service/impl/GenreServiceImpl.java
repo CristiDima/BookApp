@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -27,22 +28,24 @@ public class GenreServiceImpl implements GenreService {
     };
 
     @Override
-    public List<GenreDto> getGenres() {
+    public Optional<List<GenreDto>> getGenres() {
         List<Genre> genres = new ArrayList<>();
         genreRepository.findAll().forEach(genres::add);
 
-        return genreMapper.genreToGenreDto(genres);
+        return Optional.ofNullable(genreMapper.genreToGenreDto(genres));
     }
 
     @Override
-    public void saveGenre(GenreDto genreDto) {
-
+    public Optional<GenreDto> saveGenre(GenreDto genreDto) {
         genreRepository.save(genreMapper.genreDtoToGenre(genreDto));
+        return Optional.ofNullable(genreDto);
     }
 
     @Override
-    public void deleteGenre(GenreDto genreDto) {
-
+    public Optional<GenreDto> deleteGenre(int id) {
+        GenreDto genreDto = getGenreById(id);
         genreRepository.delete(genreMapper.genreDtoToGenre(genreDto));
+
+        return Optional.ofNullable(genreDto);
     }
 }

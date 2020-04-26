@@ -29,22 +29,23 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorDto> getAuthors() {
+    public Optional<List<AuthorDto>> getAuthors() {
         List<Author> authors = new ArrayList<>();
         authorRepository.findAll().forEach(authors::add);
-        return authorMapper.authorToAuthorDto(authors);
+        return Optional.ofNullable(authorMapper.authorToAuthorDto(authors));
     }
 
     @Override
-    public void saveAuthor(AuthorDto authorDto) {
-
+    public Optional<AuthorDto> saveAuthor(AuthorDto authorDto) {
         authorRepository.save(authorMapper.authorDtoToAuthor(authorDto));
+        return Optional.ofNullable(authorDto);
     }
 
     @Override
-    public void deleteAuthor(AuthorDto authorDto){
-
+    public Optional<AuthorDto> deleteAuthor(int id){
+        AuthorDto authorDto = getAuthorById(id);
         authorRepository.delete(authorMapper.authorDtoToAuthor(authorDto));
+        return Optional.ofNullable(authorDto);
     }
 
 

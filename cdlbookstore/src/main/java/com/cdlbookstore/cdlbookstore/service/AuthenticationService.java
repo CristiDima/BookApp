@@ -1,14 +1,16 @@
 package com.cdlbookstore.cdlbookstore.service;
 
-import com.cdlbookstore.cdlbookstore.dto.UserBooksterDto;
+import com.cdlbookstore.cdlbookstore.dto.UserSessionDto;
 import com.cdlbookstore.cdlbookstore.forms.LoginForm;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Map;
+import java.util.Optional;
 
 public interface AuthenticationService {
 
-    Map<String, Object> login(LoginForm loginForm);
-    ResponseEntity signup(Map<String, String> userDetails);
-    ResponseEntity resetPassword(String email);
+    Optional<Map<String, Object>> login(LoginForm loginForm);
+    Optional<UserSessionDto> logout(String token);
+    Optional<Map<String, String>> signUp(Map<String, String> userDetails);
+    Optional<String> resetPassword(String email);
+    Optional<String> heartbeat(String token);
 }

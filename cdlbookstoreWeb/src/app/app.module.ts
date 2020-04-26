@@ -29,6 +29,7 @@ import { NewPasswordComponent } from './login/new-password/new-password.componen
 import { ProfileModule } from './profile/profile.module';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { UserDetailsService } from './shared/user-details.service';
+import {SlideshowModule} from 'ng-simple-slideshow';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { UserDetailsService } from './shared/user-details.service';
     HttpClientModule,
     AdminModule,
     ProfileModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    SlideshowModule
   ],
   providers: [PagesRouting, APIRequestService, PathRequestService, UserDetailsService,
               AuthorService, BookService, GenreService, AuthenticationService,

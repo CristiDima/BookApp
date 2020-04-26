@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserOnlineAccountServiceImpl implements UserOnlineAccountService {
@@ -21,17 +22,18 @@ public class UserOnlineAccountServiceImpl implements UserOnlineAccountService {
     UserOnlineAccountMapper userOnlineAccountMapper;
 
     @Override
-    public UserOnlineAccountDto getByUserId(int userId) {
+    public Optional<UserOnlineAccountDto> getByUserId(int userId) {
         UserOnlineAccount userOnlineAccount = this.userOnlineAccountRepository.findByUserId(userId);
-        if (userOnlineAccount != null && userOnlineAccount.getExpiresAt() != null && userOnlineAccount.getExpiresAt().before(new Date())) {
+        if (userOnlineAccount != null && userOnlineAccount.getExpiresAt() != null &&
+                userOnlineAccount.getExpiresAt().before(new Date())) {
             userOnlineAccount.setValid(false);
             userOnlineAccountRepository.updateUserOnlineAccount(userOnlineAccount.isValid(), userId);
         }
-        return userOnlineAccountMapper.userOnlineAccountToUserOnlineAccountDto(userOnlineAccount);
+        return Optional.ofNullable(userOnlineAccountMapper.userOnlineAccountToUserOnlineAccountDto(userOnlineAccount));
     }
 
     @Override
-    public UserOnlineAccountDto setUserOnlineAccountDto(int userId) {
+    public Optional<UserOnlineAccountDto> setUserOnlineAccountDto(int userId) {
         UserOnlineAccount userOnlineAccount = this.userOnlineAccountRepository.findByUserId(userId);
         Calendar c = Calendar.getInstance();
         Date date = c.getTime();
@@ -44,7 +46,7 @@ public class UserOnlineAccountServiceImpl implements UserOnlineAccountService {
             date = c.getTime();
             userOnlineAccount.setExpiresAt(date);
             this.userOnlineAccountRepository.save(userOnlineAccount);
-            return userOnlineAccountMapper.userOnlineAccountToUserOnlineAccountDto(userOnlineAccount);
+            return Optional.ofNullable(userOnlineAccountMapper.userOnlineAccountToUserOnlineAccountDto(userOnlineAccount));
         } else {
             userOnlineAccount.setActivatedAt(date);
             c.add(Calendar.DATE, 30);
@@ -53,7 +55,7 @@ public class UserOnlineAccountServiceImpl implements UserOnlineAccountService {
             userOnlineAccount.setValid(true);
             userOnlineAccountRepository.updateUserOnlineAccount(userOnlineAccount.getActivatedAt(), userOnlineAccount.getExpiresAt(),
                     userOnlineAccount.isValid(), userId);
-            return userOnlineAccountMapper.userOnlineAccountToUserOnlineAccountDto(userOnlineAccount);
+            return Optional.ofNullable(userOnlineAccountMapper.userOnlineAccountToUserOnlineAccountDto(userOnlineAccount));
         }
     }
 }

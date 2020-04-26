@@ -5,6 +5,7 @@ import { Book } from '../models/book.model';
 import { PathRequestService } from './path-request.service';
 import { APIRequestService } from './api-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { error } from 'protractor';
 
 @Injectable()
 export class UserDetailsService {
@@ -66,6 +67,11 @@ export class UserDetailsService {
             }
             this.spinner.hide();
             this.isUserOnlineSubscriptionRequestFinish = true;
+        }, error => {
+            if (error.error === null) {
+                this.isUserOnlineSubscriptionRequestFinish = true;
+            }
+            this.spinner.hide();
         });
     }
 
@@ -77,17 +83,24 @@ export class UserDetailsService {
             }
             this.spinner.hide();
             this.isUserPhysicalSubscriptionRequestFinish = true;
+        }, error => {
+            if (error.error === null) {
+                this.isUserPhysicalSubscriptionRequestFinish = true;
+            }
+            this.spinner.hide();
         });
     }
 
     private getLoannedBooksRequest(userId: number): void {
         this.spinner.show();
-        this.apiRequest.requst('GET', this.pathRequest.loannedBookPath + '/' + userId).subscribe((responseData: Book[]) => {
+        this.apiRequest.requst('GET', this.pathRequest.loanedBookPath + '/' + userId).subscribe((responseData: Book[]) => {
             if (responseData) {
                 this.loannedBooks = responseData;
             }
             this.spinner.hide();
             this.isLoannedBooksRequestFinish = true;
+        }, error => {
+            this.spinner.hide();
         });
     }
 
@@ -109,6 +122,8 @@ export class UserDetailsService {
                 this.readList = responseData;
             }
             this.spinner.hide();
+        }, error => {
+            this.spinner.hide();
         });
     }
 
@@ -120,6 +135,8 @@ export class UserDetailsService {
             }
             this.spinner.hide();
             this.isAddressRequestFinish = true;
+        }, error => {
+            this.spinner.hide();
         });
     }
     //endregion
