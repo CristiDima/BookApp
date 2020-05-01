@@ -15,6 +15,8 @@ import { AddGenreComponent } from './admin/type-actions/add-genre/add-genre.comp
 import { DeleteGenreComponent } from './admin/type-actions/delete-genre/delete-genre.component';
 import { AdminGuard } from './guards/admin-guard.service';
 import { ResetPasswordComponent } from './login/resetPassword/reset-password.component';
+import { NewPasswordComponent } from './login/new-password/new-password.component';
+import { ResetPassGuard } from './guards/reset-pass-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -22,6 +24,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'new-password', canActivate: [ResetPassGuard], component: NewPasswordComponent},
   { path: 'books',   canActivate: [AuthGuard], component: BooksComponent},
   { path: 'account',   canActivate: [AuthGuard], component: ProfileComponent},
   {

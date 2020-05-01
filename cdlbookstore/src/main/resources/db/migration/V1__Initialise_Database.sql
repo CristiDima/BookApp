@@ -22,13 +22,24 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (address_id) REFERENCES address(id));
 
-  -- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Table `cdlstore`.`user_credentials`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_credentials` (
   `id` INT NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
+
+-- -----------------------------------------------------
+-- Table `cdlstore`.`user_reset_password`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_reset_password` (
+  `id` INT NOT NULL,
+  `token` VARCHAR(100) NOT NULL,
+  `expires_at` DATETIME NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));

@@ -5,18 +5,20 @@ import { PathRequestService } from './path-request.service';
 import { UserSessionService } from './user-session.service';
 import { PagesRouting } from './pages-routing.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { interval } from 'rxjs';
+import { interval, Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class AuthenticationService {
     
     public lastMouseMove: Date = new Date();
-    private incorrectCredentials: boolean = false;
-    
+    public isValidResponse: boolean = false;
 
     constructor(private apiRequest: APIRequestService, private pathRequest: PathRequestService,
                 private userSessionService: UserSessionService, private _pagesRouting: PagesRouting,
-                private spinner: NgxSpinnerService) {
+                private spinner: NgxSpinnerService, private toastr: ToastrService,
+                private route: ActivatedRoute) {
       interval(30000).subscribe(() => { // will execute every 30 seconds
         this.heartbeat()
       });
@@ -24,6 +26,7 @@ export class AuthenticationService {
 
     //login region
     public login(userCredentials: UserCredentials): void {
+      const msg: string = 'Email or password are incorrect';
        this.spinner.show();
         this.apiRequest.requst('POST', this.pathRequest.loginPath, userCredentials).subscribe((responseData: Map<string, any>) => {
             if (responseData) {
@@ -41,15 +44,15 @@ export class AuthenticationService {
                     'token': this.userSessionService.userSession.token, 
                     'tokenExpirationDate': tokenExpirationDate}
                 this.setLocalStorageValue('currentUser', currentUser);
-                this.incorrectCredentials = false;
+                
               }
 
             } else {
-              this.incorrectCredentials = true;
+              this.toastr.error(msg);
             }
             this.spinner.hide();
         }, error => {
-          this.incorrectCredentials = true;
+          this.toastr.error(msg);
           this.spinner.hide();
         });
     }
@@ -67,22 +70,48 @@ export class AuthenticationService {
     }
 
     public resetPassword(email: string): void {
+      const errorMsg: string = 'Email address is invalid, please try again';
+      const successMsg: string = 'An email to reset your password was send';
       this.spinner.show();
-      this.apiRequest.requst('POST', this.pathRequest.resetPasswordPath, email).subscribe((responseDate: string) => {
-
+      this.apiRequest.requst('POST', this.pathRequest.resetPasswordPath, email).subscribe((responseData: string) => {
         this.spinner.hide();
+        if (responseData) {
+          this.toastr.error(successMsg);
+        } else {
+          this.toastr.error(errorMsg);
+          this.isValidResponse = false;
+        }
       }, error => {
         this.spinner.hide();
+        this.toastr.error(errorMsg);
       });
     }
 
     public changePassword(password: string): void {
       this.spinner.show();
-      this.apiRequest.requst('PUT', this.pathRequest.changePasswordPath, password).subscribe((responseDate: string) => {
-
+      const successMsg: string = 'Your password was changed';
+      const errorMsg: string = 'An error occured, your password was not changed, please try again';
+      let id: number = null;
+      this.route.queryParams.subscribe(params => {
+        id = params.id;
+    });
+      const userDetails: Map<string, any> = new Map<string, any>();
+      userDetails.set('password', password);
+      userDetails.set('userId', id);
+      const convMap = {};
+      userDetails.forEach((val: string, key: string) => {
+        convMap[key] = val;
+      });
+      this.apiRequest.requst('PUT', this.pathRequest.changePasswordPath, convMap).subscribe((responseDate: string) => {
+        if (responseDate) {
+          this.toastr.success(successMsg);
+        } else {
+          this.toastr.error(errorMsg);
+        }
         this.spinner.hide();
       }, error => {
         this.spinner.hide();
+        this.toastr.error(errorMsg);
       });
     }
 
@@ -99,7 +128,6 @@ export class AuthenticationService {
         if (this.lastMouseMove.toUTCString() < new Date().toUTCString()) {
           this.logout();
         } else {
-          console.log('extend session');
           this.apiRequest.heartbeat();
         }
       } 
@@ -112,10 +140,14 @@ export class AuthenticationService {
             (resolve, reject) => {
               setTimeout(() => {
                 resolve(this.userSessionService.isLoggedIn());
-              }, 800);
+              });
             }
           );
           return promise;
+    }
+
+    public canResetPassword(token: string, userId: number): Observable<boolean> {
+      return this.apiRequest.requst('GET', this.pathRequest.resetPasswordPath + '/' + userId + '/' + token);
     }
 
     public isAdmin(): Promise<boolean> {
@@ -123,7 +155,7 @@ export class AuthenticationService {
           (resolve, reject) => {
             setTimeout(() => {
               resolve(this.userSessionService.isAdmin());
-            }, 800);
+            });
           }
         );
         return promise;

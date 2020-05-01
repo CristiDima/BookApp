@@ -1,13 +1,7 @@
 package com.cdlbookstore.cdlbookstore.service.impl;
 
-import com.cdlbookstore.cdlbookstore.dto.AddressDto;
-import com.cdlbookstore.cdlbookstore.dto.UserBookstoreDto;
-import com.cdlbookstore.cdlbookstore.dto.UserCredentialsDto;
-import com.cdlbookstore.cdlbookstore.dto.UserSessionDto;
-import com.cdlbookstore.cdlbookstore.entities.Address;
-import com.cdlbookstore.cdlbookstore.entities.UserBookstore;
-import com.cdlbookstore.cdlbookstore.entities.UserCredentials;
-import com.cdlbookstore.cdlbookstore.entities.UserSession;
+import com.cdlbookstore.cdlbookstore.dto.*;
+import com.cdlbookstore.cdlbookstore.entities.*;
 import com.cdlbookstore.cdlbookstore.forms.LoginForm;
 import com.cdlbookstore.cdlbookstore.mapper.AddressMapper;
 import com.cdlbookstore.cdlbookstore.mapper.UserBookstoreMapper;
@@ -36,6 +30,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     UserSessionService userSessionService;
+
+    @Autowired
+    UserResetPasswordService userResetPasswordService;
 
     @Autowired
     UserCredentialsMapper userCredentialsMapper;
@@ -135,9 +132,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return Optional.ofNullable(null);
         }
 
-        emailService.resetPasswordEmail(email);
+        UserBookstoreDto userBookstoreDto = userBookstoreService.getUserById(userCredentialsDto.getUserId()).orElse(null);
+        UserResetPasswordDto userResetPasswordDto = userResetPasswordService.setResetPassToken(userBookstoreDto.getId());
+        String link = "http://localhost:4200/new-password" + "?token=" + userResetPasswordDto.getToken() +
+                "&id=" + userBookstoreDto.getId();
+        emailService.resetPasswordEmail(email, userBookstoreDto.getLastName(), link);
 
-        return Optional.ofNullable(email);
+        return Optional.ofNullable(userCredentialsDto.getEmail());
     }
 
     @Override
@@ -155,6 +156,34 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         userSessionService.updateUserSession(new Date(), userSessionDto.getUserId());
         return Optional.ofNullable(token);
+    }
+
+    @Override
+    public Optional<Boolean> isTokenValid(int userId, String token) {
+        UserResetPasswordDto userResetPasswordDto = userResetPasswordService.getResetPassToken(userId, token);
+
+        if (userResetPasswordDto.getExpiresAt().after(new Date())) {
+            return Optional.ofNullable(true);
+        }
+
+        return Optional.ofNullable(true);
+    }
+
+    @Override
+    public Optional<Boolean> changePassword(Map<String, Object> userDetails) {
+        if (userDetails == null || userDetails.get("password") == null || userDetails.get("userId") == null) {
+            return Optional.ofNullable(false);
+        }
+
+        int userId = Integer.parseInt((String) userDetails.get("userId"));
+        String password = (String) userDetails.get("password");
+        UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByUserId(userId);
+        if (userCredentialsDto == null) {
+            Optional.ofNullable(false);
+        }
+        userCredentialsDto.setPassword(password);
+        userCredentialsService.updatePasswordByUserId(userCredentialsDto.getPassword(), userCredentialsDto.getUserId());
+        return Optional.ofNullable(true);
     }
 
 }

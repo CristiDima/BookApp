@@ -9,6 +9,9 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
+// regular style toast 
+@import '~ngx-toastr/toastr';
+
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
@@ -116,6 +119,10 @@ html { background-color: $background-color; }
     background-color: #000000;
 }
 
+button.mat-menu-item:hover {
+    background-color: #000000 !important;
+}
+
 .large-button {
     color: $app-primary;
     background-color: $app-secondary;
@@ -130,3 +137,9 @@ html { background-color: $background-color; }
     color: $app-primary;
     background-color: #000000;
 }
+
+// mat-form-field.ng-invalid.ng-touched {
+//     border: 0px solid red;
+//     margin: 0%;
+//     padding: 0%;
+// }

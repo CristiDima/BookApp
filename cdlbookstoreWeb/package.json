@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^8.2.4",
+    "@angular/animations": "^8.2.14",
     "@angular/cdk": "^8.1.4",
     "@angular/common": "~8.2.3",
     "@angular/compiler": "~8.2.3",
@@ -27,6 +27,7 @@
     "md5-typescript": "^1.0.5",
     "ng-simple-slideshow": "^1.2.9",
     "ngx-spinner": "^9.0.2",
+    "ngx-toastr": "^12.0.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
@@ -51,6 +52,6 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "^3.4.5"
   }
 }

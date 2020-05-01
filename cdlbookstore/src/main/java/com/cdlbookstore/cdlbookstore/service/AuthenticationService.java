@@ -13,4 +13,6 @@ public interface AuthenticationService {
     Optional<Map<String, String>> signUp(Map<String, String> userDetails);
     Optional<String> resetPassword(String email);
     Optional<String> heartbeat(String token);
+    Optional<Boolean> isTokenValid(int userId, String token);
+    Optional<Boolean> changePassword(Map<String, Object> userDetails);
 }

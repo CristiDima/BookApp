@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PagesRouting } from 'src/app/shared/pages-routing.service';
-import { APIRequestService } from 'src/app/shared/api-request.service';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
-import { PathRequestService } from 'src/app/shared/path-request.service';
 import { Md5 } from 'md5-typescript';
+import { CustomValidatorService } from 'src/app/validators/custom-validator.service';
 
 @Component({
   selector: 'app-new-password',
@@ -15,19 +14,24 @@ export class NewPasswordComponent implements OnInit {
 
   protected changePassword: FormGroup = null;
 
-  constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService,
-              private _pathRequest: PathRequestService, private _authenticationService: AuthenticationService) {}
+  constructor(private _pagesRouting: PagesRouting, private _authenticationService: AuthenticationService,
+              private customValidatorsService: CustomValidatorService) {}
 
   ngOnInit() {
     this.changePassword = new FormGroup({
         'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
         'repeatPassword': new FormControl(null, [Validators.required, Validators.minLength(6)])
+    }, {
+      validators: [
+        this.customValidatorsService.passwordsMatch('password', 'repeatPassword'),
+      ]
     });
   }
 
   protected onSubmit() {
       const password: string = Md5.init(this.changePassword.controls.password.value);
-      this._authenticationService.resetPassword(password);
+      this.changePassword.reset()
+      this._authenticationService.changePassword(password);
   }
 
   public onCancel() {

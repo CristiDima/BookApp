@@ -30,6 +30,8 @@ import { ProfileModule } from './profile/profile.module';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { UserDetailsService } from './shared/user-details.service';
 import {SlideshowModule} from 'ng-simple-slideshow';
+import { ResetPassGuard } from './guards/reset-pass-guard.service';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -52,11 +54,15 @@ import {SlideshowModule} from 'ng-simple-slideshow';
     AdminModule,
     ProfileModule,
     NgxSpinnerModule,
-    SlideshowModule
+    SlideshowModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true
+    }),
   ],
   providers: [PagesRouting, APIRequestService, PathRequestService, UserDetailsService,
               AuthorService, BookService, GenreService, AuthenticationService,
-              UserSessionService, AuthGuard, AdminGuard, CustomValidatorService],
+              UserSessionService, AuthGuard, AdminGuard, CustomValidatorService, ResetPassGuard],
   bootstrap: [AppComponent, 
     HomePageComponent,
     LoginComponent]

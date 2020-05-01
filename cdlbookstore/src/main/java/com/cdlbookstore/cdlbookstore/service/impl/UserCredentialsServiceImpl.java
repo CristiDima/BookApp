@@ -32,6 +32,12 @@ public class UserCredentialsServiceImpl implements UserCredentialsService {
     }
 
     @Override
+    public UserCredentialsDto findUserByUserId(int userId) {
+        UserCredentials userCredentials = userCredentialsRepository.findByUserId(userId);
+        return userCredentialsMapper.userCredentialsToUserCredentialsDto(userCredentials);
+    }
+
+    @Override
     public void saveUserAccountDetails(UserCredentialsDto userCredentialsDto) {
         userCredentialsRepository.save(userCredentialsMapper.UserCredentialsDtoToUserCredentials(userCredentialsDto));
     }

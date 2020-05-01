@@ -16,6 +16,8 @@ public interface UserCredentialsRepository extends CrudRepository<UserCredential
 
     UserCredentials findByEmail(String email);
 
+    UserCredentials findByUserId(int userId);
+
     @Transactional
     @Modifying
     @Query("update UserCredentials u set u.email = ?1 where u.id = ?2")

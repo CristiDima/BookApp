@@ -5,10 +5,7 @@ import com.cdlbookstore.cdlbookstore.forms.LoginForm;
 import com.cdlbookstore.cdlbookstore.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -42,6 +39,20 @@ public class AuthenticationController {
     @PostMapping("/resetPassword")
     private ResponseEntity<String> resetPassword(@RequestBody String email) {
         return authenticationService.resetPassword(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/resetPassword/{id}/{token}")
+    private ResponseEntity<Boolean> resetPassword(@PathVariable int id, @PathVariable String token) {
+        return authenticationService.isTokenValid(id, token)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/changePassword")
+    private ResponseEntity<Boolean> changePassword(@RequestBody Map<String, Object> userDetails) {
+        return authenticationService.changePassword(userDetails)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

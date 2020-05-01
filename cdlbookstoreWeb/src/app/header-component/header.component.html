@@ -16,7 +16,7 @@
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAdminPage()">Admin</button>
-                <button *ngIf="isLoggedId()"mat-menu-item class="standard-button" (click)="onBooksPage()">Books</button>
+                <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onBooksPage()">Books</button>
                 <button *ngIf="!isLoggedId()" mat-menu-item class="standard-button" (click)="onLogin()">Log in</button>
                 <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onLogout()">Log out</button>
                 <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>
