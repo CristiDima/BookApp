@@ -1,23 +1,31 @@
+@import "src/styles.scss";
+
 .container {
     margin-top: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .admin {
-        margin: 2em;
-        display: flow-root;
+    .signup {
+        margin: 0.5em;
     }
 
     .standard-button {
-        color: #FFD700;
-        background-color: #000000;
-        margin: 1em;
-        width: 120px;
+        margin-left: 0.2em;
+        margin-right: 0.2em;
     }
 
-    .standard-button:disabled {
-        color: #FFD700;
-        background-color: #A9A9A9;
+    .large-button:disabled {
+        color: $app-primary;
+        background-color: #d9d9d9;
     }
+
+    .mat-card-content > :first-child, .mat-card > :first-child {
+        margin-top: 1em;
+    }
+
+    .mat-card-content > :last-child:not(.mat-card-footer), .mat-card > :last-child:not(.mat-card-footer) {
+        margin-bottom: 1em;
+    }
+
 }

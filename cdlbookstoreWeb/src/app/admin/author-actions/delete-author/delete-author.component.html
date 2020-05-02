@@ -1,5 +1,5 @@
 <form [formGroup]="deleteAuthorForm" (ngSubmit)="onSubmit()">
-    <div fxLayout fxLayout="column" fxLayoutAlign="center">
+    <div fxLayout fxLayout="column" class="mat-form-group">
         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
             <mat-label for="authorname">Author name:*</mat-label>
             <mat-select formControlName="authorName" class="form-control">
@@ -8,8 +8,8 @@
         </mat-form-field>
     </div>
     <hr>
-    <div fxLayout="row" fxLayoutAlign="center">
-        <button [disabled]="!deleteAuthorForm.valid" class="save-button" mat-raised-button type="submit">Save</button>
-        <button [disabled]="!deleteAuthorForm.valid" class="save-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
+    <div fxLayout="row" class="mat-form-group">
+        <button [disabled]="!deleteAuthorForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
+        <button [disabled]="!deleteAuthorForm.valid" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
     </div>
 </form>

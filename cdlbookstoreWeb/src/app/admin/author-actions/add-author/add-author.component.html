@@ -1,47 +1,44 @@
-<div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
-    <div fxFlex="100%" class="add-author" fxLayoutAlign="center">
-        <mat-card>
-            <mat-card-header>
-                <div mat-card-avatar></div>
-                <mat-card-title *ngIf="isOnAddPageMode">Add new author</mat-card-title>
-                <mat-card-title *ngIf="!isOnAddPageMode">Delete author</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="addAuthorForm" (ngSubmit)="onSubmit()" *ngIf="isOnAddPageMode">
-                    <div fxLayout fxLayout="column" fxLayoutAlign="center">
-                        <div fxLayout="row" fxLayoutAlign="center">
-                            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="description">Author name:*</mat-label>
-                                <input matInput formControlName="authorname" class="form-control">
-                                <mat-error *ngIf="hasValue">This author was already added</mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="center">
-                            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="description">Description:*</mat-label>
-                                <input matInput formControlName="description" class="form-control">
-                            </mat-form-field>
-                        </div>
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title *ngIf="isOnAddPageMode">Add new author</mat-card-title>
+            <mat-card-title *ngIf="!isOnAddPageMode">Delete author</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="addAuthorForm" (ngSubmit)="onSubmit()" *ngIf="isOnAddPageMode">
+                <div fxLayout fxLayout="column" fxLayoutAlign="center">
+                    <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+                        <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                            <mat-label for="description">Author name:*</mat-label>
+                            <input matInput formControlName="authorname" class="form-control">
+                            <mat-error *ngIf="hasValue">This author was already added</mat-error>
+                        </mat-form-field>
                     </div>
-                    <hr>
-                    <div fxLayout="row" fxLayoutAlign="center">
-                        <button [disabled]="!addAuthorForm.valid" class="save-button" mat-raised-button type="submit">Save</button>
-                        <button [disabled]="!addAuthorForm.valid" class="save-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
+                    <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+                        <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                            <mat-label for="description">Description:*</mat-label>
+                            <textarea matInput formControlName="description" class="form-control"></textarea>
+                        </mat-form-field>
                     </div>
-                </form>
-                <div *ngIf="isOnRemovePageMode">
-                    <app-delete-author [isOnAddPageMode]="isOnAddPageMode" [isOnRemovePageMode]="isOnRemovePageMode"></app-delete-author>
                 </div>
                 <hr>
-                <div class="mode" fxLayout fxLayout="column" fxLayoutAlign="center" >
-                    <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="mode-button" mat-raised-button (click)="onChangeMode()">
-                            <span *ngIf="isOnAddPageMode">Delete</span>
-                            <span *ngIf="!isOnAddPageMode">Add</span>
-                        </button>
-                    </div>
+                <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+                    <button [disabled]="!addAuthorForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
+                    <button [disabled]="!addAuthorForm.valid" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
                 </div>
-            </mat-card-content>
-        </mat-card>
-    </div>
+            </form>
+            <div *ngIf="isOnRemovePageMode">
+                <app-delete-author [isOnAddPageMode]="isOnAddPageMode" [isOnRemovePageMode]="isOnRemovePageMode"></app-delete-author>
+            </div>
+            <hr>
+            <div fxLayout fxLayout="column" fxLayoutAlign="center" class="mat-form-group">
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <button class="standard-button" mat-raised-button (click)="onChangeMode()">
+                        <span *ngIf="isOnAddPageMode">Delete</span>
+                        <span *ngIf="!isOnAddPageMode">Add</span>
+                    </button>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>

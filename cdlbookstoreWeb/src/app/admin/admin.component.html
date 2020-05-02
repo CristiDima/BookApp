@@ -1,15 +1,19 @@
 <div class="header">
     <app-header></app-header>
 </div>
-<div class="container" fxLayout fxLayout="row" fxLayoutAlign="center" fxFlex="50%">
+<div class="container">
     <div >
-        <button class="standard-button" [disabled]="isBookAction" mat-raised-button (click)="onChangeBookAction()">Add book</button>
-        <button class="standard-button" [disabled]="isAuthorAction" mat-raised-button (click)="onChangeAuthorAction()">Add author</button>
-        <button class="standard-button" [disabled]="isGenreAction" mat-raised-button (click)="onChangeGenreAction()">Add type</button>
-    
-        <app-add-book *ngIf="isBookAction"></app-add-book>
-        <app-add-author *ngIf="isAuthorAction"></app-add-author>
-        <app-add-genre *ngIf="isGenreAction"></app-add-genre>
+        <mat-tab-group class="mat-tab-group" (selectedTabChange)="onMatTabChange($event)">
+            <mat-tab class="mat-tab" label="Book">
+                <app-add-book></app-add-book>
+            </mat-tab>
+            <mat-tab label="Author">
+                <app-add-author></app-add-author>
+            </mat-tab>
+            <mat-tab label="Genre">
+                <app-add-genre></app-add-genre>
+            </mat-tab>
+          </mat-tab-group>
     </div>
 </div>
 <div class="footer">

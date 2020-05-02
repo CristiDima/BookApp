@@ -1,38 +1,18 @@
+@import "src/styles.scss";
+
 .container {
-    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
 
-    .required-field {
-        padding: 0%;
-        margin: 0%;
-    } 
-
-    .add-type {
-        margin: 2em;
-        display: flow-root;
+    .standard-button {
+        margin-left: 0.2em;
+        margin-right: 0.2em;
     }
 
-    .form-group{
-        width: 100%;
-    }
-
-    .save-button {
-        color: #FFD700;
-        background-color: #000000;
-        margin: 1em;
-        width: 100px;
-    }
-    .save-button:disabled {
-        color: #FFD700;
-        background-color: #707B7C ;
-    }
-}
-
-.mode {
-    bottom: 80px;
-    .mode-button {
-        color: #FFD700;
-        background-color: #000000;
-        margin: 1em;
-        width: 120px;
+    .standard-button:disabled {
+        color: $app-secondary;
+        background-color: $background-color;
     }
 }

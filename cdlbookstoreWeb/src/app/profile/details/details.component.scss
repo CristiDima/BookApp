@@ -6,18 +6,13 @@
     justify-content: center;
     margin: 1em;
 
-    .required-field {
-        padding: 0%;
-        margin: 0%;
-    } 
-
     .standard-button {
         margin-left: 0.2em;
         margin-right: 0.2em;
     }
 
     .standard-button:disabled {
-        color: $app-primary;
-        background-color: #d9d9d9;
+        color: $app-secondary;
+        background-color: $background-color;
     }
 }

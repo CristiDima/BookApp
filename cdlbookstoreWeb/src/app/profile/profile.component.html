@@ -4,7 +4,7 @@
 
 <div class="container">
     <div >
-        <mat-tab-group (selectedTabChange)="onMatTabChange($event)">
+        <mat-tab-group class="mat-tab-group" (selectedTabChange)="onMatTabChange($event)">
             <mat-tab class="mat-tab" label="Details">
                 <app-details *ngIf="userDetailsService.isLoadedInitialData"></app-details>
             </mat-tab>

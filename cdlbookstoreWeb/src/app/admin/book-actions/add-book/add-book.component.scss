@@ -1,48 +1,18 @@
+@import "src/styles.scss";
+
 .container {
-    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
 
-    .required-field {
-        padding: 0%;
-        margin: 0%;
-    } 
-
-    .add-book {
-        margin: 2em;
-        display: flow-root;
+    .standard-button {
+        margin-left: 0.2em;
+        margin-right: 0.2em;
     }
 
-    .form-group{
-        width: 100%;
+    .standard-button:disabled {
+        color: $app-secondary;
+        background-color: $background-color;
     }
-
-    .save-button {
-        color: #FFD700;
-        background-color: #000000;
-        margin: 1em;
-        width: 100px;
-    }
-    .save-button:disabled {
-        color: #FFD700;
-        background-color: #707B7C ;
-    }
-}
-
-.mode {
-    bottom: 80px;
-    .mode-button {
-        color: #FFD700;
-        background-color: #000000;
-        margin: 1em;
-        width: 120px;
-    }
-}
-
-.mat-form-field  .mat-form-field.ng-invalid.ng-touched {
-    border: 1px solid red;
-    border-bottom-width: 2px;
-  }
-  
-.mat-form-field  .mat-form-field.ng-valid.ng-touched.ng-dirty {
-    border: 1px solid green;
-    border-bottom-width: 2px;
 }

@@ -1,5 +1,5 @@
 <form [formGroup]="deleteBookForm" (ngSubmit)="onSubmit()">
-    <div  fxLayout fxLayout="column" fxLayoutAlign="center">
+    <div  fxLayout fxLayout="column" class="mat-form-group">
         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
             <mat-label for="bookname">Book name:*</mat-label>
             <mat-select formControlName="bookName" class="form-control">
@@ -8,8 +8,8 @@
         </mat-form-field>
     </div>
     <hr>
-    <div fxLayout="row" fxLayoutAlign="center">
-        <button [disabled]="!deleteBookForm.valid" class="save-button" mat-raised-button type="submit">Save</button>
-        <button [disabled]="!deleteBookForm.valid" class="save-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
+    <div fxLayout="row" class="mat-form-group">
+        <button [disabled]="!deleteBookForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
+        <button [disabled]="!deleteBookForm.valid" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
     </div>
 </form>

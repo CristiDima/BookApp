@@ -60,6 +60,10 @@ html { background-color: $background-color; }
     margin: 2.5em;
 }
 
+::ng-deep .mat-ink-bar {
+    background-color:$app-secondary !important;
+}
+
 .mat-form-group {
     display: flex;
     align-items: center;
