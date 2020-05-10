@@ -4,6 +4,9 @@ import { AuthorService } from 'src/app/shared/author.service';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { Author } from 'src/app/models/author.model';
+import { FileSaveService } from 'src/app/shared/file-save.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-delete-author',
@@ -15,21 +18,18 @@ import { Author } from 'src/app/models/author.model';
     @Input() isOnRemovePageMode: boolean;
   
     protected deleteAuthorForm: FormGroup = null;
-    protected authorList: string[] = [];
+    protected isAuthorUsed: boolean = false;
 
-    constructor(private _authorService: AuthorService, private _apiRequest: APIRequestService,
-                private _pathRequest: PathRequestService) {
-      this.getInitialData();
+    constructor(private _authorService: AuthorService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
+                private fileSaveService: FileSaveService, private spinner: NgxSpinnerService,  private toastr: ToastrService) {
     }
   
     ngOnInit() {
-      this.deleteAuthorForm = new FormGroup({
-        'authorName': new FormControl(null, [Validators.required])
-      });
+      this.onResetForm();
     }
 
-    private getInitialData(): void {
-      this.authorList = this._authorService.authorsName;
+    public get authorList(): string[]  {
+      return this._authorService.authorsName;
     }
   
     //region Events
@@ -41,26 +41,43 @@ import { Author } from 'src/app/models/author.model';
     protected onSubmit(): void {
       const authorName: string = this.deleteAuthorForm.value.authorName;
       const author: Author = this._authorService.getAuthorByName(authorName);
-      this.deleteAuthorRequest(author)
+      if (!author || this._authorService.isAuthorUsed(author)) {
+        this.deleteAuthorForm.controls['authorName'].setErrors({'incorrect': true});
+        this.isAuthorUsed = true;
+      } else {
+        this.isAuthorUsed = false;
+        this.deleteAuthorRequest(author)
+      }
     }
   
     protected onCancel(): void {
       this.deleteAuthorForm.reset();
     }
+
+    protected onResetForm(): void {
+      this.deleteAuthorForm = new FormGroup({
+        'authorName': new FormControl(null, [Validators.required])
+      });
+    }
     //endregion
 
     //region Requests
-    private getAuthorsRequest(): void {
-      this._apiRequest.requst('GET', this._pathRequest.authorPath).subscribe((responseData: Author[]) => {
-        this._authorService.authors = responseData;
-        this.getInitialData();
-      });
-    }
-
     private deleteAuthorRequest(author: Author): void {
+      this.spinner.show();
+      const succesMsg: string = 'The author: `' + author.name + '` was deleted';
+      const errorMsg: string = 'An error occured. Please try again.'
       this._apiRequest.requst('DELETE', this._pathRequest.authorPath, author.id).subscribe((responseData: Author) => {
-        this.deleteAuthorForm.reset();
-        this.getAuthorsRequest();
+        if (author.photo) {
+          this.fileSaveService.deleteFile(author.photo);
+        }
+        const index: number = this._authorService.authors.findIndex(el => el.name === responseData.name);
+        this._authorService.authors.splice(index, 1);
+        this.onResetForm();
+        this.spinner.hide();
+        this.toastr.success(succesMsg);
+      }, error => {
+        this.spinner.hide();
+        this.toastr.error(errorMsg);
       });
     }
     //endregion

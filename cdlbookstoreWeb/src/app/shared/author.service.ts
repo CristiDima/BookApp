@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Author } from '../models/author.model';
+import { BookService } from './book.service';
+import { PathRequestService } from './path-request.service';
+import { FileSaveService } from './file-save.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { APIRequestService } from './api-request.service';
 
 @Injectable()
 export class AuthorService {
     
     public authors: Author[] = [];
     
-    constructor() {
+    constructor(private _bookService: BookService, private fileService: FileSaveService, private _apiRequest: APIRequestService,
+                private _pathRequest: PathRequestService, private spinner: NgxSpinnerService) {
+        this.getAuthorsRequest();
     }
 
     public get authorsName(): string[] {
@@ -40,7 +47,31 @@ export class AuthorService {
     }
 
     public getBooks(author: Author) {
+        
+    }
 
+    public isAuthorUsed(author: Author): boolean {
+        let isAuthorUsed: boolean = false;
+        for (let index = 0; index < this._bookService.books.length; index++) {
+            const book = this._bookService.books[index];
+            for (let index = 0; index < book.authors.length; index++) {
+                const bookAuthor = book.authors[index];
+                if (author.name === bookAuthor.name) {
+                    isAuthorUsed = true;
+                    break;
+                }
+            }
+            if (isAuthorUsed) {
+                break;
+            }
+        }
+        return isAuthorUsed;
+    }
+
+    public getPhoto (): any {
+        this.authors.forEach(author => {
+            this.fileService.getAuthorImg(author);
+        });
     }
 
     public hasValue (author: Author): boolean {
@@ -54,4 +85,15 @@ export class AuthorService {
 
         return false;
     }
+
+    private getAuthorsRequest() {
+        this.spinner.show();
+        this._apiRequest.requst('GET', this._pathRequest.authorPath).subscribe((responseData: Author[]) => {
+          this.authors = responseData;
+          this.getPhoto();
+          this.spinner.hide();
+        }, error => {
+          this.spinner.hide();
+        });
+      }
 }

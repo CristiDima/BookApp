@@ -5,7 +5,6 @@ import { APIRequestService } from '../shared/api-request.service';
 import { UserCredentials } from '../models/user.model';
 import {Md5} from "md5-typescript";
 import { AuthenticationService } from '../shared/authentication.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
   
 
   constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService,
-     private _authenticationService: AuthenticationService, private spinner: NgxSpinnerService) {}
+     private _authenticationService: AuthenticationService) {}
 
   ngOnInit() {
     this.signinForm = new FormGroup({

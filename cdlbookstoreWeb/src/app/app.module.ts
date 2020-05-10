@@ -32,6 +32,22 @@ import { UserDetailsService } from './shared/user-details.service';
 import {SlideshowModule} from 'ng-simple-slideshow';
 import { ResetPassGuard } from './guards/reset-pass-guard.service';
 import { ToastrModule } from 'ngx-toastr';
+import { FileSaveService } from './shared/file-save.service';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+const config = {
+    apiKey: "AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc",
+    authDomain: "bookstorefiles-4fb5f.firebaseapp.com",
+    databaseURL: "https://bookstorefiles-4fb5f.firebaseio.com",
+    projectId: "bookstorefiles-4fb5f",
+    storageBucket: "bookstorefiles-4fb5f.appspot.com",
+    messagingSenderId: "879408210464",
+    appId: "1:879408210464:web:8ed0d527af1eca14a09245",
+    measurementId: "G-QT9QGXTVNS"
+};
 
 @NgModule({
   declarations: [
@@ -59,9 +75,13 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true
     }),
+    AngularFireModule.initializeApp(config),
+    AngularFirestoreModule, // firestore
+    AngularFireAuthModule, // auth
+    AngularFireStorageModule // storage
   ],
   providers: [PagesRouting, APIRequestService, PathRequestService, UserDetailsService,
-              AuthorService, BookService, GenreService, AuthenticationService,
+              AuthorService, BookService, GenreService, AuthenticationService, FileSaveService,
               UserSessionService, AuthGuard, AdminGuard, CustomValidatorService, ResetPassGuard],
   bootstrap: [AppComponent, 
     HomePageComponent,

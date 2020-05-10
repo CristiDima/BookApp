@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Author } from '../models/author.model';
 import { Book } from '../models/book.model';
+import { FileSaveService } from './file-save.service';
+import { APIRequestService } from './api-request.service';
+import { PathRequestService } from './path-request.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class BookService {
     
     public books: Book[] = [];
     
-    constructor() {
+    constructor(private fileService: FileSaveService, private _apiRequest: APIRequestService,  private _pathRequest: PathRequestService,
+                private spinner: NgxSpinnerService) {
+        this.getBooksRequest();
     }
 
     public get booksName(): string[] {
@@ -44,15 +51,39 @@ export class BookService {
 
     }
 
+    public getPhoto (): any {
+        this.books.forEach(book => {
+            this.fileService.getBookImg(book);
+        });
+    }
+
+    public getFile (): any {
+        this.books.forEach(book => {
+            this.fileService.getBookPdf(book);
+        });
+    }
+
     public hasValue (book: Book): boolean {
         if (!book) {
             return false;
         }
         
-        if (this.books.includes(book)) {
+        if (this.booksName.includes(book.name)) {
             return true;
         }
 
         return false;
     }
+
+    private getBooksRequest() {
+        this.spinner.show();
+        this._apiRequest.requst('GET', this._pathRequest.bookPath).subscribe((responseData: Book[]) => {
+          this.books = responseData;
+          this.getPhoto();
+          this.getFile();
+          this.spinner.hide();
+        }, error => {
+          this.spinner.hide();
+        });
+      }
 }

@@ -16,15 +16,27 @@
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                             <mat-label for="authorName">Author name:*</mat-label>
                             <mat-select [formControl]="selectedAuthors"  multiple>
-                                <mat-option *ngFor="let author of authorList" [value]="author">{{author}}</mat-option>
+                                <mat-option *ngFor="let author of authorsName" [value]="author">{{author}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="type">Type:*</mat-label>
-                            <mat-select [formControl]="selectedTypes" multiple>
-                                <mat-option *ngFor="let type of typeList" [value]="type">{{type}}</mat-option>
+                            <mat-label for="bookname">Pages:</mat-label>
+                            <input matInput type="number" pattern="[0-9]*" formControlName="pages" class="form-control">
+                        </mat-form-field>
+                        <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                            <mat-label for="bookname">Years:</mat-label>
+                            <mat-select formControlName="year">
+                                <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+                        <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                            <mat-label for="genre">Genre:*</mat-label>
+                            <mat-select [formControl]="selectedGenres" multiple>
+                                <mat-option *ngFor="let genre of genresName" [value]="genre">{{genre}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -33,6 +45,20 @@
                             <mat-label for="description">Description:*</mat-label>
                             <textarea matInput formControlName="description" class="form-control"></textarea>
                         </mat-form-field>
+                    </div>
+                    <div fxLayout="row">
+                        <button class="large-button" mat-raised-button (click)="fileInput.click()" type='button'>
+                            <span>Upload PDF:</span>
+                            <input #fileInput type="file" style="display:none;" (change)="onPdfFileChange($event)" accept="application/pdf"/>
+                        </button>
+                        <mat-label>{{uploadedFileName}}</mat-label>
+                    </div>
+                    <div fxLayout="row">
+                        <button class="large-button" mat-raised-button (click)="imageInput.click()" type='button'> 
+                            <span>Upload Photo:</span>
+                            <input #imageInput type="file" style="display:none;" (change)="onImgFileChange($event)" accept="image/*"/>
+                        </button>
+                        <mat-label>{{uploadedImgName}}</mat-label>
                     </div>
                 </div>
                 <hr>

@@ -4,6 +4,9 @@ import { BookService } from 'src/app/shared/book.service';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { Book } from 'src/app/models/book.model';
+import { FileSaveService } from 'src/app/shared/file-save.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-delete-book',
@@ -15,25 +18,21 @@ import { Book } from 'src/app/models/book.model';
     @Input() isOnRemovePageMode: boolean;
   
     protected deleteBookForm: FormGroup = null;
-    protected booksList: string[] = [];
 
-    constructor(private _bookService: BookService, private _apiRequest: APIRequestService,
-                private _pathRequest: PathRequestService) {
-      this.getInitialData();
+    constructor(private _bookService: BookService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
+                private fileSaveService: FileSaveService, private spinner: NgxSpinnerService,  private toastr: ToastrService) {
     }
   
     ngOnInit() {
-      this.deleteBookForm = new FormGroup({
-          'bookName': new FormControl(null, [Validators.required])
-      });
+      this.onResetForm();
     }
 
-    private getInitialData(): void {
-      this.booksList = this._bookService.booksName;
+    public get booksList(): string[] {
+      return this._bookService.booksName;
     }
   
     //region Events
-    onChangeMode(): void {
+    public onChangeMode(): void {
       this.isOnAddPageMode  = !this.isOnAddPageMode;
       this.isOnRemovePageMode = !this.isOnRemovePageMode;
     }
@@ -44,23 +43,37 @@ import { Book } from 'src/app/models/book.model';
       this.deleteBookRequest(book)
     }
   
-    onCancel(): void {
+    public onCancel(): void {
       this.deleteBookForm.reset();
+    }
+
+    private onResetForm(): void {
+      this.deleteBookForm = new FormGroup({
+        'bookName': new FormControl(null, [Validators.required])
+      });
     }
     //endregion
   
     //region Requests
-    private getBooksRequest(): void {
-      this._apiRequest.requst('GET', this._pathRequest.authorPath).subscribe((responseData: Book[]) => {
-        this._bookService.books = responseData;
-        this.getInitialData();
-      });
-    }
-
     private deleteBookRequest(book: Book): void {
-      this._apiRequest.requst('DELETE', this._pathRequest.authorPath, book.id).subscribe((responseData: Book) => {
-        this.deleteBookForm.reset();
-        this.getBooksRequest();
+      this.spinner.show();
+      const succesMsg: string = 'The book: `' + book.name + '` was deleted';
+      const errorMsg: string = 'An error occured. Please try again.'
+      this._apiRequest.requst('DELETE', this._pathRequest.bookPath, book.id).subscribe((responseData: Book) => {
+        this.onResetForm();
+        if (book.photo) {
+          this.fileSaveService.deleteFile(book.photo);
+        }
+        if (book.file) {
+          this.fileSaveService.deleteFile(book.file);
+        }
+        const index: number = this._bookService.books.findIndex(el => el.name === responseData.name);
+        this._bookService.books.splice(index, 1);
+        this.spinner.hide();
+        this.toastr.success(succesMsg);
+      }, error => {
+        this.spinner.hide();
+        this.toastr.error(errorMsg);
       });
     }
     //endregion

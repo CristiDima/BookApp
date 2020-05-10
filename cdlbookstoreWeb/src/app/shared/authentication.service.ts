@@ -19,7 +19,7 @@ export class AuthenticationService {
                 private userSessionService: UserSessionService, private _pagesRouting: PagesRouting,
                 private spinner: NgxSpinnerService, private toastr: ToastrService,
                 private route: ActivatedRoute) {
-      interval(30000).subscribe(() => { // will execute every 30 seconds
+      interval(3000000).subscribe(() => { // will execute every 30 seconds
         this.heartbeat()
       });
     }
@@ -57,15 +57,23 @@ export class AuthenticationService {
         });
     }
 
-    public logout(): void {
+    public logout(msg?: string): void {
       this.removeLocalStorageValue('currentUser');
       this.spinner.show();
+      let logOutMsg: string = ''
+      if (msg) {
+        logOutMsg = msg;
+      }
       this.apiRequest.requst('PUT', this.pathRequest.logoutPath, this.userSessionService.userSession.token).subscribe(() => {
         this.userSessionService.user = null;
         this._pagesRouting.HomePage();
+        if (msg) {
+          this.toastr.warning(logOutMsg);
+        }
         this.spinner.hide();
       }, error => {
         this.spinner.hide();
+        this.toastr.warning('Logut failed');
       });
     }
 
@@ -126,7 +134,8 @@ export class AuthenticationService {
       const expirationTokenDate: Date = userDetails ? new Date(userDetails['tokenExpirationDate']) : null;
       if (expirationTokenDate.toUTCString() < new Date().toUTCString()) {
         if (this.lastMouseMove.toUTCString() < new Date().toUTCString()) {
-          this.logout();
+          const sessionExpiredMsg: string = 'Your session has expired';
+          this.logout(sessionExpiredMsg);
         } else {
           this.apiRequest.heartbeat();
         }

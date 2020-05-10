@@ -3,7 +3,7 @@
         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
             <mat-label for="bookname">Book name:*</mat-label>
             <mat-select formControlName="bookName" class="form-control">
-                <mat-option *ngFor="let book of booksList" [value]="topping">{{book}}</mat-option>
+                <mat-option *ngFor="let book of booksList" [value]="book">{{book}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>

@@ -5,6 +5,7 @@ import { PathRequestService } from 'src/app/shared/path-request.service';
 import { UserOnlineSubscription, UserPhysicalSubscription } from 'src/app/models/user.model';
 import { UserSessionService } from 'src/app/shared/user-session.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-payment',
@@ -20,7 +21,7 @@ export class PaymentComponent implements OnInit {
 
   constructor(private userDetails: UserDetailsService, private apiRequest: APIRequestService,
               private pathRequest: PathRequestService, private userSession: UserSessionService, 
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService, private toastr: ToastrService) { }
 
   ngOnInit() {
     if (this.userDetails.userOnlineSubscription && this.userDetails.userOnlineSubscription.valid) {
@@ -64,6 +65,8 @@ export class PaymentComponent implements OnInit {
 
   private setPhysicalSubscription(): any {
     this.spinner.show();
+    const successMsg: string = 'Your subscription was activated.';
+    const errorMsg: string = 'An error occured. Please try again.';
     this.apiRequest.requst('PUT', this.pathRequest.physicalAccountPath, this.userSession.user.id)
     .subscribe((responeData: UserPhysicalSubscription) => {
       if (responeData) {
@@ -71,8 +74,10 @@ export class PaymentComponent implements OnInit {
         this.isPhysicalSubscriptions = true;
       }
       this.spinner.hide();
+      this.toastr.success(successMsg);
     }, error => {
-      
+      this.spinner.hide();
+      this.toastr.error(errorMsg);
     });
   }
   //endregion

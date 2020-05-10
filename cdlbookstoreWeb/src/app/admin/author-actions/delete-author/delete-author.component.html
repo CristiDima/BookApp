@@ -5,6 +5,7 @@
             <mat-select formControlName="authorName" class="form-control">
                 <mat-option *ngFor="let author of authorList" [value]="author">{{author}}</mat-option>
             </mat-select>
+            <mat-error *ngIf="isAuthorUsed">This author is added to at least one book.</mat-error>
         </mat-form-field>
     </div>
     <hr>

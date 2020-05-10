@@ -7,19 +7,29 @@
     </slideshow>
 </div>
 <div class="about-us" fxLayout="row" fxLayoutAlign="center center">
-    <div fxLayout fxLayout="row" *ngFor="let i of [1, 2, 3, 4, 5]">
+    <div fxLayout fxLayout="row" *ngFor="let book of books">
         <mat-card class="book-card">
             <mat-card-header>
-                <button class="icon-card" mat-icon-button mat-card-avatar>
+                <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + book.uiImage + ')'}"></div>
+                <!-- <button class="icon-card" mat-icon-button mat-card-avatar>
                     <mat-icon>local_library</mat-icon>
-                </button>
-              <mat-card-title>The Idiot</mat-card-title>
-              <mat-card-subtitle>Fyodor Dostoievski</mat-card-subtitle>
+                </button> -->
+              <mat-card-title>{{book.name}}</mat-card-title>
+              <mat-card-subtitle class="truncate">
+                  <span *ngFor="let author of book.authors">
+                      {{author.name}};
+                  </span>
+              </mat-card-subtitle>
             </mat-card-header>
+            <img class="book-image" mat-card-image [src]="book.uiImage" alt="">
             <mat-card-content class="book-card-content">
-                <p> <b>Rating:</b> 9.7/10 </p>
-                <p> <b>Year:</b> 1980 </p>
-                <p> <b>Type:</b> Thriler</p>
+                <p> <b>Rating:</b> {{book.rating}} / {{book.votes}} </p>
+                <p> <b>Year:</b> {{book.year}} </p>
+                <p> <b>Genre:</b> 
+                <span *ngFor="let genre of book.genres" class="truncate">
+                    {{genre.name}};
+                </span>
+                </p>
               </mat-card-content>
             <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
               <button mat-button class="standard-button">Details</button>

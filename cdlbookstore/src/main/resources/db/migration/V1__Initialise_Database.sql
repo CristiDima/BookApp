@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`author` (
   `id` INT NOT NULL,
   `name` VARCHAR(200) NOT NULL,
   `description` TEXT NOT NULL,
+  `photo` VARCHAR(200) NULL,
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
@@ -105,10 +106,13 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`genre` (
 CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   `id` INT NOT NULL,
   `name` VARCHAR(200) NOT NULL,
-  `description` TEXT NOT NULL NULL,
+  `description` TEXT NOT NULL,
   `rating` DOUBLE NULL,
+  `votes` DOUBLE NULL,
   `pages` INT NULL,
   `year` int NULL,
+  `photo` VARCHAR(200) NULL,
+  `file` VARCHAR(200) NULL,
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------

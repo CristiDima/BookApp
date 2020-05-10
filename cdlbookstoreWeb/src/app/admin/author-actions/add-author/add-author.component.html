@@ -20,6 +20,13 @@
                             <textarea matInput formControlName="description" class="form-control"></textarea>
                         </mat-form-field>
                     </div>
+                    <div fxLayout="row">
+                        <button class="large-button" mat-raised-button (click)="imageInput.click()" type='button'> 
+                            <span>Upload Photo:</span>
+                            <input #imageInput type="file" style="display:none;" (change)="onImgFileChange($event)" accept="image/*"/>
+                        </button>
+                        <mat-label>{{uploadedImgName}}</mat-label>
+                    </div>
                 </div>
                 <hr>
                 <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">

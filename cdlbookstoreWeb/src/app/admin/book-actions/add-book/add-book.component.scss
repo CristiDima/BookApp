@@ -15,4 +15,12 @@
         color: $app-secondary;
         background-color: $background-color;
     }
+
+    .upload-button {
+        color: $app-secondary;
+        background-color: $app-primary;
+        padding: 1em;
+        border: 1px $app-secondary;
+        width: 150px;
+    }
 }

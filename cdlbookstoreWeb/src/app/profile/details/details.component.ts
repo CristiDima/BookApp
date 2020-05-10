@@ -5,6 +5,7 @@ import { APIRequestService } from 'src/app/shared/api-request.service';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { UserDetailsService } from 'src/app/shared/user-details.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-details',
@@ -22,7 +23,7 @@ export class DetailsComponent implements OnInit {
 
   constructor(private userSessionService: UserSessionService, private apiRequest: APIRequestService,
               private pathRequest: PathRequestService, private userDetailsService: UserDetailsService, 
-              private spinner: NgxSpinnerService) { }
+              private spinner: NgxSpinnerService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.formReset();
@@ -59,13 +60,13 @@ export class DetailsComponent implements OnInit {
     this.userDetailsService.address.district = this.userInfoForm.controls.district.value;
   }
 
-  //region eventshttps-proxy-agent
+  //region events
   protected onSubmit():void {
     const userDetails: Map<string, any> = new Map<string, any>();
     Object.keys(this.userInfoForm.controls).forEach(key => {
       userDetails.set(key, this.userInfoForm.controls[key].value);
     });
-    this.editAuthorRequest(userDetails);
+    this.editUserDetails(userDetails);
 
   }
 
@@ -81,11 +82,13 @@ export class DetailsComponent implements OnInit {
   //endregion
 
   //region Requests
-  private editAuthorRequest(userDetails: Map<string, any>): void {
+  private editUserDetails(userDetails: Map<string, any>): void {
     const convMap = {};
     userDetails.forEach((val: string, key: string) => {
       convMap[key] = val;
     });
+    const successMsg: string = 'Your details were updated';
+    const errorMsg: string = 'An error occured when we trying to update your details'
     this.spinner.show();
     this.apiRequest.requst('PUT', this.pathRequest.userPath + '/' + this.userSessionService.user.id, convMap)
     .subscribe((responseData: any) => { 
@@ -94,11 +97,13 @@ export class DetailsComponent implements OnInit {
       this.formReset();
       this.hasError = false;
       this.spinner.hide();
+      this.toastr.success(successMsg);
     }, 
     error => {
       this.hasError = true;
       this.errorMessage = error.error;
       this.spinner.hide();
+      this.toastr.success(errorMsg);
   });
   }
 //endregion
