@@ -5,4 +5,5 @@ export class Author {
     public photo: string;
 
     public uiImage: File;
+    public uiSelected: boolean = false;
   }

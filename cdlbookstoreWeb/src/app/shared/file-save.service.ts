@@ -37,7 +37,7 @@ export class FileSaveService {
     }
 
     public getBookPdf(book: Book) {
-      if (!book.photo || book.photo === '') {
+      if (!book.file || book.file === '') {
         return;
       }
       const storageRef: firebase.storage.Reference = this.fs.storage.ref(book.file);

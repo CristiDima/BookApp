@@ -12,6 +12,7 @@ export class GenreService {
     
     constructor(private _bookService: BookService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
                 private spinner: NgxSpinnerService) {
+        this.getGenresRequest();
     }
 
     public get genresName(): string[] {

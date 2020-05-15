@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 @Injectable()
 export  class PathRequestService {
     public bookPath = environment.url + '/book';
+    public bookRating = environment.url + '/book/rating';
     public onlineBookPath = environment.url + '/onlineBooks'
     public loanedBookPath = environment.url + '/loanedBooks'
     public onlineAccountPath = environment.url + '/onlineAccount'

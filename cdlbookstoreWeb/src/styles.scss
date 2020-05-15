@@ -15,10 +15,13 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$app-primary: /*#FFD700;*/ 	#fae596;
-$app-secondary: #173e43;
-$background-color: #dddfd4;
-$app-accent:  mat-palette($mat-pink, A200, A100, A400);
+$app-primary: /*#FFD700;*/ 	#A2C4AE;
+$app-secondary: #C8E3D3;
+$hover-color: #8BB19E;
+$background-color: #FFFFFF;
+$mat-card-color: #F1EEEF;
+$text-color: #000000;
+$app-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $app-warn:    mat-palette($mat-red);
@@ -35,13 +38,13 @@ body {
 html { background-color: $background-color; }
 
 .mat-card {
-    background-color: $app-primary;
+    background-color: $mat-card-color;
     width: 500px;
     mat-label {
-        color: $app-secondary;
+        color: $text-color;
     }
     mat-form-field {
-        color: $app-secondary;
+        color: $text-color;
     }
 
 }
@@ -76,19 +79,19 @@ html { background-color: $background-color; }
 
 .icon-button {
     color: $app-primary;
-    background-color: $app-secondary;
+    background-color: #000000;
 }
 
 .icon-card {
+    color: $mat-card-color;
     background-color: $app-secondary;
     background-size: cover;
 }
 
 .book-card {
     width: 250px;
-    height: 350px;
-    background-color: $app-primary;
-    margin: 0.5em;
+    height: 400px;
+    background-color: $mat-card-color;
     .book-card-content {
         display: flow-root;
     }
@@ -101,8 +104,6 @@ html { background-color: $background-color; }
     }
 }
 
-
-
 .small-book-card {
     width: 250px;
     height: 130px;
@@ -114,43 +115,56 @@ html { background-color: $background-color; }
     }
 }
 
+mat-paginator.mat-paginator.paginator--centered {
+    display: flex !important;
+    justify-content: center !important;
+} 
 .standard-button {
-    color: $app-primary;
+    color: $text-color;
     background-color: $app-secondary;
     margin: 1em;
     width: 100px;
 }
 .standard-button:disabled {
-    color: $app-primary;
+    color: $text-color;
     background-color: #d9d9d9;
 }
 .standard-button:hover {
-    color: $app-primary;
-    background-color: #000000;
+    color: $text-color;
+    background-color: $hover-color;
 }
 
 button.mat-menu-item:hover {
-    background-color: #000000 !important;
+    background-color: $hover-color!important;
 }
 
 .large-button {
-    color: $app-primary;
+    color: $text-color;
     background-color: $app-secondary;
     margin: 1em;
     width: 150px;
 }
 .large-button:disabled {
-    color: $app-primary;
+    color: $text-color;
     background-color: #d9d9d9;
 }
 .large-button:hover {
-    color: $app-primary;
-    background-color: #000000;
+    color: $text-color;
+    background-color: $hover-color;
 }
 
 .book-image {
     height: 40%;
 }
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+    opacity: 0.03 !important;
+    background-color: $hover-color!important;
+  }
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: $hover-color;
+  }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

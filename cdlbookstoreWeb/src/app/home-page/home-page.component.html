@@ -3,7 +3,7 @@
 </div>
 <div class="container" fxLayout fxLayoutAlign="center">
     <slideshow [imageUrls]="imageUrlArray" [showArrows]="true" [autoPlay]="true" [showDots]="true" [arrowSize]="'15px'">
-        <p>“A reader lives a thousand lives before he dies . . . The man who never reads lives only one.” – George R.R. Martin</p>
+        <!-- <p>“A reader lives a thousand lives before he dies . . . The man who never reads lives only one.” – George R.R. Martin</p> -->
     </slideshow>
 </div>
 <div class="about-us" fxLayout="row" fxLayoutAlign="center center">
@@ -11,9 +11,6 @@
         <mat-card class="book-card">
             <mat-card-header>
                 <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + book.uiImage + ')'}"></div>
-                <!-- <button class="icon-card" mat-icon-button mat-card-avatar>
-                    <mat-icon>local_library</mat-icon>
-                </button> -->
               <mat-card-title>{{book.name}}</mat-card-title>
               <mat-card-subtitle class="truncate">
                   <span *ngFor="let author of book.authors">

@@ -11,7 +11,7 @@ export class ProfileComponent implements OnInit {
 
   public isPageLoaded: boolean = false;
 
-  constructor() { }
+  constructor(private userDetailsService: UserDetailsService) { }
 
   ngOnInit(){
   }

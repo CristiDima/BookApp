@@ -56,6 +56,6 @@ export class HomePageComponent {
             if (!isAlreadyAdded) {
                 this.books.push(this._bookService.books[randomIndex]);
             }
-        } while (this.books.length < 5)
+        } while (this.books.length < 4)
     }
 }

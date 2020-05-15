@@ -4,21 +4,23 @@
 
 <div class="container">
     <div >
-        <mat-tab-group class="mat-tab-group" (selectedTabChange)="onMatTabChange($event)">
+        <mat-tab-group class="mat-tab-group">
             <mat-tab class="mat-tab" label="Details">
                 <app-details *ngIf="userDetailsService.isLoadedInitialData"></app-details>
             </mat-tab>
             <mat-tab label="Payment">
                 <app-payment *ngIf="userDetailsService.isLoadedInitialData"></app-payment>
             </mat-tab>
-            <mat-tab label="Read List">
+            <mat-tab label="Wishlist">
                 <app-read-list *ngIf="userDetailsService.isLoadedInitialData"></app-read-list>
             </mat-tab>
-            <mat-tab label="Loanned books">
+            <mat-tab label="Loanned">
                 <app-loanned-books *ngIf="userDetailsService.isLoadedInitialData"></app-loanned-books>
             </mat-tab>
-            <mat-tab label="Online books">
+            <mat-tab label="Online">
                 <app-online-books *ngIf="userDetailsService.isLoadedInitialData"></app-online-books>
+            </mat-tab>
+            <mat-tab label="History">
             </mat-tab>
           </mat-tab-group>
     </div>

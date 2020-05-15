@@ -11,10 +11,12 @@ import {
   MatInputModule,
   MatSidenavModule,
   MatSelectModule,
-  MatSelectTrigger,
   MatTabsModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatAutocompleteModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 @NgModule({
@@ -32,7 +34,10 @@ import {
     MatSelectModule,
     MatTabsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatAutocompleteModule,
+    MatCheckboxModule
   ],
   exports: [
     MatButtonModule,
@@ -48,7 +53,10 @@ import {
     MatSelectModule,
     MatTabsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatAutocompleteModule,
+    MatCheckboxModule
   ]
 })
 export class MaterialModule {}

@@ -52,4 +52,15 @@ public class BookServiceImpl implements BookService {
         bookRepository.delete(bookMapper.bookDtoToBook(bookDto));
         return Optional.ofNullable(bookDto);
     }
+
+    @Override
+    public Optional<Double> updateRating (int bookId, double rating) {
+        BookDto bookDto = getBookById(bookId);
+        if (bookDto == null) {
+            return Optional.ofNullable(null);
+        }
+        double tempRating  = ((bookDto.getRating() * bookDto.getVotes()) + rating) / (bookDto.getVotes() + 1);
+        bookRepository.updateBookRating(tempRating, (bookDto.getVotes() + 1), bookId);
+        return Optional.ofNullable(tempRating);
+    }
 }

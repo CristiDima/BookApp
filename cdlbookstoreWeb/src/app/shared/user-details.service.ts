@@ -5,14 +5,13 @@ import { Book } from '../models/book.model';
 import { PathRequestService } from './path-request.service';
 import { APIRequestService } from './api-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { error } from 'protractor';
 
 @Injectable()
 export class UserDetailsService {
 
     public userOnlineSubscription: UserOnlineSubscription = null;
     public userPhysicalSubscription: UserPhysicalSubscription = null;
-    public loannedBooks: Book[] = [];
+    public currentBooks: Book[] = [];
     public onlineBooks: Book[] = [];
     public readList: Book[] = [];
     public address: UserAddress = null;
@@ -32,6 +31,39 @@ export class UserDetailsService {
     public get isLoadedInitialData(): boolean {
         return (this.isUserOnlineSubscriptionRequestFinish && this.isUserPhysicalSubscriptionRequestFinish &&
             this.isLoannedBooksRequestFinish && this.isOnlineBooksRequestFinish && this.isAddressRequestFinish)
+    }
+
+    public get isPhysicalSubcription(): boolean {
+        if (this.userPhysicalSubscription && this.userPhysicalSubscription.valid) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public get isFullSubcription(): boolean {
+        if (this.isOnlineSubcription && this.isPhysicalSubcription) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public get isOnlineSubcription(): boolean {
+        if (this.userOnlineSubscription && this.userOnlineSubscription.valid) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public isFavouriteBook(book: Book) {
+        const favBook: Book = this.readList.filter(el => el === book)[0];
+        if (favBook) {
+            return true;
+        }
+
+        return false;
     }
 
     //event region
@@ -95,7 +127,7 @@ export class UserDetailsService {
         this.spinner.show();
         this.apiRequest.requst('GET', this.pathRequest.loanedBookPath + '/' + userId).subscribe((responseData: Book[]) => {
             if (responseData) {
-                this.loannedBooks = responseData;
+                this.currentBooks = responseData;
             }
             this.spinner.hide();
             this.isLoannedBooksRequestFinish = true;

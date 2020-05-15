@@ -12,4 +12,5 @@ public interface BookService {
     Optional<List<BookDto>> getBooks ();
     Optional<BookDto> saveBook(BookDto bookDto);
     Optional<BookDto> deleteBook (int id);
+    Optional<Double> updateRating (int bookId, double rating);
 }

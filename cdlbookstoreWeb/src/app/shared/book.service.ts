@@ -4,6 +4,7 @@ import { FileSaveService } from './file-save.service';
 import { APIRequestService } from './api-request.service';
 import { PathRequestService } from './path-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -11,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class BookService {
     
     public books: Book[] = [];
+    public isBooksDownloadedSubject: Subject<boolean> = new Subject<boolean>();
     
     constructor(private fileService: FileSaveService, private _apiRequest: APIRequestService,  private _pathRequest: PathRequestService,
                 private spinner: NgxSpinnerService) {
@@ -47,8 +49,44 @@ export class BookService {
         return value;
     }
 
-    public getAuthor(book: Book){
+    public searchBooksByBooksName(booksName: string[]): Book[] {
+        const matchedBooks: Book[] = [];
+        booksName.forEach(el => {
+            this.books.forEach(book => {
+                if (book.name === el) {
+                    matchedBooks.push(book);
+                }
+            })
+        });
+        return matchedBooks;
+    }
 
+    public searchBooksByAuthorsName(authorsName: string[]): Book[] {
+        const matchedBooks: Book[] = [];
+        authorsName.forEach(el => {
+            this.books.forEach(book => {
+                book.authors.forEach(author => {
+                    if (author.name === el) {
+                        matchedBooks.push(book);
+                    }
+                });
+            });
+        });
+        return matchedBooks;
+    }
+
+    public searchBooksByGenresName(genresName: string[]): Book[] {
+        const matchedBooks: Book[] = [];
+        genresName.forEach(el => {
+            this.books.forEach(book => {
+                book.genres.forEach(genre => {
+                    if (genre.name === el) {
+                        matchedBooks.push(book);
+                    }
+                });
+            });
+        });
+        return matchedBooks;
     }
 
     public getPhoto (): any {
@@ -82,6 +120,7 @@ export class BookService {
           this.getPhoto();
           this.getFile();
           this.spinner.hide();
+          this.isBooksDownloadedSubject.next();
         }, error => {
           this.spinner.hide();
         });

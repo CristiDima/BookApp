@@ -1,78 +1,39 @@
-.container {
-    position: fixed;
-        top: 60px;
-        bottom: 20px;
-        left: 0;
+@import "src/styles.scss";
+
+.nav-container {
+    top: 60px;
+    bottom: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    .side-nav {
         width: 25%;
-        background: #000000;
-    .books-container {
-        top: 60px;
-        background: #000000;
+        height: 100%;
 
-        .title{
-            color: #FFD700;
-        }
-
-        .types {
-            background-color: #000000;
-            width: 100%;
-            height: 10%;
-            margin-top: 1em;
-            padding-top: 0%;
-        }
-
-        .search {
-            background-color: #FFD700;
-            color: #000000;
-            margin: 1em;
-            width: 100px auto;
-        }
-    }
-
-    // .mat-form-field {
-    //     width: auto;
-    // }
-
-    // mat-icon-stepper selected color change 
-.mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
-    background-color: #FFD700!important;
-}
-
-    ::ng-deep {
-        //input outline color
-        mat-form-field-appearance-outline .mat-form-field-outline {
-            color: #FFD700!important;
-            // opacity: 1!important;
-        }
-
-        //mat-input focused color
-        .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-            color: #FFD700!important;
-        }
-
-        // mat-label normal state style
-        .mat-form-field-label {
-            color: #FFD700!important;
-        }
-
-        // mat-label focused style
-        .mat-form-field.mat-focused .mat-form-field-label {
-            color: #FFD700!important;
-        }
-
-
-        .mat-form-field-appearance-outline .mat-form-field-outline {
-            color: #FFD700;
-        }
-        mat-form-field {
-            .mat-hint, input, ::placeholder, .mat-form-field-label {
-                color: #FFD700;
+        .selected-domain {
+            margin: 0.5em;
+            div {
+                padding: 0.5em;
             }
         }
-        .mat-form-field-type-mat-select .mat-form-field-label, .mat-select-value {
-            color: #FFD700;
-        }
+    }
+
+    .nav-content {
+        padding: 0.5em;
+    }
+
+    .form-group{
+        width: auto;
     }
 }
+
+.container {
+    .book-card {
+        height: 400px;
+        margin: 1.5em;
+    }
+}
+
 
 

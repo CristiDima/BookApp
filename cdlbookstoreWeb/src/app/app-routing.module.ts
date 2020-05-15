@@ -17,6 +17,8 @@ import { AdminGuard } from './guards/admin-guard.service';
 import { ResetPasswordComponent } from './login/resetPassword/reset-password.component';
 import { NewPasswordComponent } from './login/new-password/new-password.component';
 import { ResetPassGuard } from './guards/reset-pass-guard.service';
+import { BookComponent } from './books/book/book.component';
+import { BookGuard } from './guards/book-guard.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -26,6 +28,7 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'new-password', canActivate: [ResetPassGuard], component: NewPasswordComponent},
   { path: 'books',   canActivate: [AuthGuard], component: BooksComponent},
+  { path: 'book',   canActivate: [AuthGuard, BookGuard], component: BookComponent},
   { path: 'account',   canActivate: [AuthGuard], component: ProfileComponent},
   {
     path: 'admin',

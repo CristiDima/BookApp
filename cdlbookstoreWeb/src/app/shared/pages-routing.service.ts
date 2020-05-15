@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { Book } from '../models/book.model';
 
 @Injectable()
 export class PagesRouting {
@@ -25,6 +26,10 @@ export class PagesRouting {
 
     public BooksPage(): any {
         return this._router.navigate(['books']);
+    }
+
+    public BookPage(book: Book): any {
+        return this._router.navigate(['book'], { state: { book: book } });
     }
 
     public AdminPage(): any {

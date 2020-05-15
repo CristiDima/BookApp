@@ -1,0 +1,64 @@
+<div class="header">
+    <app-header></app-header>
+</div>
+
+<div class="container">
+    <mat-card class="mat-card">
+        <mat-card-header>
+        <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + selectedBook.uiImage + ')'}"></div>
+        <mat-card-title>{{selectedBook.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div> <b>Rating:</b> {{selectedBook.rating}} / {{selectedBook.votes}} 
+                <star-rating [value]="selectedBook.rating" totalstars="10" checkedcolor="#A2C4AE" uncheckedcolor="#C8E3D3" size="20px" 
+                    readonly="false" (rate)="onRate($event)"></star-rating>
+            </div>
+            <p> <b>Year:</b> {{selectedBook.year}} </p>
+            <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                <mat-label for="description">Description</mat-label>
+                <textarea matInput [readonly]="true"> {{selectedBook.description}} </textarea>
+            </mat-form-field>
+            <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group selected-domain">
+                <div fxLayout fxLayout="column" >
+                    <button class="book-action" mat-icon-button [disabled]="!canBorrowBook" (click)="onBorrowBook()">
+                        <mat-icon>markunread_mailbox</mat-icon>
+                     </button>
+                </div>
+                <div fxLayout fxLayout="column" >
+                    <button class="book-action" mat-icon-button [disabled]="!canReadOnline" (click)="onReadBook()">
+                        <mat-icon class="read-book">picture_as_pdf</mat-icon>
+                     </button>
+                </div>
+                <div fxLayout fxLayout="column" >
+                    <button class="book-action" mat-icon-button [disabled]="isFavourite" (click)="onAddToWishlist()">
+                        <mat-icon>favorite</mat-icon>
+                     </button>
+                </div>
+            </div>
+            <hr>
+            <p class="title"><b>Authors</b></p>
+            <div *ngFor="let author of selectedBook.authors">
+                <mat-card-header>
+                    <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + author.uiImage + ')'}"></div>
+                    <p> {{author.name}}</p>
+                </mat-card-header>
+                <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                    <textarea matInput [readonly]="true"> {{author.description}} </textarea>
+                </mat-form-field>
+            </div>
+            <hr>
+            <p class="title"><b>Genres</b></p>
+            <div *ngFor="let genre of selectedBook.genres">
+                <!-- <p> <b>Genre:</b> {{genre.name}}</p> -->
+                <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                    <mat-label for="description">{{genre.name}}</mat-label>
+                    <textarea matInput [readonly]="true"> {{genre.description}} </textarea>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="footer">
+    <app-footer></app-footer>
+</div>

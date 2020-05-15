@@ -1,38 +1,102 @@
 <div class="header">
     <app-header></app-header>
 </div>
+<mat-sidenav-container class="nav-container" *ngIf="true">
+    <mat-sidenav opened mode="side" class="side-nav" [disableClose]="true">
+        <div>
+            <p fxLayout fxLayout="row" fxLayoutAlign="center" class="title">Search books</p>
+        </div>
+        <div class="mat-form-group">
+            <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
+                <input type="text" placeholder="Genres" aria-label="Genres" matInput
+                    [matAutocomplete]="autoGenre" [formControl]="genreControl" [readonly]="isSearchByGenresDisable"> 
+            </mat-form-field>
+            
+            <mat-autocomplete #autoGenre="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let genre of filteredGenres | async" [value]="selectedGenres">
+                    <div (click)="optionClicked($event, genre)">
+                        <mat-checkbox [checked]="genre.uiSelected" (change)="toggleGenreSelection(genre)" 
+                        (click)="$event.stopPropagation()">{{ genre.name }}</mat-checkbox>
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+        </div>
 
-<div class="container">
-    <mat-sidenav-container class="books-container" *ngIf="true">
-        <mat-sidenav-content fxLayout fxLayout="column">
-            <div>
-                <p fxLayout fxLayout="row" fxLayoutAlign="center" class="title">Books</p>
-            </div>
-            <mat-form-field class="types" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
-                <mat-label>Type</mat-label>
-                <mat-select [formControl]="types" multiple>
-                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
-                </mat-select>
+        <div class="mat-form-group">
+            <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
+                <input type="text" placeholder="Authors" aria-label="Authors" matInput
+                    [matAutocomplete]="autoAuthor" [formControl]="authorControl" [readonly]="isSearchByAuthorsDisable"> 
             </mat-form-field>
-            <mat-form-field class="types" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
-                <mat-label>Authors</mat-label>
-                <mat-select [formControl]="types" multiple>
-                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="types" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
-                <mat-label>Books</mat-label>
-                <mat-select [formControl]="types" multiple>
-                    <mat-option *ngFor="let type of typeList" [value]="topping">{{type}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div fxLayout fxLayout="row" fxLayoutAlign="center" >
-                <button mat-button class="search">Search</button>
-            </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</div>
+            
+            <mat-autocomplete #autoAuthor="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let author of filteredAuthors | async" [value]="selectedAuthors">
+                    <div (click)="optionClicked($event, author)">
+                        <mat-checkbox [checked]="author.uiSelected" (change)="toggleAuthorSelection(author)" 
+                        (click)="$event.stopPropagation()">{{ author.name }}</mat-checkbox>
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+        </div>
 
+        <div class="mat-form-group">
+            <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
+                <input type="text" placeholder="Books" aria-label="Books" matInput
+                    [matAutocomplete]="auto" [formControl]="bookControl" [readonly]="isSearchByBooksDisable"> 
+            </mat-form-field>
+            
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let book of filteredBooks | async" [value]="selectedBooks">
+                    <div (click)="optionClicked($event, book)">
+                        <mat-checkbox [checked]="book.uiSelected" (change)="toggleBookSelection(book)" 
+                        (click)="$event.stopPropagation()">{{ book.name }}</mat-checkbox>
+                    </div>
+                </mat-option>
+            </mat-autocomplete>
+        </div>
+        <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+            <button mat-button class="standard-button" (click)="onSearch()">Search</button>
+            <button mat-button class="standard-button" (click)="onClear()">Reset</button>
+        </div>
+        <hr>
+        <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group selected-domain">
+            <div fxLayout fxLayout="column" *ngFor="let item of searchByValue | keyvalue">
+                <mat-checkbox  [checked]="selected === item" (change)="selected = item">{{item.key}}</mat-checkbox>
+            </div>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="nav-content" *ngIf="canShowContent">
+        <div fxLayout="row wrap">
+            <div class="container" fxFlex *ngFor="let book of obs | async">
+                <mat-card class="book-card" >
+                    <mat-card-header>
+                        <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + book.uiImage + ')'}"></div>
+                        <mat-card-title>{{book.name}}</mat-card-title>
+                        <mat-card-subtitle class="truncate">
+                            <span *ngFor="let author of book.authors">
+                                {{author.name}};
+                            </span>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+                    <img class="book-image" mat-card-image [src]="book.uiImage" alt="">
+                    <mat-card-content class="book-card-content">
+                        <p> <b>Rating:</b> {{book.rating}} / {{book.votes}} </p>
+                        <p> <b>Year:</b> {{book.year}} </p>
+                        <p> <b>Genre:</b> 
+                        <span *ngFor="let genre of book.genres" class="truncate">
+                            {{genre.name}};
+                        </span>
+                        </p>
+                        </mat-card-content>
+                    <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+                        <button mat-button class="standard-button" (click)="onShowBookDetails(book)">Details</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+    <mat-paginator [length]="books.length" [pageSize]="12" ></mat-paginator>
+   </mat-sidenav-content>
+</mat-sidenav-container>
 <div class="footer">
     <app-footer></app-footer>
 </div>
+

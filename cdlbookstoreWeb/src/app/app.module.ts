@@ -37,6 +37,9 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { BookComponent } from './books/book/book.component';
+import { BookGuard } from './guards/book-guard.service';
+import { RatingModule } from 'ng-starrating';
 
 const config = {
     apiKey: "AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc",
@@ -57,8 +60,9 @@ const config = {
     LoginComponent,
     SignupComponent,
     BooksComponent,
+    BookComponent,
     ResetPasswordComponent,
-    NewPasswordComponent,
+    NewPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -78,13 +82,13 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
-    AngularFireStorageModule // storage
+    AngularFireStorageModule, // storage
+    RatingModule
   ],
   providers: [PagesRouting, APIRequestService, PathRequestService, UserDetailsService,
               AuthorService, BookService, GenreService, AuthenticationService, FileSaveService,
-              UserSessionService, AuthGuard, AdminGuard, CustomValidatorService, ResetPassGuard],
-  bootstrap: [AppComponent, 
-    HomePageComponent,
-    LoginComponent]
+              UserSessionService, AuthGuard, AdminGuard, CustomValidatorService, ResetPassGuard,
+              BookGuard],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

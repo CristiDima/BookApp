@@ -16,4 +16,5 @@ export class Book {
 
   public uiImage: File;
   public uiFile: File;
+  public uiSelected: boolean = false;
 }

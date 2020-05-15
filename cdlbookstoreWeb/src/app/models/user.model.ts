@@ -6,7 +6,7 @@ export class User {
     public phoneNumber: number;
     public addressId: number;
     public admin: boolean;
-    public booksPerMount: number = 5;
+    public totalBooks: number = 5;
 }
 
 export class UserAddress {

@@ -44,4 +44,11 @@ public class BookController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PostMapping("/book/rating/{id}")
+    private ResponseEntity<Double> updateRating(@PathVariable("id") int id, @RequestBody int rating) {
+        return  this.bookService.updateRating(id, rating)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
