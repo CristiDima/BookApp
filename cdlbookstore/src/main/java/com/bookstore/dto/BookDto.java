@@ -29,6 +29,10 @@ public class BookDto {
 
     private String file;
 
+    private int total;
+
+    private int loaned;
+
     private Set<AuthorDto> authors;
 
     private Set<GenreDto> genres;

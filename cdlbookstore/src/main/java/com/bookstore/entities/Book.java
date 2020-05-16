@@ -44,6 +44,13 @@ public class Book {
     @Column
     private String file;
 
+    @Column
+    @NotNull
+    private int total;
+
+    @Column
+    private int loaned;
+
     @ManyToMany()
     @JoinTable(
             name = "book_authors",

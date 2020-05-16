@@ -25,11 +25,15 @@
                             <mat-label for="bookname">Pages:</mat-label>
                             <input matInput type="number" pattern="[0-9]*" formControlName="pages" class="form-control">
                         </mat-form-field>
-                        <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                        <mat-form-field class="small-form" appearance="outline" fxLayout="column">
                             <mat-label for="bookname">Years:</mat-label>
                             <mat-select formControlName="year">
                                 <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
                             </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="small-form" appearance="outline" fxLayout="column">
+                            <mat-label for="bookname">Total books:</mat-label>
+                            <input matInput type="number" pattern="[0-9]*" formControlName="pages" class="form-control">
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
@@ -51,14 +55,14 @@
                             <span>Upload PDF:</span>
                             <input #fileInput type="file" style="display:none;" (change)="onPdfFileChange($event)" accept="application/pdf"/>
                         </button>
-                        <mat-label>{{uploadedFileName}}</mat-label>
+                        <mat-label>{{uploadedFileName ? uploadedFileName : 'No file was uploaded'}}</mat-label>
                     </div>
                     <div fxLayout="row">
                         <button class="large-button" mat-raised-button (click)="imageInput.click()" type='button'> 
                             <span>Upload Photo:</span>
                             <input #imageInput type="file" style="display:none;" (change)="onImgFileChange($event)" accept="image/*"/>
                         </button>
-                        <mat-label>{{uploadedImgName}}</mat-label>
+                        <mat-label>{{uploadedImgName ? uploadedImgName : 'No file was uploaded'}}</mat-label>
                     </div>
                 </div>
                 <hr>

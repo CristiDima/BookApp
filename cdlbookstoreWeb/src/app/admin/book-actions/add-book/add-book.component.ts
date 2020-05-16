@@ -91,6 +91,7 @@ import { ToastrService } from 'ngx-toastr';
       book.description = this.addbookForm.value.description;
       book.pages = this.addbookForm.value.pages;
       book.year = this.addbookForm.value.year;
+      book.total = this.addbookForm.value.total;
       book.photo = this.addbookForm.value.img ? this.addbookForm.value.img.name : '';
       book.file = this.addbookForm.value.pdfFile ? this.addbookForm.value.pdfFile.name : '';
       this.addbookForm.value.authorsName.forEach(element => {
@@ -162,6 +163,7 @@ import { ToastrService } from 'ngx-toastr';
         'typesArray': this.selectedGenres,
         'pages': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
         'year': new FormControl(0, [Validators.required]),
+        'availableBooks': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
         'description': new FormControl('', [Validators.required]),
         'pdfFile': new FormControl(null, []),
         'img': new FormControl(null, [])

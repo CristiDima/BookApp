@@ -14,6 +14,9 @@ export class Book {
   public file: string;
   public photo: string;
 
+  public loaned: number = 0;
+  public total: number = 0;
+
   public uiImage: File;
   public uiFile: File;
   public uiSelected: boolean = false;

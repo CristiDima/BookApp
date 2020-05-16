@@ -113,18 +113,22 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   `year` int NULL,
   `photo` VARCHAR(200) NULL,
   `file` VARCHAR(200) NULL,
+  `total` INT NOT NULL,
+  `loaned` INT NULL DEFAULT 0,
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`available_books`
+-- Table `votes`.`user_votes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`available_books` (
+CREATE TABLE IF NOT EXISTS `cdlstore`.`user_vote` (
   `id` INT NOT NULL,
   `book_id` INT NOT NULL,
-  `total` INT NULL,
-  `loaned` INT NULL,
+  `user_id` INT NOT NULL,
+  `rating` DOUBLE NULL,
   PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
   FOREIGN KEY (book_id) REFERENCES book(id));
+
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`book_authors`
@@ -146,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book_genres` (
 
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`loaned_books`
+-- Table `cdlstore`.`current_books`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`loaned_books` (
   `id` INT NOT NULL,
@@ -154,6 +158,28 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`loaned_books` (
   `book_id` INT NOT NULL,
   `loaned_at` DATETIME NOT NULL,
   `date_to_return` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
+  FOREIGN KEY (book_id) REFERENCES book(id));
+
+-- -----------------------------------------------------
+-- Table `cdlstore`.`loaned_books`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`library` (
+  `id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `book_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
+  FOREIGN KEY (book_id) REFERENCES book(id));
+
+  -- -----------------------------------------------------
+-- Table `cdlstore`.`loaned_books`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`wishlist` (
+  `id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `book_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
   FOREIGN KEY (book_id) REFERENCES book(id));
@@ -170,17 +196,6 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`online_books` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (book_id) REFERENCES book(id),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
-
--- -- -----------------------------------------------------
--- -- Table `cdlstore`.`read_list`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `cdlstore`.`read_list` (
---   `id` INT NOT NULL,
---   `book_id` INT NOT NULL,
---   `user_id` INT NOT NULL,
---   PRIMARY KEY (`id`),
---   FOREIGN KEY (book_id) REFERENCES book(id),
---   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
 
 -- --------------------------------------------------------
 -- Initial inserts into db
