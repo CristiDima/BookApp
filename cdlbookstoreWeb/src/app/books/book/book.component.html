@@ -22,17 +22,17 @@
                 <div fxLayout fxLayout="column" >
                     <button class="book-action" mat-icon-button [disabled]="!canBorrowBook" (click)="onBorrowBook()">
                         <mat-icon>markunread_mailbox</mat-icon>
-                     </button>
+                    </button>
                 </div>
                 <div fxLayout fxLayout="column" >
                     <button class="book-action" mat-icon-button [disabled]="!canReadOnline" (click)="onReadBook()">
                         <mat-icon class="read-book">picture_as_pdf</mat-icon>
-                     </button>
+                    </button>
                 </div>
                 <div fxLayout fxLayout="column" >
-                    <button class="book-action" mat-icon-button [disabled]="isFavourite" (click)="onAddToWishlist()">
+                    <button [class.book-fav-action]="!isFavourite" mat-icon-button [class.fav-disabled]="isFavourite" (click)="onAddToWishlist()">
                         <mat-icon>favorite</mat-icon>
-                     </button>
+                    </button>
                 </div>
             </div>
             <hr>
@@ -49,7 +49,6 @@
             <hr>
             <p class="title"><b>Genres</b></p>
             <div *ngFor="let genre of selectedBook.genres">
-                <!-- <p> <b>Genre:</b> {{genre.name}}</p> -->
                 <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                     <mat-label for="description">{{genre.name}}</mat-label>
                     <textarea matInput [readonly]="true"> {{genre.description}} </textarea>

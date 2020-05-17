@@ -69,7 +69,7 @@
             <div class="container" fxFlex *ngFor="let book of obs | async">
                 <mat-card class="book-card" >
                     <mat-card-header>
-                        <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + book.uiImage + ')'}"></div>
+                        <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + book.authors[0].uiImage + ')'}"></div>
                         <mat-card-title>{{book.name}}</mat-card-title>
                         <mat-card-subtitle class="truncate">
                             <span *ngFor="let author of book.authors">
@@ -86,7 +86,7 @@
                             {{genre.name}};
                         </span>
                         </p>
-                        </mat-card-content>
+                    </mat-card-content>
                     <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
                         <button mat-button class="standard-button" (click)="onShowBookDetails(book)">Details</button>
                     </mat-card-actions>
@@ -96,6 +96,7 @@
     <mat-paginator [length]="books.length" [pageSize]="12" ></mat-paginator>
    </mat-sidenav-content>
 </mat-sidenav-container>
+
 <div class="footer">
     <app-footer></app-footer>
 </div>

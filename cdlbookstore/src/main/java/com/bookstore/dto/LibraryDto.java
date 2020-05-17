@@ -11,8 +11,8 @@ public class LibraryDto {
 
     private int id;
 
-    private String user_id;
+    private String userId;
 
-    private String book_id;
+    private String bookId;
 
 }

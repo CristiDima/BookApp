@@ -5,14 +5,7 @@ import com.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @RestController
@@ -22,6 +15,7 @@ public class BookController {
     private BookService bookService;
 
 
+    //region books
     @PostMapping("/book")
     public ResponseEntity<BookDto> saveBook(@RequestBody BookDto bookDto)
     {
@@ -51,4 +45,86 @@ public class BookController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    //endregion
+
+
+    //region loanedBooks
+    @PostMapping("/book/borrow/{id}")
+    public ResponseEntity<BookDto> borrowBook(@RequestBody int userId, @PathVariable int id)
+    {
+        return bookService.borrowBook(id, userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/loanedBooks/{id}")
+    private ResponseEntity<List<BookDto>> getLoanedBooks(@PathVariable int id) {
+        return bookService.getLoanedBooks(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+    //endregion
+
+    //region online books
+    @GetMapping("/onlineBooks/{id}")
+    private ResponseEntity<List<BookDto>> getOnlineBooks(@PathVariable int id) {
+        return bookService.getOnlineBooks(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/book/online/{id}")
+    public ResponseEntity<BookDto> addOnlineBook(@RequestBody int userId, @PathVariable int id)
+    {
+        return bookService.addOnlineBook(id, userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
+    @DeleteMapping("/book/online/{bookId}/{userId}")
+    public ResponseEntity<BookDto> deleteOnlineBook(@PathVariable int userId, @PathVariable int bookId)
+    {
+        return bookService.deleteOnlineBook(bookId, userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+    //endregion
+
+    //region wishlist
+    @PostMapping("/book/wishlist/{id}")
+    public ResponseEntity<BookDto> addWishlistBook(@RequestBody int userId, @PathVariable int id)
+    {
+        return bookService.addWishlistBook(id, userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/book/wishlist/{bookId}/{userId}")
+    public ResponseEntity<BookDto> deleteWishlistBook(@PathVariable int userId, @PathVariable int bookId)
+    {
+        return bookService.deleteWishlistBook(bookId, userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/book/wishlist/{userId}")
+    public ResponseEntity<List<BookDto>> getWishlist(@PathVariable int userId)
+    {
+        return bookService.getWishlist(userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+    //endregion
+
+    //region library
+    @GetMapping("/book/library/{userId}")
+    public ResponseEntity<List<BookDto>> getLibrary(@PathVariable int userId)
+    {
+        return bookService.getLibrary(userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+    //endregion
+
 }

@@ -37,7 +37,8 @@ import {
     MatNativeDateModule,
     MatPaginatorModule,
     MatAutocompleteModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule,
@@ -56,7 +57,8 @@ import {
     MatNativeDateModule,
     MatPaginatorModule,
     MatAutocompleteModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
   ]
 })
 export class MaterialModule {}

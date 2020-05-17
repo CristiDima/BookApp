@@ -5,9 +5,10 @@ import { DetailsComponent } from './details/details.component';
 import { LoannedBooksComponent } from './loanned-books/loanned-books.component';
 import { OnlineBooksComponent } from './online-books/online-books.component';
 import { PaymentComponent } from './payment/payment.component';
-import { ReadListComponent } from './read-list/read-list.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 import { AdminModule } from '../admin/admin.module';
 import { ProfileComponent } from './profile.component';
+import { LibraryComponent } from './library/library.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { ProfileComponent } from './profile.component';
       LoannedBooksComponent,
       OnlineBooksComponent,
       PaymentComponent,
-      ReadListComponent
+      WishlistComponent,
+      LibraryComponent
     ],
     imports: [MaterialModule, BrowserModule, AdminModule],
     providers: [],

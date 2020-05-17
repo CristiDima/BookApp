@@ -15,11 +15,18 @@
                 <mat-icon>list</mat-icon>
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
+                <!-- admin -->
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAdminPage()">Admin</button>
+                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button">Quiz</button>
+                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button">Books</button>
+                <!-- user -->
+                <hr>
+                <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>
                 <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onBooksPage()">Books</button>
+                <!-- both -->
                 <button *ngIf="!isLoggedId()" mat-menu-item class="standard-button" (click)="onLogin()">Log in</button>
                 <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onLogout()">Log out</button>
-                <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>
+                
             </mat-menu>
         </div>
     </mat-toolbar-row>

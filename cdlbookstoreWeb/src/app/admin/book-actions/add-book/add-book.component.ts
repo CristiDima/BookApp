@@ -163,7 +163,7 @@ import { ToastrService } from 'ngx-toastr';
         'typesArray': this.selectedGenres,
         'pages': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
         'year': new FormControl(0, [Validators.required]),
-        'availableBooks': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
+        'total': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
         'description': new FormControl('', [Validators.required]),
         'pdfFile': new FormControl(null, []),
         'img': new FormControl(null, [])

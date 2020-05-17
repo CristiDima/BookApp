@@ -1,4 +1,4 @@
-<div fxLayout="row wrap" class="container" *ngIf="canShowContent">
+ <div fxLayout="row wrap" class="container" *ngIf="canShowContent">
     <div fxFlex *ngFor="let book of obs | async">
         <mat-card class="book-card">
             <mat-card-header>
@@ -23,11 +23,8 @@
             <mat-card-actions  style="text-align: center;">
                 <div fxLayout fxLayout="column" >
                     <button mat-button class="standard-button" (click)="onShowBookDetails(book)">Details</button>
-                    <button class="book-action" title="Remove from online library" mat-icon-button [disabled]="false" (click)="onRemoveFromOnlineLibrary(book)">
+                    <button class="book-action" title="Remove from wishlist" mat-icon-button [disabled]="false" (click)="onRemoveFromWishlist(book)">
                         <mat-icon>delete</mat-icon>
-                    </button>
-                    <button class="book-action" mat-icon-button [disabled]="false" (click)="onReadBook(book)">
-                        <mat-icon class="read-book">picture_as_pdf</mat-icon>
                     </button>
                 </div>
             </mat-card-actions>

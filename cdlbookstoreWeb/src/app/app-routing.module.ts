@@ -19,6 +19,7 @@ import { NewPasswordComponent } from './login/new-password/new-password.componen
 import { ResetPassGuard } from './guards/reset-pass-guard.service';
 import { BookComponent } from './books/book/book.component';
 import { BookGuard } from './guards/book-guard.service';
+import { OnlineFileComponent } from './pdf-viewer/online-file.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -27,8 +28,9 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'new-password', canActivate: [ResetPassGuard], component: NewPasswordComponent},
-  { path: 'books',   canActivate: [AuthGuard], component: BooksComponent},
-  { path: 'book',   canActivate: [AuthGuard, BookGuard], component: BookComponent},
+  { path: 'books', canActivate: [AuthGuard], component: BooksComponent},
+  { path: 'book', canActivate: [AuthGuard, BookGuard], component: BookComponent},
+  { path: 'pdf-viewer', canActivate: [AuthGuard, BookGuard], component: OnlineFileComponent},
   { path: 'account',   canActivate: [AuthGuard], component: ProfileComponent},
   {
     path: 'admin',

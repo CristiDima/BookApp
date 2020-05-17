@@ -11,9 +11,9 @@ public class UserVoteDto {
 
     private int id;
 
-    private String user_id;
+    private String userId;
 
-    private String book_id;
+    private String bookId;
 
     private String rating;
 

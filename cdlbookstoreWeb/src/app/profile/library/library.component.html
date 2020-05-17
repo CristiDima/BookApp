@@ -21,14 +21,8 @@
                 </p>
             </mat-card-content>
             <mat-card-actions  style="text-align: center;">
-                <div fxLayout fxLayout="column" >
+                <div fxLayout fxLayout="column">
                     <button mat-button class="standard-button" (click)="onShowBookDetails(book)">Details</button>
-                    <button class="book-action" title="Remove from online library" mat-icon-button [disabled]="false" (click)="onRemoveFromOnlineLibrary(book)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-                    <button class="book-action" mat-icon-button [disabled]="false" (click)="onReadBook(book)">
-                        <mat-icon class="read-book">picture_as_pdf</mat-icon>
-                    </button>
                 </div>
             </mat-card-actions>
         </mat-card>

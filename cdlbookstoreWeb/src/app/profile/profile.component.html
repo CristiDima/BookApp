@@ -12,15 +12,15 @@
                 <app-payment *ngIf="userDetailsService.isLoadedInitialData"></app-payment>
             </mat-tab>
             <mat-tab label="Wishlist">
-                <app-read-list *ngIf="userDetailsService.isLoadedInitialData"></app-read-list>
+                <app-wishlist *ngIf="userDetailsService.isLoadedInitialData"></app-wishlist>
             </mat-tab>
-            <mat-tab label="Loanned">
+            <mat-tab label="Loaned">
                 <app-loanned-books *ngIf="userDetailsService.isLoadedInitialData"></app-loanned-books>
             </mat-tab>
-            <mat-tab label="Online">
+            <mat-tab label="Online library">
                 <app-online-books *ngIf="userDetailsService.isLoadedInitialData"></app-online-books>
             </mat-tab>
-            <mat-tab label="History">
+            <mat-tab label="Library">
             </mat-tab>
           </mat-tab-group>
     </div>

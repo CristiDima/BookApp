@@ -11,7 +11,7 @@ public class WishlistDto {
 
     private int id;
 
-    private String user_id;
+    private int userId;
 
-    private String book_id;
+    private int bookId;
 }

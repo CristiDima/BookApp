@@ -97,6 +97,7 @@ html { background-color: $background-color; }
     width: 250px;
     height: 400px;
     background-color: $mat-card-color;
+    object-fit: contain;
     .book-card-content {
         display: flow-root;
     }
@@ -107,6 +108,16 @@ html { background-color: $background-color; }
         overflow: hidden;
         text-overflow: ellipsis;
     }
+}
+
+.book-action {
+    color: $app-primary;
+    cursor: pointer;
+}
+
+.book-action:disabled {
+    color: $app-secondary;
+    cursor: default;
 }
 
 .small-book-card {

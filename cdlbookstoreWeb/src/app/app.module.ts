@@ -40,6 +40,11 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { BookComponent } from './books/book/book.component';
 import { BookGuard } from './guards/book-guard.service';
 import { RatingModule } from 'ng-starrating';
+import { ConfirmationComponent } from './dialog/confirmation.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { OnlineFileComponent } from './pdf-viewer/online-file.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 const config = {
     apiKey: "AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc",
@@ -62,7 +67,9 @@ const config = {
     BooksComponent,
     BookComponent,
     ResetPasswordComponent,
-    NewPasswordComponent
+    NewPasswordComponent,
+    ConfirmationComponent,
+    OnlineFileComponent
   ],
   imports: [
     BrowserModule,
@@ -83,8 +90,11 @@ const config = {
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
     AngularFireStorageModule, // storage
-    RatingModule
+    RatingModule,
+    PdfViewerModule,
+    NgxExtendedPdfViewerModule
   ],
+  entryComponents: [ConfirmationComponent],
   providers: [PagesRouting, APIRequestService, PathRequestService, UserDetailsService,
               AuthorService, BookService, GenreService, AuthenticationService, FileSaveService,
               UserSessionService, AuthGuard, AdminGuard, CustomValidatorService, ResetPassGuard,
@@ -92,3 +102,5 @@ const config = {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

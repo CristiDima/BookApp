@@ -68,6 +68,10 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource.disconnect();
   }
 
+  public getAuthorImage(book: Book): File {
+    return book.authors[0].uiImage;
+  }
+
   public get isSearchByBooksDisable(): boolean {
     if (_.isNil(this.selected)) {
       return true;
@@ -244,7 +248,6 @@ export class BooksComponent implements OnInit, OnDestroy, AfterViewInit {
       const i = this.selectedBooks.findIndex(value => value.name === book.name);
       this.selectedBooks.splice(i, 1);
     }
-    console.log(this.selectedBooks);
     this.bookControl.setValue(this.selectedBooks);
   }
 

@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {AuthorMapper.class, GenreMapper.class})
+@Mapper(componentModel = "spring")
 public interface WishlistMapper {
 
     WishlistDto wishlistDtoToWishlist(Wishlist wishlist);

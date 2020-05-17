@@ -13,14 +13,15 @@
         text-align: center;
     }
 
-    .book-action {
-        color: $app-primary;
+
+    .book-fav-action {
+        color: $app-secondary;
         cursor: pointer;
     }
 
-    .book-action:disabled {
-        color: $app-secondary;
-        cursor: default;
+    .fav-disabled {
+        color: $app-primary;
+        cursor: pointer;
     }
 
     .standard-button {

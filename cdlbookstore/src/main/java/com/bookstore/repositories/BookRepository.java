@@ -13,4 +13,9 @@ public interface BookRepository extends CrudRepository<Book, Integer> {
     @Modifying
     @Query("update Book b set b.rating = ?1, b.votes = ?2 where b.id = ?3")
     void updateBookRating(Double rating, Double votes, Integer bookId);
+
+    @Transactional
+    @Modifying
+    @Query("update Book b set b.loaned = ?1 where b.id = ?2")
+    void updateLoanedBooks(int loanedBooks, Integer bookId);
 }

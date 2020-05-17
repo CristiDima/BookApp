@@ -32,6 +32,10 @@ export class PagesRouting {
         return this._router.navigate(['book'], { state: { book: book } });
     }
 
+    public PdfViewerPage(book: Book): any {
+        return this._router.navigate(['pdf-viewer'], { state: { book: book } });
+    }
+
     public AdminPage(): any {
         return this._router.navigate(['admin']);
     }

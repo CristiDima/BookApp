@@ -18,11 +18,11 @@ public class Library {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
+    @Column(name = "user_id")
     @NotNull
-    private String user_id;
+    private int userId;
 
-    @Column
+    @Column(name = "book_id")
     @NotNull
-    private String book_id;
+    private int bookId;
 }

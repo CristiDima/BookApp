@@ -5,15 +5,17 @@ import { Book } from '../models/book.model';
 import { PathRequestService } from './path-request.service';
 import { APIRequestService } from './api-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FileSaveService } from './file-save.service';
 
 @Injectable()
 export class UserDetailsService {
 
     public userOnlineSubscription: UserOnlineSubscription = null;
     public userPhysicalSubscription: UserPhysicalSubscription = null;
-    public currentBooks: Book[] = [];
+    public loanedBooks: Book[] = [];
     public onlineBooks: Book[] = [];
-    public readList: Book[] = [];
+    public wishlist: Book[] = [];
+    public library: Book[] = [];
     public address: UserAddress = null;
 
     private isUserOnlineSubscriptionRequestFinish: boolean = false;
@@ -21,16 +23,18 @@ export class UserDetailsService {
     private isLoannedBooksRequestFinish: boolean = false;
     private isOnlineBooksRequestFinish: boolean = false;
     private isAddressRequestFinish: boolean = false;
-    // private isReadListRequestFinish: boolean = false;
+    private isWishlistRequestFinish: boolean = false;
+    private isLibraryRequestFinish: boolean = false;
 
     constructor(private userSession: UserSessionService, private pathRequest: PathRequestService,
-                private apiRequest: APIRequestService, private spinner: NgxSpinnerService) {
+                private apiRequest: APIRequestService, private spinner: NgxSpinnerService, private fileService: FileSaveService) {
         this.getUserDetails();
     }
 
     public get isLoadedInitialData(): boolean {
         return (this.isUserOnlineSubscriptionRequestFinish && this.isUserPhysicalSubscriptionRequestFinish &&
-            this.isLoannedBooksRequestFinish && this.isOnlineBooksRequestFinish && this.isAddressRequestFinish)
+            this.isLoannedBooksRequestFinish && this.isOnlineBooksRequestFinish && this.isAddressRequestFinish &&
+            this.isWishlistRequestFinish && this.isLibraryRequestFinish)
     }
 
     public get isPhysicalSubcription(): boolean {
@@ -57,8 +61,51 @@ export class UserDetailsService {
         return false;
     }
 
+    public hasOnlineBook(book: Book): boolean {
+        if (!book) {
+            return false;
+        }
+        
+        const origBook: Book = this.onlineBooks.filter(el => el.name === book.name)[0];
+
+        if (origBook) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public hasWishlistBook(book: Book): boolean {
+        if (!book) {
+            return false;
+        }
+        
+        const origBook: Book = this.wishlist.filter(el => el.name === book.name)[0];
+
+        if (origBook) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public hasLoanedBook(book: Book): boolean {
+        if (!book) {
+            return false;
+        }
+        
+        const origBook: Book = this.loanedBooks.filter(el => el.name === book.name)[0];
+
+        if (origBook) {
+            return true;
+        }
+
+        return false;
+    }
+
     public isFavouriteBook(book: Book) {
-        const favBook: Book = this.readList.filter(el => el === book)[0];
+        const favBook: Book = this.wishlist.filter(el => el.name === book.name)[0];
         if (favBook) {
             return true;
         }
@@ -82,9 +129,10 @@ export class UserDetailsService {
 
         this.getUserOnlineSubscriptionRequest(this.userSession.user.id);
         this.getUserPhysicalSubscriptionRequest(this.userSession.user.id);
-        this.getLoannedBooksRequest(this.userSession.user.id);
+        this.getLoanedBooksRequest(this.userSession.user.id);
         this.getOnlineBooksRequest(this.userSession.user.id);
-        // this.getReadListRequest(this.userSession.user.id);
+        this.getWishlistRequest(this.userSession.user.id);
+        this.getLibraryRequest(this.userSession.user.id);
         this.getAddressRequest(this.userSession.user.addressId);
 
     }
@@ -123,15 +171,20 @@ export class UserDetailsService {
         });
     }
 
-    private getLoannedBooksRequest(userId: number): void {
+    private getLoanedBooksRequest(userId: number): void {
         this.spinner.show();
         this.apiRequest.requst('GET', this.pathRequest.loanedBookPath + '/' + userId).subscribe((responseData: Book[]) => {
             if (responseData) {
-                this.currentBooks = responseData;
+                this.loanedBooks = responseData;
+                this.loanedBooks.forEach(book => {
+                    this.fileService.getBookPdf(book);
+                    this.fileService.getBookImg(book);
+                });
             }
             this.spinner.hide();
             this.isLoannedBooksRequestFinish = true;
         }, error => {
+            this.isLoannedBooksRequestFinish = true;
             this.spinner.hide();
         });
     }
@@ -141,20 +194,51 @@ export class UserDetailsService {
         this.apiRequest.requst('GET', this.pathRequest.onlineBookPath + '/' + userId).subscribe((responseData: Book[]) => {
             if (responseData) {
                 this.onlineBooks = responseData;
+                this.onlineBooks.forEach(book => {
+                    this.fileService.getBookPdf(book);
+                    this.fileService.getBookImg(book);
+                });
             }
             this.spinner.hide();
             this.isOnlineBooksRequestFinish = true;
+        }, error => {
+            this.isOnlineBooksRequestFinish = true;
+            this.spinner.hide();
         });
     }
 
-    private getReadListRequest(userId: number): void {
+    private getWishlistRequest(userId: number): void {
         this.spinner.show();
-        this.apiRequest.requst('GET', '', userId).subscribe((responseData: Book[]) => {
+        this.apiRequest.requst('GET', this.pathRequest.wishlistPath + '/' + userId).subscribe((responseData: Book[]) => {
             if (responseData) {
-                this.readList = responseData;
+                this.wishlist = responseData;
+                this.wishlist.forEach(book => {
+                    this.fileService.getBookPdf(book);
+                    this.fileService.getBookImg(book);
+                });
             }
+            this.isWishlistRequestFinish = true;
             this.spinner.hide();
         }, error => {
+            this.isWishlistRequestFinish = true;
+            this.spinner.hide();
+        });
+    }
+
+    private getLibraryRequest(userId: number): void {
+        this.spinner.show();
+        this.apiRequest.requst('GET', this.pathRequest.libraryPath + '/' + userId).subscribe((responseData: Book[]) => {
+            if (responseData) {
+                this.library = responseData;
+                this.library.forEach(book => {
+                    this.fileService.getBookPdf(book);
+                    this.fileService.getBookImg(book);
+                });
+            }
+            this.isLibraryRequestFinish = true;
+            this.spinner.hide();
+        }, error => {
+            this.isLibraryRequestFinish = true;
             this.spinner.hide();
         });
     }
@@ -168,6 +252,7 @@ export class UserDetailsService {
             this.spinner.hide();
             this.isAddressRequestFinish = true;
         }, error => {
+            this.isAddressRequestFinish = true;
             this.spinner.hide();
         });
     }

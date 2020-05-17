@@ -18,6 +18,10 @@ export class Book {
   public total: number = 0;
 
   public uiImage: File;
-  public uiFile: File;
+  public uiFile: string;
   public uiSelected: boolean = false;
+
+  public get available(): number {
+    return this.total - this.loaned;
+  }
 }
