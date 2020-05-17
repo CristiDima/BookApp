@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class BookController {
@@ -39,9 +40,9 @@ public class BookController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/book/rating/{id}")
-    private ResponseEntity<Double> updateRating(@PathVariable("id") int id, @RequestBody int rating) {
-        return  this.bookService.updateRating(id, rating)
+    @PostMapping("/book/rating/{bookId}/{userId}")
+    private ResponseEntity<Map<String, Double>> updateRating(@PathVariable int bookId, @PathVariable int userId, @RequestBody int rating) {
+        return  this.bookService.updateRating(bookId, userId, rating)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

@@ -38,6 +38,9 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private LibraryRepository libraryRepository;
 
+    @Autowired
+    private UserVoteRepository userVoteRepository;
+
     @Override
     public BookDto getBookById(int id){
         Book book = bookRepository.findById(id).get();
@@ -67,14 +70,36 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Double> updateRating (int bookId, double rating) {
+    public Optional<Map<String, Double>> updateRating (int bookId, int userId, double rating) {
         BookDto bookDto = getBookById(bookId);
         if (bookDto == null) {
             return Optional.ofNullable(null);
         }
-        double tempRating  = ((bookDto.getRating() * bookDto.getVotes()) + rating) / (bookDto.getVotes() + 1);
-        bookRepository.updateBookRating(tempRating, (bookDto.getVotes() + 1), bookId);
-        return Optional.ofNullable(tempRating);
+        UserVote userVote = userVoteRepository.getByBookIdAndAndUserId(bookId, userId);
+        double tempRating = 0;
+        Map<String, Double> ratingMap = new HashMap<>();
+        if (userVote != null) {
+            tempRating = (bookDto.getRating() * bookDto.getVotes()) - userVote.getRating();
+            tempRating += rating;
+            tempRating = tempRating / bookDto.getVotes();
+            bookRepository.updateBookRating(tempRating, (bookDto.getVotes()), bookId);
+            ratingMap.put("votes", bookDto.getVotes());
+            userVoteRepository.updateRating((int)rating, bookId, userId);
+        } else {
+            tempRating  = ((bookDto.getRating() * bookDto.getVotes()) + rating) / (bookDto.getVotes() + 1);
+            bookRepository.updateBookRating(tempRating, (bookDto.getVotes() + 1), bookId);
+            ratingMap.put("votes", bookDto.getVotes() + 1);
+
+            userVote = new UserVote();
+            userVote.setBookId(bookId);
+            userVote.setUserId(userId);
+            userVote.setRating((int)rating);
+            userVoteRepository.save(userVote);
+        }
+        ratingMap.put("rating", tempRating);
+
+
+        return Optional.ofNullable(ratingMap);
     }
     //endregion
 

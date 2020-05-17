@@ -13,7 +13,7 @@ public interface BookService {
     Optional<List<BookDto>> getBooks ();
     Optional<BookDto> saveBook(BookDto bookDto);
     Optional<BookDto> deleteBook (int id);
-    Optional<Double> updateRating (int bookId, double rating);
+    Optional<Map<String, Double>> updateRating (int bookId, int userId, double rating);
     //endregion
 
     //region loaned books

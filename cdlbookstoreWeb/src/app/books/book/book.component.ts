@@ -59,12 +59,12 @@ export class BookComponent {
     //#region events
     public onRate(event: any): void {
         this.spinner.show();
-        this._apiRequest.requst('POST', this._pathRequest.bookRating + '/' + this.selectedBook.id, event.newValue)
-        .subscribe((rating: number) => {
-            this.selectedBook.rating = rating;
-            this.selectedBook.votes++;
-            event.newValue = Math.floor(rating);
-            event.starRating._value = Math.floor(rating);
+        this._apiRequest.requst('POST', this._pathRequest.bookRating + '/' + this.selectedBook.id + '/' + this.userSesion.user.id,
+        event.newValue).subscribe((responseData: any) => {
+            this.selectedBook.rating = responseData['rating'];
+            this.selectedBook.votes = responseData['votes'];
+            event.newValue = Math.floor(this.selectedBook.rating);
+            event.starRating._value = Math.floor(this.selectedBook.rating);
             this.spinner.hide();
         }, error => {
             const msg: string = 'An error occured. Please try again.'
