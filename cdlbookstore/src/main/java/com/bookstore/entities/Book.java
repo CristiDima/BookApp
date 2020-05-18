@@ -51,7 +51,7 @@ public class Book {
     @Column
     private int loaned;
 
-    @ManyToMany(cascade=CascadeType.DETACH)
+    @ManyToMany()
     @JoinTable(
             name = "book_authors",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -59,7 +59,7 @@ public class Book {
     @EqualsAndHashCode.Exclude @ToString.Exclude
     private Set<Author> authors;
 
-    @ManyToMany(cascade=CascadeType.DETACH)
+    @ManyToMany()
     @JoinTable(
             name = "book_genres",
             joinColumns = @JoinColumn(name = "book_id"),

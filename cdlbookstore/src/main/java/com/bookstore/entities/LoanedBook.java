@@ -35,4 +35,12 @@ public class LoanedBook {
     @NotNull
     private Date dateToReturn;
 
+    @Column
+    private boolean ordered;
+
+    @Column
+    private boolean delivered;
+
+    @Column
+    private boolean returned;
 }

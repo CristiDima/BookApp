@@ -20,4 +20,10 @@ public class LoanedBookDto {
     private Date loanedAt;
 
     private Date dateToReturn;
+
+    private boolean ordered;
+
+    private boolean delivered;
+
+    private boolean returned;
 }

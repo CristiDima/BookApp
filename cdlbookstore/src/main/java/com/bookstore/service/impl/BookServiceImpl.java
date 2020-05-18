@@ -1,21 +1,23 @@
 package com.bookstore.service.impl;
 
+import com.bookstore.dto.AddressDto;
+import com.bookstore.dto.UserBookstoreDto;
+import com.bookstore.dto.UserCredentialsDto;
 import com.bookstore.entities.*;
 import com.bookstore.repositories.*;
+import com.bookstore.service.AddressService;
 import com.bookstore.service.BookService;
 import com.bookstore.dto.BookDto;
 import com.bookstore.mapper.BookMapper;
-import com.google.cloud.storage.*;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.StorageClient;
+import com.bookstore.service.UserBookstoreService;
+import com.bookstore.service.UserCredentialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -40,6 +42,15 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private UserVoteRepository userVoteRepository;
+
+    @Autowired
+    private UserBookstoreService userBookstoreService;
+
+    @Autowired
+    private AddressService addressService;
+
+    @Autowired
+    private UserCredentialsService userCredentialsService;
 
     @Override
     public BookDto getBookById(int id){
@@ -121,6 +132,7 @@ public class BookServiceImpl implements BookService {
         loanedBook.setBookId(bookId);
         loanedBook.setUserId(userId);
         loanedBook.setLoanedAt(date);
+        loanedBook.setOrdered(true);
         c.add(Calendar.DATE, 30);
         date = c.getTime();
         loanedBook.setDateToReturn(date);
@@ -204,33 +216,35 @@ public class BookServiceImpl implements BookService {
     //region online books
     @Override
     public Optional<BookDto> addOnlineBook(int bookId, int userId) {
-        if (bookId == 0 || userId == 0) {
-            return Optional.ofNullable(null);
-        }
-        Book book = bookRepository.findById(bookId).orElse(null);
-        if (book == null) {
-            return Optional.ofNullable(null);
-        }
-        OnlineBook onlineBook = new OnlineBook();
-        onlineBook.setBookId(bookId);
-        onlineBook.setUserId(userId);
-        onlineBookRepository.save(onlineBook);
+        if (bookId != 0 && userId != 0) {
+            Book book = bookRepository.findById(bookId).orElse(null);
+            if (book == null) {
+                return Optional.ofNullable(null);
+            }
+            OnlineBook onlineBook = new OnlineBook();
+            onlineBook.setBookId(bookId);
+            onlineBook.setUserId(userId);
+            onlineBookRepository.save(onlineBook);
 
-        return Optional.ofNullable(bookMapper.bookToBookDto(book));
+            return Optional.ofNullable(bookMapper.bookToBookDto(book));
+        } else {
+            return Optional.ofNullable(null);
+        }
     }
 
     @Override
     public Optional<BookDto> deleteOnlineBook(int bookId, int userId) {
-        if (bookId == 0 || userId == 0) {
-            return Optional.ofNullable(null);
-        }
-        Book book = bookRepository.findById(bookId).orElse(null);
-        if (book == null) {
-            return Optional.ofNullable(null);
-        }
-        onlineBookRepository.deleteByBookIdAndUserId(bookId, userId);
+        if (bookId != 0 && userId != 0) {
+            Book book = bookRepository.findById(bookId).orElse(null);
+            if (book == null) {
+                return Optional.ofNullable(null);
+            }
+            onlineBookRepository.deleteByBookIdAndUserId(bookId, userId);
 
-        return Optional.ofNullable(bookMapper.bookToBookDto(book));
+            return Optional.ofNullable(bookMapper.bookToBookDto(book));
+        } else {
+            return Optional.ofNullable(null);
+        }
     }
 
     @Override
@@ -242,6 +256,113 @@ public class BookServiceImpl implements BookService {
                 books.add(getBookById(loanedBook.getBookId()))
         );
         return Optional.ofNullable(books);
+    }
+    //endregion
+
+    //region management books
+    @Override
+    public Optional<Map<String, Map<String, Object>>> getExpiredLoanBooks() {
+        Map<String, Map<String, Object>> responseBooks = new HashMap<>();
+        List<LoanedBook> loanedBooks = loanedBookRepository.findByDeliveredTrueAndReturnedFalse();
+        List<LoanedBook> expiredLoan = new ArrayList<>();
+        loanedBooks.forEach(loanedBook -> {
+            Instant now = new Date().toInstant();
+            Instant returnDate = loanedBook.getDateToReturn().toInstant();
+            int days = (int) ChronoUnit.DAYS.between(now, returnDate);
+
+            if (days <= 2) {
+                expiredLoan.add(loanedBook);
+            }
+        });
+        this.serializeBooks(expiredLoan, responseBooks);
+        return Optional.ofNullable(responseBooks);
+    }
+
+    @Override
+    public Optional<Map<String, Map<String, Object>>> getOrderedBooks() {
+        Map<String, Map<String, Object>> responseBooks = new HashMap<>();
+        List<LoanedBook> loanedBooks = loanedBookRepository.findByOrderedTrueAndDeliveredFalse();
+
+        serializeBooks(loanedBooks, responseBooks);
+
+        return Optional.ofNullable(responseBooks);
+
+    }
+
+    @Override
+    public Optional<Map<String, Map<String, Object>>> getReturnedBooks() {
+        Map<String, Map<String, Object>> responseBooks = new HashMap<>();
+        List<LoanedBook> loanedBooks = loanedBookRepository.findByReturnedTrue();
+
+        serializeBooks(loanedBooks, responseBooks);
+
+        return Optional.ofNullable(responseBooks);
+    }
+
+    private void serializeBooks(List<LoanedBook> loanedBooks, Map<String, Map<String, Object>> responseBooks) {
+        AtomicInteger idx = new AtomicInteger();
+        loanedBooks.forEach(e -> {
+            Map<String, Object> tempBook = new HashMap<>();
+            Book book = bookRepository.findById(e.getBookId()).orElse(null);
+            if (book != null) {
+                tempBook.put("bookName", book.getName());
+                tempBook.put("bookId", book.getId());
+            }
+            UserBookstoreDto user = userBookstoreService.getUserById(e.getUserId()).orElse(null);
+            if (user != null) {
+                tempBook.put("clientName", user.getFirstName() + " " + user.getLastName());
+                tempBook.put("phoneNumber", user.getPhoneNumber());
+                tempBook.put("userId", user.getId());
+                AddressDto address = addressService.getAddress(user.getId()).orElse(null);
+                if (address != null) {
+                    tempBook.put("address", address.getAddress());
+                    tempBook.put("city", address.getCity());
+                    tempBook.put("district", address.getDistrict());
+                }
+                UserCredentialsDto userCredentials = userCredentialsService.findUserByUserId(user.getId());
+                if (userCredentials != null) {
+                    tempBook.put("email", userCredentials.getEmail());
+                }
+                Instant now = new Date().toInstant();
+                Instant returnDate = e.getDateToReturn().toInstant();
+                int days = (int) ChronoUnit.DAYS.between(now, returnDate);
+                tempBook.put("remainedDays", days);
+                tempBook.put("dateToReturn", e.getDateToReturn());
+                responseBooks.put("idx", tempBook);
+                idx.getAndIncrement();
+            }
+        });
+    }
+
+    @Override
+    public Optional<Boolean> deleteOrderedBooks(int bookId, int userId) {
+        LoanedBook loanedBook = loanedBookRepository.findByBookIdAndUserId(bookId, userId);
+        if (loanedBook != null) {
+            loanedBookRepository.updateLoanedBooks(true, bookId, userId);
+            return Optional.ofNullable(true);
+        }
+        return Optional.ofNullable(false);
+    }
+
+    @Override
+    public Optional<BookDto> returnBook(int bookId, int userId) {
+        LoanedBook loanedBook = loanedBookRepository.findByBookIdAndUserId(bookId, userId);
+        if (loanedBook != null) {
+            loanedBookRepository.updateReturnedBook(true, bookId, userId);
+            BookDto bookDto = getBookById(bookId);
+            return Optional.ofNullable(bookDto);
+        }
+        return Optional.ofNullable(null);
+    }
+
+    @Override
+    public Optional<Boolean> confirmBookReturn(int bookId, int userId) {
+        LoanedBook loanedBook = loanedBookRepository.findByBookIdAndUserId(bookId, userId);
+        if (loanedBook != null) {
+            loanedBookRepository.delete(loanedBook);
+            return Optional.ofNullable(true);
+        }
+        return Optional.ofNullable(false);
     }
     //endregion
 }

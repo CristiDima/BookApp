@@ -40,6 +40,10 @@ export class PagesRouting {
         return this._router.navigate(['admin']);
     }
 
+    public ManagementPage(): any {
+        return this._router.navigate(['management']);
+    }
+
     public UserAccountPage(): any {
         return this._router.navigate(['account']);
     }

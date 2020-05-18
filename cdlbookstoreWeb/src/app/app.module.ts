@@ -7,7 +7,7 @@ import { MaterialModule } from './shared/material.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { SignupComponent } from './signup/signup.component';
 import { BooksComponent } from './books/books.component';
@@ -45,6 +45,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { OnlineFileComponent } from './pdf-viewer/online-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { ManagementModule } from './admin-management/management.module';
 
 const config = {
     apiKey: "AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc",
@@ -79,6 +80,7 @@ const config = {
     FlexLayoutModule,
     HttpClientModule,
     AdminModule,
+    ManagementModule,
     ProfileModule,
     NgxSpinnerModule,
     SlideshowModule,

@@ -20,6 +20,8 @@ import { ResetPassGuard } from './guards/reset-pass-guard.service';
 import { BookComponent } from './books/book/book.component';
 import { BookGuard } from './guards/book-guard.service';
 import { OnlineFileComponent } from './pdf-viewer/online-file.component';
+import { OrderedBooksComponent } from './admin-management/ordered-books/ordered-books.component';
+import { ManagementComponent } from './admin-management/management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -43,8 +45,16 @@ const routes: Routes = [
     { path: 'author/add', component: AddAuthorComponent},
     { path: 'author/delete', component: DeleteAuthorComponent},
     { path: 'genre/add', component: AddGenreComponent},
-    { path: 'genre/delete', component: DeleteGenreComponent}
-  ] },
+    { path: 'genre/delete', component: DeleteGenreComponent}] 
+  },
+  {
+    path: 'management',
+    canActivate: [AuthGuard, AdminGuard],
+    canActivateChild: [AuthGuard],
+    component: ManagementComponent,
+    children: [
+    { path: 'management/orderded', component: OrderedBooksComponent}]
+  },
   { path: '**',  redirectTo: 'home'}
 ];
 

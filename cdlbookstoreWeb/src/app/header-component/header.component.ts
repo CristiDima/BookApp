@@ -45,5 +45,9 @@ export class HeaderComponent {
     protected onAdminPage(): any {
         this._pagesRouting.AdminPage();
     }
+
+    protected onManaagementPage(): any {
+        this._pagesRouting.ManagementPage();
+    }
     //endregion
 }

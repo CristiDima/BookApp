@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 
 @Injectable()
 export  class PathRequestService {
+    //#region book
     public bookPath = environment.url + '/book';
     public borrowPath = environment.url + '/book/borrow';
     public onlinePath = environment.url + '/book/online';
@@ -11,6 +12,14 @@ export  class PathRequestService {
     public bookRating = environment.url + '/book/rating';
     public onlineBookPath = environment.url + '/onlineBooks'
     public loanedBookPath = environment.url + '/loanedBooks'
+    //#endregion
+    
+    //#region bookManagement
+    public expiredLoanPath = environment.url + '/book/expiredLoan';
+    public orderedPath = environment.url + '/book/ordered';
+    public returnedPath = environment.url + '/book/returned';
+    //#endregion
+
     public onlineAccountPath = environment.url + '/onlineAccount'
     public physicalAccountPath = environment.url + '/physicalAccount'
     public readListBookPath = environment.url + '/readListBook'

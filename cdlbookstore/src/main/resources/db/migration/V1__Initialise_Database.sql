@@ -158,6 +158,9 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`loaned_books` (
   `book_id` INT NOT NULL,
   `loaned_at` DATETIME NOT NULL,
   `date_to_return` DATETIME NOT NULL,
+  `ordered` boolean DEFAULT true,
+  `delivered` boolean DEFAULT false,
+  `returned` boolean DEFAULT false,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id),
   FOREIGN KEY (book_id) REFERENCES book(id));

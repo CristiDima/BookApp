@@ -18,7 +18,6 @@ com\bookstore\dto\OnlineBookDto.class
 com\bookstore\service\impl\UserSessionServiceImpl.class
 com\bookstore\dto\UserSessionDto.class
 com\bookstore\repositories\UserVoteRepository.class
-com\bookstore\service\impl\OnlineBookServiceImpl.class
 com\bookstore\service\UserPhysicalAccountService.class
 com\bookstore\dto\UserBookstoreDto.class
 com\bookstore\service\AuthenticationService.class
@@ -35,8 +34,6 @@ com\bookstore\mapper\BookMapper.class
 com\bookstore\service\impl\UserCredentialsServiceImpl.class
 com\bookstore\service\EmailService.class
 com\bookstore\service\UserBookstoreService.class
-com\bookstore\service\LoanedBookService.class
-com\bookstore\service\OnlineBookService.class
 com\bookstore\entities\OnlineBook.class
 com\bookstore\mapper\UserSessionMapperImpl.class
 com\bookstore\mapper\LoanedBookMapper.class
@@ -45,7 +42,6 @@ com\bookstore\CdlbookstoreApplication.class
 com\bookstore\entities\Genre.class
 com\bookstore\entities\UserResetPassword.class
 com\bookstore\repositories\WishlistRepository.class
-com\bookstore\controller\LoanedBookController.class
 com\bookstore\entities\Address.class
 com\bookstore\controller\AuthenticationController.class
 com\bookstore\mapper\UserResetPasswordMapper.class
@@ -86,9 +82,7 @@ com\bookstore\service\GenreService.class
 com\bookstore\mapper\LoanedBookMapperImpl.class
 com\bookstore\entities\UserOnlineAccount.class
 com\bookstore\mapper\OnlineBookMapperImpl.class
-com\bookstore\service\impl\LoanedBookServiceImpl.class
 com\bookstore\service\UserSessionService.class
-com\bookstore\controller\OnlineBookController.class
 com\bookstore\dto\LoanedBookDto.class
 com\bookstore\service\impl\AuthenticationServiceImpl.class
 com\bookstore\mapper\UserSessionMapper.class
