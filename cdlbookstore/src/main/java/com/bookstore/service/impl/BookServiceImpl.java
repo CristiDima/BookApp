@@ -1,16 +1,10 @@
 package com.bookstore.service.impl;
 
-import com.bookstore.dto.AddressDto;
-import com.bookstore.dto.UserBookstoreDto;
-import com.bookstore.dto.UserCredentialsDto;
+import com.bookstore.dto.*;
 import com.bookstore.entities.*;
 import com.bookstore.repositories.*;
-import com.bookstore.service.AddressService;
-import com.bookstore.service.BookService;
-import com.bookstore.dto.BookDto;
+import com.bookstore.service.*;
 import com.bookstore.mapper.BookMapper;
-import com.bookstore.service.UserBookstoreService;
-import com.bookstore.service.UserCredentialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +46,12 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private UserCredentialsService userCredentialsService;
 
+    @Autowired
+    private AuthorRepository authorRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
+
     @Override
     public BookDto getBookById(int id){
         Book book = bookRepository.findById(id).get();
@@ -69,7 +69,18 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<BookDto> saveBook(BookDto bookDto) {
-        bookRepository.save(bookMapper.bookDtoToBook(bookDto));
+        Book book = bookMapper.bookDtoToBook(bookDto);
+        Set<Author> authorSet = new HashSet<>();
+        for( Author author: book.getAuthors()) {
+            authorSet.add(authorRepository.findById(author.getId()).orElse(null));
+        }
+        book.setAuthors(authorSet);
+        Set<Genre> genreSet = new HashSet<>();
+        for( Genre genre: book.getGenres()) {
+            genreSet.add(genreRepository.findById(genre.getId()).orElse(null));
+        }
+        book.setGenres(genreSet);
+        bookRepository.save(book);
         return Optional.ofNullable(bookDto);
     }
 

@@ -2,6 +2,7 @@ package com.bookstore.entities;
 
 import com.google.common.base.MoreObjects;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -51,7 +52,7 @@ public class Book {
     @Column
     private int loaned;
 
-    @ManyToMany()
+    @ManyToMany( cascade = CascadeType.ALL )
     @JoinTable(
             name = "book_authors",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -59,7 +60,7 @@ public class Book {
     @EqualsAndHashCode.Exclude @ToString.Exclude
     private Set<Author> authors;
 
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "book_genres",
             joinColumns = @JoinColumn(name = "book_id"),
