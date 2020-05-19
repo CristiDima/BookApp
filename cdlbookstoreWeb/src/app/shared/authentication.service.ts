@@ -159,6 +159,10 @@ export class AuthenticationService {
       return this.apiRequest.requst('GET', this.pathRequest.resetPasswordPath + '/' + userId + '/' + token);
     }
 
+    public canCreateAccount(token: string, companyName: string): Observable<boolean> {
+      return this.apiRequest.requst('GET', this.pathRequest.businessSignup + '/' + companyName + '/' + token);
+    }
+
     public isAdmin(): Promise<boolean> {
       const promise = new Promise<boolean>(
           (resolve, reject) => {
@@ -168,6 +172,28 @@ export class AuthenticationService {
           }
         );
         return promise;
+  }
+
+    public isBusiness(): Promise<boolean> {
+      const promise = new Promise<boolean>(
+          (resolve, reject) => {
+            setTimeout(() => {
+              resolve(this.userSessionService.isBusiness());
+            });
+          }
+        );
+        return promise;
+    }
+
+  public isUser(): Promise<boolean> {
+    const promise = new Promise<boolean>(
+        (resolve, reject) => {
+          setTimeout(() => {
+            resolve(this.userSessionService.isUser());
+          });
+        }
+      );
+      return promise;
   }
   //endregion
 

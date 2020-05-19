@@ -21,12 +21,13 @@ public class UserBookstore {
     private int id;
 
     @Column(name = "first_name")
-    @NotNull
     private String firstName;
 
     @Column(name = "last_name")
-    @NotNull
     private String lastName;
+
+    @Column(name = "company_name")
+    private String companyName;
 
     @Column(name = "address_id")
     @NotNull
@@ -43,8 +44,8 @@ public class UserBookstore {
     @Column(name = "is_business")
     private boolean isBusiness;
 
-    @Column(name = "business_id")
-    private boolean businessId;
+    @Column(name = "is_from_business")
+    private boolean isFromBusiness;
 
     @Column(name = "total_books")
     private int totalBooks;

@@ -48,6 +48,12 @@ public class UserBookstoreServiceImpl implements UserBookstoreService {
     }
 
     @Override
+    public UserBookstoreDto getByCompanyName(String businessName) {
+        UserBookstore userBookstore = userBookstoreRepository.findByCompanyName(businessName);
+        return userBookstoreMapper.userBookstoreToUserBookstoreDto(userBookstore);
+    }
+
+    @Override
     public Optional<Map<String, String>> updateUser(int userId, Map<String, String> userDetails) {
         if (userDetails.get("address") == null || userDetails.get("city") == null && userDetails.get("district") == null) {
             Optional.ofNullable(null);

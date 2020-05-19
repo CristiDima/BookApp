@@ -22,7 +22,9 @@ import { BookGuard } from './guards/book-guard.service';
 import { OnlineFileComponent } from './pdf-viewer/online-file.component';
 import { OrderedBooksComponent } from './admin-management/ordered-books/ordered-books.component';
 import { ManagementComponent } from './admin-management/management.component';
-import { BusinessSignupComponent } from './business/business-page/business-page.component';
+import { BusinessSignupComponent } from './business-signup/business-signup.component';
+import { UserGuard } from './guards/user-guard';
+import { SignupGuard } from './guards/signup-guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -30,16 +32,17 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'businessSignup', component: BusinessSignupComponent},
+  { path: 'employerSignup', canActivate: [SignupGuard], component: BusinessSignupComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'new-password', canActivate: [ResetPassGuard], component: NewPasswordComponent},
-  { path: 'books', canActivate: [AuthGuard], component: BooksComponent},
-  { path: 'book', canActivate: [AuthGuard, BookGuard], component: BookComponent},
-  { path: 'pdf-viewer', canActivate: [AuthGuard, BookGuard], component: OnlineFileComponent},
-  { path: 'account',   canActivate: [AuthGuard], component: ProfileComponent},
+  { path: 'books', canActivate: [AuthGuard, UserGuard], component: BooksComponent},
+  { path: 'book', canActivate: [AuthGuard, BookGuard, UserGuard], component: BookComponent},
+  { path: 'pdf-viewer', canActivate: [AuthGuard, BookGuard, UserGuard], component: OnlineFileComponent},
+  { path: 'account',   canActivate: [AuthGuard, UserGuard], component: ProfileComponent},
   {
     path: 'admin',
     canActivate: [AuthGuard, AdminGuard],
-    canActivateChild: [AuthGuard],
+    canActivateChild: [AuthGuard, AdminGuard],
     component: AdminComponent,
     children: [
     { path: 'book/add', component: AddBookComponent},
@@ -52,7 +55,7 @@ const routes: Routes = [
   {
     path: 'management',
     canActivate: [AuthGuard, AdminGuard],
-    canActivateChild: [AuthGuard],
+    canActivateChild: [AuthGuard, AdminGuard],
     component: ManagementComponent,
     children: [
     { path: 'management/orderded', component: OrderedBooksComponent}]

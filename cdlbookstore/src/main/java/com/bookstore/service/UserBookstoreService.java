@@ -11,4 +11,5 @@ public interface UserBookstoreService {
     UserBookstoreDto saveUser(UserBookstoreDto userBookstoreDto);
     Optional<Map<String, String>> updateUser(int userId, Map<String, String> userDetails);
     void updateUserInfoById(String firstName, String lastName, String phoneNumber, Integer userId);
+    UserBookstoreDto getByCompanyName(String businessName);
 }

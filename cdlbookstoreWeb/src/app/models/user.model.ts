@@ -6,6 +6,8 @@ export class User {
     public phoneNumber: number;
     public addressId: number;
     public admin: boolean;
+    public business: boolean;
+    public fromBusiness: boolean;
     public totalBooks: number = 5;
 }
 

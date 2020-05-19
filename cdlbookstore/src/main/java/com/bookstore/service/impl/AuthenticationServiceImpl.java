@@ -94,28 +94,45 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return Optional.ofNullable(null);
         }
 
-        if(userDetails.get("firstName") == null || userDetails.get("lastName") == null || userDetails.get("phoneNumber") == null) {
+        if((userDetails.get("firstName") == null || userDetails.get("lastName") == null) && userDetails.get("companyName") == null ) {
             return Optional.ofNullable(null);
         }
 
-        if(userDetails.get("email") == null || userDetails.get("password") == null) {
+        if(userDetails.get("email") == null || userDetails.get("password") == null || userDetails.get("phoneNumber") == null) {
             return Optional.ofNullable(null);
         }
 
         AddressDto addressDto = null;
-        Address address = new Address();
-        address.setAddress(userDetails.get("address"));
-        address.setCity(userDetails.get("city"));
-        address.setDistrict(userDetails.get("district"));
-        addressDto = addressService.saveAddress(addressMapper.addressToAddressDto(address));
-
         UserBookstoreDto userBookstoreDto = null;
         UserBookstore userBookstore = new UserBookstore();
-        userBookstore.setAdmin(false);
-        userBookstore.setFirstName(userDetails.get("firstName"));
-        userBookstore.setLastName(userDetails.get("lastName"));
+        if (userDetails.get("is_from_business") == null) {
+            Address address = new Address();
+            address.setAddress(userDetails.get("address"));
+            address.setCity(userDetails.get("city"));
+            address.setDistrict(userDetails.get("district"));
+            addressDto = addressService.saveAddress(addressMapper.addressToAddressDto(address));
+            userBookstore.setAddressId(addressDto.getId());
+        } else {
+            userBookstore.setFromBusiness(true);
+            UserBookstoreDto tempUserBookstore = userBookstoreService.getByCompanyName(userDetails.get("companyName"));
+            userBookstore.setAddressId(tempUserBookstore.getAddressId());
+        }
+
+        if (userDetails.get("isAdmin") == null) {
+            userBookstore.setAdmin(false);
+        } else {
+            userBookstore.setAdmin(true);
+        }
+
+        if (userDetails.get("firstName") != null || userDetails.get("lastName") != null) {
+            userBookstore.setFirstName(userDetails.get("firstName"));
+            userBookstore.setLastName(userDetails.get("lastName"));
+        } else if (userDetails.get("companyName") != null) {
+            userBookstore.setCompanyName(userDetails.get("companyName"));
+            userBookstore.setBusiness(true);
+        }
+
         userBookstore.setPhoneNumber(userDetails.get("phoneNumber"));
-        userBookstore.setAddressId(addressDto.getId());
         userBookstoreDto = userBookstoreService.saveUser(userBookstoreMapper.userBookstoreToUserBookstoreDto(userBookstore));
 
         UserCredentials userCredentials = new UserCredentials();
@@ -123,7 +140,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userCredentials.setEmail(userDetails.get("email"));
         userCredentials.setPassword(userDetails.get("password"));
         userCredentialsService.saveUserAccountDetails(userCredentialsMapper.userCredentialsToUserCredentialsDto(userCredentials));
-        emailService.sendCreateAccountEmail(userCredentials.getEmail(), userBookstoreDto.getFirstName() + " " + userBookstoreDto.getLastName());
+        String name = "";
+        if (userBookstoreDto.getFirstName() != null && userBookstoreDto.getLastName() != null) {
+            name = userBookstoreDto.getFirstName() + " " + userBookstoreDto.getLastName();
+        } else if (userBookstoreDto.getCompanyName() != null){
+            name = userBookstoreDto.getCompanyName();
+        }
+
+        emailService.sendCreateAccountEmail(userCredentials.getEmail(), name);
         return Optional.ofNullable(userDetails);
     }
 

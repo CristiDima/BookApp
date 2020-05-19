@@ -9,34 +9,21 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`address` (
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`business`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`business` (
-  `id` INT NOT NULL,
-  `company_name` VARCHAR(200) NOT NULL,
-  `address_id` INT NOT NULL,
-  `phone_number` VARCHAR(10),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (address_id) REFERENCES address(id));
-
--- -----------------------------------------------------
 -- Table `cdlstore`.`user_bookstore`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
   `id` INT NOT NULL,
-  `first_name` VARCHAR(200) NOT NULL,
-  `last_name` VARCHAR(200) NOT NULL,
+  `first_name` VARCHAR(200) NULL,
+  `last_name` VARCHAR(200) NULL,
+  `company_name` VARCHAR(200) NULL DEFAULT NULL,
   `address_id` INT NOT NULL,
   `phone_number` VARCHAR(10),
   `is_admin` boolean NOT NULL,
+  `is_from_business` boolean NULL DEFAULT false,
   `is_business` boolean NULL DEFAULT false,
-  `business_id` INT NULL,
   `total_books` INT NULL DEFAULT 5,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (address_id) REFERENCES address(id),
-  FOREIGN KEY (business_id) REFERENCES business(id));
-
-
+  FOREIGN KEY (address_id) REFERENCES address(id));
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`user_credentials`
@@ -48,17 +35,6 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_credentials` (
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
-
-  -- -----------------------------------------------------
--- Table `cdlstore`.`business_credentials`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`business_credentials` (
-  `id` INT NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
-  `password` VARCHAR(50) NOT NULL,
-  `business_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (business_id) REFERENCES business(id));
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`user_reset_password`
@@ -103,9 +79,9 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`business_account` (
   `is_valid` boolean NOT NULL,
   `activated_at` DATETIME NOT NULL,
   `expires_at` DATETIME NULL,
-  `business_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (business_id) REFERENCES business(id));
+  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`user_session`

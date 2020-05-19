@@ -46,7 +46,9 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { OnlineFileComponent } from './pdf-viewer/online-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ManagementModule } from './admin-management/management.module';
-import { BusinessSignupComponent } from './business/business-page/business-page.component';
+import { BusinessSignupComponent } from './business-signup/business-signup.component';
+import { EmployerSignupComponent } from './employer-signup/employer-signup.component';
+import { SignupGuard } from './guards/signup-guard';
 
 const config = {
     apiKey: "AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc",
@@ -72,7 +74,8 @@ const config = {
     NewPasswordComponent,
     ConfirmationComponent,
     OnlineFileComponent,
-    BusinessSignupComponent
+    BusinessSignupComponent,
+    EmployerSignupComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +105,7 @@ const config = {
   providers: [PagesRouting, APIRequestService, PathRequestService, UserDetailsService,
               AuthorService, BookService, GenreService, AuthenticationService, FileSaveService,
               UserSessionService, AuthGuard, AdminGuard, CustomValidatorService, ResetPassGuard,
-              BookGuard],
+              BookGuard, SignupGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

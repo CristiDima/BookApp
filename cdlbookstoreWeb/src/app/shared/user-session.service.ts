@@ -39,11 +39,47 @@ export class UserSessionService {
             return false;
         }
 
-        if (!this.user.admin) {
+        if (this.user.admin) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public isUser(): boolean {
+        if (_.isNil(this.user)){
+            return false;
+        }
+
+        if (this.user.admin || this.user.business) {
             return false;
         }
 
         return true;
+    }
+
+    public isBusiness(): boolean {
+        if (_.isNil(this.user)){
+            return false;
+        }
+
+        if ( this.user.business) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public isFromBusiness(): boolean {
+        if (_.isNil(this.user)){
+            return false;
+        }
+
+        if ( this.user.fromBusiness) {
+            return true;
+        }
+
+        return false;
     }
 
     public isLoggedIn(): boolean {

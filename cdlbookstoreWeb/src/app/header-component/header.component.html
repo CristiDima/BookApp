@@ -20,9 +20,10 @@
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button">Create Quiz</button>
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button" (click)="onManaagementPage()">Check Books</button>
                 <!-- user -->
-                <hr>
-                <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>
-                <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onBooksPage()">Books</button>
+                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>
+                <button *ngIf="isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBooksPage()">Books</button>
+                <!-- business -->
+                <button *ngIf=" isBusiness() && isLoggedId()" mat-menu-item class="standard-button">Profile</button>
                 <!-- both -->
                 <button *ngIf="!isLoggedId()" mat-menu-item class="standard-button" (click)="onLogin()">Log in</button>
                 <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onLogout()">Log out</button>

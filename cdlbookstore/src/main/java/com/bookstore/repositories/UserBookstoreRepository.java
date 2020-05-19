@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface UserBookstoreRepository extends CrudRepository<UserBookstore, Integer> {
 
+    UserBookstore findByCompanyName(String companyName);
+
     @Transactional
     @Modifying
     @Query("update UserBookstore u set u.firstName = ?1, u.lastName = ?2, u.phoneNumber = ?3 where u.id = ?4")

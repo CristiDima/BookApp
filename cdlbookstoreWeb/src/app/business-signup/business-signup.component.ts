@@ -8,9 +8,9 @@ import { APIRequestService } from 'src/app/shared/api-request.service';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 
 @Component({
-  selector: 'app-business-page',
-  templateUrl: './business-page.component.html',
-  styleUrls: ['./business-page.component.scss']
+  selector: 'app-business-signup',
+  templateUrl: './business-signup.component.html',
+  styleUrls: ['./business-signup.component.scss']
 })
 export class BusinessSignupComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class BusinessSignupComponent implements OnInit {
 
   ngOnInit() {
     this.signupForm = new FormGroup({
-      'businessName': new FormControl(null, [Validators.required]),
+      'companyName': new FormControl(null, [Validators.required]),
       'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'repeatPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
       'email': new FormControl(null, [Validators.required, Validators.email]),
@@ -67,7 +67,7 @@ export class BusinessSignupComponent implements OnInit {
       convMap[key] = val;
     });
     this.spinner.show();
-    this.apiRequest.requst('POST', this.pathRequest.businessSignup, convMap).subscribe((responseData: any) => {
+    this.apiRequest.requst('POST', this.pathRequest.signupPath, convMap).subscribe((responseData: any) => {
         this.hasError = false;
         this._pagesRouting.LoginPage();
         this.signupForm.reset();

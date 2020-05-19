@@ -15,11 +15,17 @@ public class UserBookstoreDto {
 
     private String lastName;
 
+    private String companyName;
+
     private int addressId;
 
     private  String phoneNumber;
 
     private boolean isAdmin;
+
+    private boolean isBusiness;
+
+    private boolean isFromBusiness;
 
     private int totalBooks;
 }

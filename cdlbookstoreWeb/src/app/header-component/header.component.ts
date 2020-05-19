@@ -17,6 +17,14 @@ export class HeaderComponent {
         return this._userService.isAdmin();
     }
 
+    public isUser(): boolean {
+        return this._userService.isUser();
+    }
+
+    public isBusiness(): boolean {
+        return this._userService.isBusiness();
+    }
+
     public isLoggedId(): boolean {
         return this._userService.isLoggedIn();
     }
