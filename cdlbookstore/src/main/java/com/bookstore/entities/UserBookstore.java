@@ -40,6 +40,12 @@ public class UserBookstore {
     @NotNull
     private boolean isAdmin;
 
+    @Column(name = "is_business")
+    private boolean isBusiness;
+
+    @Column(name = "business_id")
+    private boolean businessId;
+
     @Column(name = "total_books")
     private int totalBooks;
 }

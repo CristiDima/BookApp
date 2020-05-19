@@ -123,7 +123,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userCredentials.setEmail(userDetails.get("email"));
         userCredentials.setPassword(userDetails.get("password"));
         userCredentialsService.saveUserAccountDetails(userCredentialsMapper.userCredentialsToUserCredentialsDto(userCredentials));
-        emailService.sendCreateAccountEmail(userCredentials.getEmail());
+        emailService.sendCreateAccountEmail(userCredentials.getEmail(), userBookstoreDto.getFirstName() + " " + userBookstoreDto.getLastName());
         return Optional.ofNullable(userDetails);
     }
 

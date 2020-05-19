@@ -44,6 +44,10 @@ export class LoginComponent implements OnInit {
     this._pagesRouting.SignUpPage();
   }
 
+  protected onBusinessSignUpPage() {
+    this._pagesRouting.BusinessSignUpPage();
+  }
+
   protected onResetPasswordPage() {
     this._pagesRouting.ResetPasswordPage();
   }

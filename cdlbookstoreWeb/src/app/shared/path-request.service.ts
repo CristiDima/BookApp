@@ -20,6 +20,10 @@ export  class PathRequestService {
     public returnedPath = environment.url + '/book/returned';
     //#endregion
 
+    //#region business
+    public businessSignup = environment.url + '/businessSignup';
+    //#endregion
+
     public onlineAccountPath = environment.url + '/onlineAccount'
     public physicalAccountPath = environment.url + '/physicalAccount'
     public readListBookPath = environment.url + '/readListBook'

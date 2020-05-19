@@ -20,6 +20,10 @@ export class PagesRouting {
         return this._router.navigate(['signup']);
     }
 
+    public BusinessSignUpPage(): any {
+        return this._router.navigate(['businessSignup']);
+    }
+
     public ResetPasswordPage(): any {
         return this._router.navigate(['reset-password']);
     }

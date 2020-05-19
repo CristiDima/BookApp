@@ -28,11 +28,19 @@ public class EmailServiceImpl implements EmailService {
     private TemplateEngine templateEngine;
 
     @Override
-    public void sendCreateAccountEmail(String to) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Bookstore account");
-        message.setText("Your bookster account was created");
+    public void sendCreateAccountEmail(String to, String lastName) {
+        MimeMessage message = this.getJavaMailSender().createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            helper.setTo(to);
+            helper.setSubject("Create an account");
+            Map<String, String> values = new HashMap<>();
+            values.put("username", lastName);
+            helper.setText(this.generateMailHtml(values, "NewAccountTemplate"), true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
         this.getJavaMailSender().send(message);
     }
 

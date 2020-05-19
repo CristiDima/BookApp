@@ -9,6 +9,17 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`address` (
   PRIMARY KEY (`id`));
 
 -- -----------------------------------------------------
+-- Table `cdlstore`.`business`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`business` (
+  `id` INT NOT NULL,
+  `company_name` VARCHAR(200) NOT NULL,
+  `address_id` INT NOT NULL,
+  `phone_number` VARCHAR(10),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (address_id) REFERENCES address(id));
+
+-- -----------------------------------------------------
 -- Table `cdlstore`.`user_bookstore`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
@@ -18,9 +29,14 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
   `address_id` INT NOT NULL,
   `phone_number` VARCHAR(10),
   `is_admin` boolean NOT NULL,
+  `is_business` boolean NULL DEFAULT false,
+  `business_id` INT NULL,
   `total_books` INT NULL DEFAULT 5,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (address_id) REFERENCES address(id));
+  FOREIGN KEY (address_id) REFERENCES address(id),
+  FOREIGN KEY (business_id) REFERENCES business(id));
+
+
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`user_credentials`
@@ -32,6 +48,17 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_credentials` (
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
+
+  -- -----------------------------------------------------
+-- Table `cdlstore`.`business_credentials`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`business_credentials` (
+  `id` INT NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(50) NOT NULL,
+  `business_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (business_id) REFERENCES business(id));
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`user_reset_password`
@@ -67,6 +94,18 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_physical_account` (
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
+
+-- -----------------------------------------------------
+-- Table `cdlstore`.`business_account`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`business_account` (
+  `id` INT NOT NULL,
+  `is_valid` boolean NOT NULL,
+  `activated_at` DATETIME NOT NULL,
+  `expires_at` DATETIME NULL,
+  `business_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (business_id) REFERENCES business(id));
 
 -- -----------------------------------------------------
 -- Table `cdlstore`.`user_session`
@@ -116,6 +155,21 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`book` (
   `total` INT NOT NULL,
   `loaned` INT NULL DEFAULT 0,
   PRIMARY KEY (`id`));
+
+  -- -----------------------------------------------------
+-- Table `cdlstore`.`quiz`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`quiz` (
+  `id` INT NOT NULL,
+  `question` TEXT NOT NULL,
+  `first_choice` TEXT NOT NULL,
+  `second_choice` TEXT NOT NULL,
+  `third_choice` TEXT NOT NULL,
+  `fourth_choice` TEXT NOT NULL,
+  `correct_choice` TEXT NOT NULL,
+  `book_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (book_id) REFERENCES book(id));
 
 -- -----------------------------------------------------
 -- Table `votes`.`user_votes`

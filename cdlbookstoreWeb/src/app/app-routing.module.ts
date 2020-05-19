@@ -22,12 +22,14 @@ import { BookGuard } from './guards/book-guard.service';
 import { OnlineFileComponent } from './pdf-viewer/online-file.component';
 import { OrderedBooksComponent } from './admin-management/ordered-books/ordered-books.component';
 import { ManagementComponent } from './admin-management/management.component';
+import { BusinessSignupComponent } from './business/business-page/business-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: 'home', component: HomePageComponent},
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
+  { path: 'businessSignup', component: BusinessSignupComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'new-password', canActivate: [ResetPassGuard], component: NewPasswordComponent},
   { path: 'books', canActivate: [AuthGuard], component: BooksComponent},
@@ -55,6 +57,8 @@ const routes: Routes = [
     children: [
     { path: 'management/orderded', component: OrderedBooksComponent}]
   },
+
+
   { path: '**',  redirectTo: 'home'}
 ];
 

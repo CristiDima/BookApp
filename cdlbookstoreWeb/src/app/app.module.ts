@@ -46,6 +46,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { OnlineFileComponent } from './pdf-viewer/online-file.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { ManagementModule } from './admin-management/management.module';
+import { BusinessSignupComponent } from './business/business-page/business-page.component';
 
 const config = {
     apiKey: "AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc",
@@ -70,7 +71,8 @@ const config = {
     ResetPasswordComponent,
     NewPasswordComponent,
     ConfirmationComponent,
-    OnlineFileComponent
+    OnlineFileComponent,
+    BusinessSignupComponent
   ],
   imports: [
     BrowserModule,
