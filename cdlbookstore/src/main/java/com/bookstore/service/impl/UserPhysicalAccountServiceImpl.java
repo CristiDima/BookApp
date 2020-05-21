@@ -21,6 +21,8 @@ public class UserPhysicalAccountServiceImpl implements UserPhysicalAccountServic
     @Autowired
     UserPhysicalAccountMapper userPhysicalAccountMapper;
 
+    private int validity = 30;
+
     @Override
     public  Optional<UserPhysicalAccountDto> getByUserId(int userId) {
         UserPhysicalAccount userPhysicalAccount = this.userPhysicalAccountRepository.findByUserId(userId);
@@ -42,14 +44,14 @@ public class UserPhysicalAccountServiceImpl implements UserPhysicalAccountServic
             userPhysicalAccount.setActivatedAt(date);
             userPhysicalAccount.setUserId(userId);
             userPhysicalAccount.setValid(true);
-            c.add(Calendar.DATE, 30);
+            c.add(Calendar.DATE, validity);
             date = c.getTime();
             userPhysicalAccount.setExpiresAt(date);
             this.userPhysicalAccountRepository.save(userPhysicalAccount);
             return Optional.ofNullable(userPhysicalAccountMapper.userPhysicalAccountToUserPhysicalAccountDto(userPhysicalAccount));
         } else {
             userPhysicalAccount.setActivatedAt(date);
-            c.add(Calendar.DATE, 30);
+            c.add(Calendar.DATE, validity);
             date = c.getTime();
             userPhysicalAccount.setExpiresAt(date);
             userPhysicalAccount.setValid(true);

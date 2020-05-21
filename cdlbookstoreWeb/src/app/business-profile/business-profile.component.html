@@ -1,0 +1,19 @@
+<div class="header">
+    <app-header></app-header>
+</div>
+
+<div class="container">
+    <div >
+        <mat-tab-group class="mat-tab-group">
+            <mat-tab class="mat-tab" label="Activate subscription">
+                <app-business-payment *ngIf="businessService.canShowContent"></app-business-payment>
+            </mat-tab>
+            <mat-tab label="View employers">
+            </mat-tab>
+          </mat-tab-group>
+    </div>
+</div>
+
+<div class="footer">
+    <app-footer></app-footer>
+</div>

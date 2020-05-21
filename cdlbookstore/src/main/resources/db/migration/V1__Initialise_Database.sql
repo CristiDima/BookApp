@@ -25,6 +25,16 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_bookstore` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (address_id) REFERENCES address(id));
 
+  -- -----------------------------------------------------
+-- Table `cdlstore`.`employees`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cdlstore`.`employees` (
+  `id` INT NOT NULL,
+  `email` VARCHAR(200) NULL,
+  `business_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (business_id) REFERENCES user_bookstore(id));
+
 -- -----------------------------------------------------
 -- Table `cdlstore`.`user_credentials`
 -- -----------------------------------------------------

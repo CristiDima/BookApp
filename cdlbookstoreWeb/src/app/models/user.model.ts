@@ -42,3 +42,11 @@ export class UserPhysicalSubscription {
     public activatedAt: Date;
     public userId: number;
 }
+
+export class UserBusinessSubscription {
+    public id: number;
+    public valid: boolean = false;
+    public expiresAt: Date;
+    public activatedAt: Date;
+    public userId: number;
+}

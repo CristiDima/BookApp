@@ -51,4 +51,8 @@ export class PagesRouting {
     public UserAccountPage(): any {
         return this._router.navigate(['account']);
     }
+
+    public BusinessProfilePage(): any {
+        return this._router.navigate(['businessProfile']);
+    }
 }

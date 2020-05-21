@@ -160,7 +160,7 @@ export class AuthenticationService {
     }
 
     public canCreateAccount(token: string, companyName: string): Observable<boolean> {
-      return this.apiRequest.requst('GET', this.pathRequest.businessSignup + '/' + companyName + '/' + token);
+      return this.apiRequest.requst('GET', this.pathRequest.businessSignupPath + '/' + companyName + '/' + token);
     }
 
     public isAdmin(): Promise<boolean> {

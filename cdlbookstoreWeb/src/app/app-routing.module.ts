@@ -25,6 +25,8 @@ import { ManagementComponent } from './admin-management/management.component';
 import { BusinessSignupComponent } from './business-signup/business-signup.component';
 import { UserGuard } from './guards/user-guard';
 import { SignupGuard } from './guards/signup-guard';
+import { BusinessGuard } from './guards/business-guard';
+import { BusinessProfileComponent } from './business-profile/business-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -38,6 +40,7 @@ const routes: Routes = [
   { path: 'books', canActivate: [AuthGuard, UserGuard], component: BooksComponent},
   { path: 'book', canActivate: [AuthGuard, BookGuard, UserGuard], component: BookComponent},
   { path: 'pdf-viewer', canActivate: [AuthGuard, BookGuard, UserGuard], component: OnlineFileComponent},
+  { path: 'businessProfile',   canActivate: [AuthGuard, BusinessGuard], component: BusinessProfileComponent},
   { path: 'account',   canActivate: [AuthGuard, UserGuard], component: ProfileComponent},
   {
     path: 'admin',

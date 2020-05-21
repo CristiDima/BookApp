@@ -49,6 +49,9 @@ import { ManagementModule } from './admin-management/management.module';
 import { BusinessSignupComponent } from './business-signup/business-signup.component';
 import { EmployerSignupComponent } from './employer-signup/employer-signup.component';
 import { SignupGuard } from './guards/signup-guard';
+import { BusinessProfileModule } from './business-profile/business-profile.module';
+import { UserGuard } from './guards/user-guard';
+import { BusinessGuard } from './guards/business-guard';
 
 const config = {
     apiKey: "AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc",
@@ -87,6 +90,7 @@ const config = {
     AdminModule,
     ManagementModule,
     ProfileModule,
+    BusinessProfileModule,
     NgxSpinnerModule,
     SlideshowModule,
     ToastrModule.forRoot({
@@ -105,7 +109,7 @@ const config = {
   providers: [PagesRouting, APIRequestService, PathRequestService, UserDetailsService,
               AuthorService, BookService, GenreService, AuthenticationService, FileSaveService,
               UserSessionService, AuthGuard, AdminGuard, CustomValidatorService, ResetPassGuard,
-              BookGuard, SignupGuard],
+              BookGuard, SignupGuard, BusinessGuard, UserGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -23,6 +23,8 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\repositories\Use
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\service\BusinessAccountService.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\repositories\LoanedBookRepository.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\dto\QuizDto.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\repositories\EmployeesRepository.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\service\EmployeesService.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\controller\AuthenticationController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\CdlbookstoreApplication.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\mapper\UserResetPasswordMapper.java
@@ -54,6 +56,7 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\entities\UserRes
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\mapper\GenreMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\repositories\UserResetPasswordRepository.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\service\impl\EmailServiceImpl.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\service\impl\EmployeesServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\entities\BusinessAccount.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\entities\UserCredentials.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\mapper\WishlistMapper.java
@@ -71,7 +74,9 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\service\impl\Aut
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\dto\UserCredentialsDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\entities\LoanedBook.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\repositories\UserVoteRepository.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\entities\Employees.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\entities\Quiz.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\dto\EmployeesDto.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\controller\BusinessController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\mapper\AddressMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\service\AuthenticationService.java
@@ -85,6 +90,7 @@ D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\controller\UserP
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\service\impl\AuthorServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\controller\BookController.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\dto\AuthorDto.java
+D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\mapper\EmployeesMapper.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\entities\Address.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\service\impl\UserResetPasswordServiceImpl.java
 D:\GitHub\BookStoreApp\cdlbookstore\src\main\java\com\bookstore\dto\UserSessionDto.java

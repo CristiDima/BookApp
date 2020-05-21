@@ -1,0 +1,50 @@
+<div class="container" >
+    <mat-card class="mat-card">
+        <mat-card-header>
+            <div mat-card-avatar></div>
+            <mat-card-title>Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="addEmployeeForm" (ngSubmit)="onSubmit()">
+                <div fxLayout fxLayout="column" fxLayoutAlign="center">
+                    <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+                        <mat-form-field class="form-group"  appearance="outline" fxLayout="column">
+                            <mat-label for="firstName">Add new employee (email):*</mat-label>
+                            <input formControlName="email" matInput class="form-control">
+                        </mat-form-field>
+                        <button class="book-action" mat-icon-button type="submit" [disabled]="!addEmployeeForm.valid">
+                            <mat-icon>person_add</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </form>
+                <div class="mat-form-group">
+                    <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
+                        <mat-label for="firstName">Remove employee:</mat-label>
+                        <input type="text" matInput  [matAutocomplete]="auto" [formControl]="employeeControl" > 
+                    </mat-form-field>
+                    
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let employee of filteredEmployee | async" [value]="selectedBooks">
+                            <div (click)="optionClicked($event, employee)">
+                                <mat-checkbox [checked]="employee.isSelected" (change)="toggleEmployeeSelection(employee)" 
+                                (click)="$event.stopPropagation()">{{ employee.email }}</mat-checkbox>
+                            </div>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <button class="book-action" mat-icon-button (click)="deleteEmployeesRequest()">
+                        <mat-icon>remove_circle</mat-icon>
+                    </button>
+                
+                </div>
+                <hr>
+                <div class="mat-form-group">
+                    <button [disabled]="userDetailsService.isBusinessSubscription" class="standard-button" 
+                        mat-raised-button (click)="businessService.activateBusinessRequest()">Activate</button>
+                    <button [disabled]="!userDetailsService.isBusinessSubscription" class="standard-button" 
+                        mat-raised-button (click)="businessService.extendBusinessRequest()">Extend</button>
+                </div>
+            
+        </mat-card-content>
+    </mat-card>
+</div>

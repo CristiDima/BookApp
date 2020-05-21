@@ -21,7 +21,11 @@ export  class PathRequestService {
     //#endregion
 
     //#region business
-    public businessSignup = environment.url + '/businessSignup';
+    public businessSignupPath = environment.url + '/businessSignup';
+    public employeesPath = environment.url + '/employees';
+    public businessAccountPath = environment.url + '/businessAccount';
+    public setBusinessAccountPath = environment.url + '/businessAccount/set';
+    public updateBusinessAccountPath = environment.url + '/businessAccount/update'
     //#endregion
 
     public onlineAccountPath = environment.url + '/onlineAccount'

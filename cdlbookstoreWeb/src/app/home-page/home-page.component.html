@@ -1,9 +1,27 @@
 <div class="header">
     <app-header></app-header>
 </div>
+<mat-toolbar class="header"> 
+    <mat-toolbar-row class="title-name">Bookstore</mat-toolbar-row>
+    <mat-toolbar-row class="title">“You can always edit a bad page. You can’t edit a blank page.” ― Jodi Picoult</mat-toolbar-row>
+    <mat-toolbar-row class="title">
+        <button mat-menu-item class="home-button">Log in</button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div class="about-us" fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout fxLayout="row" *ngFor="let quote of famousQuotes">
+        <mat-card class="small-book-card">
+            <mat-card-header>
+              <mat-card-title>{{quote.author}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="book-card-content">
+                <p>{{quote.quote}}</p>
+              </mat-card-content>
+          </mat-card>
+    </div>
+</div>
 <div class="container" fxLayout fxLayoutAlign="center">
     <slideshow [imageUrls]="imageUrlArray" [showArrows]="true" [autoPlay]="true" [showDots]="true" [arrowSize]="'15px'">
-        <!-- <p>“A reader lives a thousand lives before he dies . . . The man who never reads lives only one.” – George R.R. Martin</p> -->
     </slideshow>
 </div>
 <div class="about-us" fxLayout="row" fxLayoutAlign="center center">
@@ -31,21 +49,6 @@
             <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
               <button mat-button class="standard-button">Details</button>
             </mat-card-actions>
-          </mat-card>
-    </div>
-</div>
-<div class="about-us" fxLayout="row" fxLayoutAlign="center center">
-    <div fxLayout fxLayout="row" *ngFor="let quote of famousQuotes">
-        <mat-card class="small-book-card">
-            <mat-card-header>
-                <button class="icon-card" mat-icon-button mat-card-avatar>
-                    <mat-icon>edit</mat-icon>
-                </button>
-              <mat-card-title>{{quote.author}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content class="book-card-content">
-                <p>{{quote.quote}}</p>
-              </mat-card-content>
           </mat-card>
     </div>
 </div>

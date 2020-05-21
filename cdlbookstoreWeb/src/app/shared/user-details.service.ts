@@ -1,6 +1,6 @@
 import { UserSessionService } from './user-session.service';
 import { Injectable } from '@angular/core';
-import { UserOnlineSubscription, UserPhysicalSubscription, UserAddress } from '../models/user.model';
+import { UserOnlineSubscription, UserPhysicalSubscription, UserAddress, UserBusinessSubscription } from '../models/user.model';
 import { Book } from '../models/book.model';
 import { PathRequestService } from './path-request.service';
 import { APIRequestService } from './api-request.service';
@@ -12,6 +12,7 @@ export class UserDetailsService {
 
     public userOnlineSubscription: UserOnlineSubscription = null;
     public userPhysicalSubscription: UserPhysicalSubscription = null;
+    public userBusinessSubscription: UserBusinessSubscription = null;
     public loanedBooks: Book[] = [];
     public onlineBooks: Book[] = [];
     public wishlist: Book[] = [];
@@ -38,7 +39,8 @@ export class UserDetailsService {
     }
 
     public get isPhysicalSubcription(): boolean {
-        if (this.userPhysicalSubscription && this.userPhysicalSubscription.valid) {
+        if ((this.userPhysicalSubscription && this.userPhysicalSubscription.valid) ||
+            (this.userBusinessSubscription && this.userBusinessSubscription.valid)) {
             return true;
         }
 
@@ -54,7 +56,17 @@ export class UserDetailsService {
     }
 
     public get isOnlineSubcription(): boolean {
-        if (this.userOnlineSubscription && this.userOnlineSubscription.valid) {
+        if ((this.userOnlineSubscription && this.userOnlineSubscription.valid) ||
+            (this.userBusinessSubscription && this.userBusinessSubscription.valid)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public get isBusinessSubscription(): boolean {
+        console.log(this.userBusinessSubscription, this.userBusinessSubscription.valid);
+        if (this.userBusinessSubscription && this.userBusinessSubscription.valid) {
             return true;
         }
 
@@ -127,8 +139,15 @@ export class UserDetailsService {
             return;
         }
 
-        this.getUserOnlineSubscriptionRequest(this.userSession.user.id);
-        this.getUserPhysicalSubscriptionRequest(this.userSession.user.id);
+        if (this.userSession.user.fromBusiness || this.userSession.user.business) {
+            this.isUserOnlineSubscriptionRequestFinish = true;
+            this.isUserPhysicalSubscriptionRequestFinish = true;
+            this.getBusinessSubscriptionRequest(this.userSession.user.id);
+        } else {
+            this.getUserOnlineSubscriptionRequest(this.userSession.user.id);
+            this.getUserPhysicalSubscriptionRequest(this.userSession.user.id);
+        }
+        
         this.getLoanedBooksRequest(this.userSession.user.id);
         this.getOnlineBooksRequest(this.userSession.user.id);
         this.getWishlistRequest(this.userSession.user.id);
@@ -139,6 +158,18 @@ export class UserDetailsService {
     //endregion
 
     //requests region
+    private getBusinessSubscriptionRequest(userId: number): void {
+        this.spinner.show();
+        this.apiRequest.requst('GET', this.pathRequest.businessAccountPath + '/' + userId).subscribe((responseData: UserBusinessSubscription) => {
+            if (responseData) {
+                this.userBusinessSubscription = responseData;
+            }
+            this.spinner.hide();
+        }, error => {
+            this.spinner.hide();
+        });
+    }cum 
+
     private getUserOnlineSubscriptionRequest(userId: number): void {
         this.spinner.show();
         this.apiRequest.requst('GET', this.pathRequest.onlineAccountPath + '/' + userId).subscribe((responseData: UserOnlineSubscription) => {

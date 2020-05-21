@@ -1,7 +1,7 @@
 @import "src/styles.scss";
 
 .container {
-    margin-top: 62px;
+    margin-top: 60px;
     width: 100%;
     height: 600px;
   
@@ -11,6 +11,50 @@
       z-index: 1;
       background-color: $app-primary;
     }
+}
+
+.header {
+  margin-top: 62px;
+  background-color: $app-primary;
+  padding: 0%;
+  margin: 0%;
+  top: 0;
+  left: 0;
+  height: 300px;
+  z-index: 100;
+
+  .title-name {
+    top: 1%;
+    font-family: "Papyrus", fantasy;
+    // display: flex;
+    // align-items: center;
+    justify-content: center;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .home-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $app-primary;
+      background-color: $text-color;
+      margin: 1em;
+      width: 200px;
+    }
+    .home-button:disabled {
+        color: $text-color;
+        background-color: $background-color;
+    }
+    .home-button:hover {
+        color: $app-primary;
+        background-color: $background-color;
+    }
+  }
+  
 }
 
 .about-us {

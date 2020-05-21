@@ -21,6 +21,8 @@ public class UserOnlineAccountServiceImpl implements UserOnlineAccountService {
     @Autowired
     UserOnlineAccountMapper userOnlineAccountMapper;
 
+    private int validity = 30;
+
     @Override
     public Optional<UserOnlineAccountDto> getByUserId(int userId) {
         UserOnlineAccount userOnlineAccount = this.userOnlineAccountRepository.findByUserId(userId);
@@ -42,14 +44,14 @@ public class UserOnlineAccountServiceImpl implements UserOnlineAccountService {
             userOnlineAccount.setActivatedAt(date);
             userOnlineAccount.setUserId(userId);
             userOnlineAccount.setValid(true);
-            c.add(Calendar.DATE, 30);
+            c.add(Calendar.DATE, validity);
             date = c.getTime();
             userOnlineAccount.setExpiresAt(date);
             this.userOnlineAccountRepository.save(userOnlineAccount);
             return Optional.ofNullable(userOnlineAccountMapper.userOnlineAccountToUserOnlineAccountDto(userOnlineAccount));
         } else {
             userOnlineAccount.setActivatedAt(date);
-            c.add(Calendar.DATE, 30);
+            c.add(Calendar.DATE, validity);
             date = c.getTime();
             userOnlineAccount.setExpiresAt(date);
             userOnlineAccount.setValid(true);

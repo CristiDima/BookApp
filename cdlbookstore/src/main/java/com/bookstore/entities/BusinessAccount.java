@@ -30,7 +30,7 @@ public class BusinessAccount {
     @Column(name = "expires_at")
     private Date expiresAt;
 
-    @Column(name = "business_id")
+    @Column(name = "user_id")
     @NotNull
     private int userId;
 }

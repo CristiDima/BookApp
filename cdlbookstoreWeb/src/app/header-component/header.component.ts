@@ -57,5 +57,9 @@ export class HeaderComponent {
     protected onManaagementPage(): any {
         this._pagesRouting.ManagementPage();
     }
+
+    protected onBusinessProfilePage(): any {
+        this._pagesRouting.BusinessProfilePage();
+    }
     //endregion
 }
