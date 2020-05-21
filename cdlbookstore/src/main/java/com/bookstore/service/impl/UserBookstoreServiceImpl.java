@@ -1,6 +1,8 @@
 package com.bookstore.service.impl;
 
+import com.bookstore.dto.AddressDto;
 import com.bookstore.dto.UserBookstoreDto;
+import com.bookstore.dto.UserCredentialsDto;
 import com.bookstore.entities.UserBookstore;
 import com.bookstore.mapper.UserBookstoreMapper;
 import com.bookstore.repositories.UserBookstoreRepository;
@@ -10,6 +12,8 @@ import com.bookstore.service.UserCredentialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -81,5 +85,30 @@ public class UserBookstoreServiceImpl implements UserBookstoreService {
         userCredentialsService.updateEmailByUserId(userDetails.get("email"), userId);
 
         return Optional.ofNullable(userDetails);
+    }
+
+    @Override
+    public void removeUserFromCompany(String email) {
+        UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByEmail(email);
+        UserBookstoreDto userBookstoreDto = getUserById(userCredentialsDto.getUserId()).orElse(null);
+        userBookstoreRepository.updateUserInfoById(false, null, userBookstoreDto.getId());
+    }
+
+    @Override
+    public Optional<List<String>> getUsersNameByEmail(List<String> emails) {
+        List<String> usersName = new ArrayList<>();
+        for (String email : emails) {
+            UserBookstoreDto userBookstoreDto = getUserByEmail(email);
+            String name = userBookstoreDto.getFirstName() + " " + userBookstoreDto.getLastName();
+            usersName.add(name);
+        }
+
+        return Optional.ofNullable(usersName);
+    }
+
+    @Override
+    public UserBookstoreDto getUserByEmail(String email) {
+        UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByEmail(email);
+        return getUserById(userCredentialsDto.getUserId()).orElse(null);
     }
 }

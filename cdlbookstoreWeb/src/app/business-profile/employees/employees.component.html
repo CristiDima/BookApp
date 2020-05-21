@@ -1,0 +1,34 @@
+<mat-form-field class="input-table" appearance="outline">
+  <mat-label>Name:</mat-label>
+  <input matInput (keyup)="applyFilter($event.target.value)" >
+</mat-form-field>
+<div *ngIf="canShowContent" class="mat-elevation-z8" >
+    <mat-table #table  [dataSource]="dataSource" >
+      <!-- Delete Column -->
+      <ng-container matColumnDef="delete" >
+        <mat-header-cell *matHeaderCellDef> Sended </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell"> 
+          <button class="book-action" mat-icon-button (click)="deleteEmployeesRequest(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+    
+      <!-- Client name Column -->
+      <ng-container matColumnDef="name" >
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell"> {{element.name}} </mat-cell>
+      </ng-container>
+    
+      <!-- Book name Column -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell"> {{element.email}} </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="businessService.employees.length" [pageSize]="20" showFirstLastButtons></mat-paginator>
+</div>
+  

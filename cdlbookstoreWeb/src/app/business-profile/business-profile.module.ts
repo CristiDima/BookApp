@@ -5,11 +5,13 @@ import { AdminModule } from '../admin/admin.module';
 import { BusinessProfileComponent } from './business-profile.component';
 import { BusinessPaymentComponent } from './business-payment/business-payment.component';
 import { BusinessService } from './business-service';
+import { EmployeesComponent } from './employees/employees.component';
 
 @NgModule({
     declarations: [
         BusinessProfileComponent,
-        BusinessPaymentComponent
+        BusinessPaymentComponent,
+        EmployeesComponent
     ],
     imports: [MaterialModule, BrowserModule, AdminModule],
     providers: [BusinessService],

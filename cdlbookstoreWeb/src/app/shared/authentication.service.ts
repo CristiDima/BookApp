@@ -159,8 +159,8 @@ export class AuthenticationService {
       return this.apiRequest.requst('GET', this.pathRequest.resetPasswordPath + '/' + userId + '/' + token);
     }
 
-    public canCreateAccount(token: string, companyName: string): Observable<boolean> {
-      return this.apiRequest.requst('GET', this.pathRequest.businessSignupPath + '/' + companyName + '/' + token);
+    public canCreateAccount(token: string, id: number): Observable<boolean> {
+      return this.apiRequest.requst('GET', this.pathRequest.businessSignupPath + '/' + id + '/' + token);
     }
 
     public isAdmin(): Promise<boolean> {

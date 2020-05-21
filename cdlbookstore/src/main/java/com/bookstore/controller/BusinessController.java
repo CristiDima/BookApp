@@ -36,8 +36,15 @@ public class BusinessController {
     }
 
     @PostMapping("/employees")
-    private ResponseEntity<Boolean> deleteEmployee(@RequestBody Map<String, List<String>> emailsMap) {
+    private ResponseEntity<Boolean> deleteEmployees(@RequestBody Map<String, List<String>> emailsMap) {
         return employeesService.deleteByEmail(emailsMap)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/employees/delete")
+    private ResponseEntity<Boolean> deleteEmployee(@RequestBody String email) {
+        return employeesService.deleteByEmail(email)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -59,6 +66,13 @@ public class BusinessController {
     @PostMapping("/businessAccount/update")
     private ResponseEntity<BusinessAccountDto> updateBusinessAccountDto(@RequestBody int userId) {
         return businessAccountService.updateBusinessAccountDto(userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/businessSignup/{id}/{token}")
+    private ResponseEntity<Boolean> getAllEmployees(@PathVariable int id, @PathVariable String token) {
+        return employeesService.isTokenValid(id, token)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

@@ -16,4 +16,9 @@ public interface UserBookstoreRepository extends CrudRepository<UserBookstore, I
     @Modifying
     @Query("update UserBookstore u set u.firstName = ?1, u.lastName = ?2, u.phoneNumber = ?3 where u.id = ?4")
     void updateUserInfoById(String firstName, String lastName, String phoneNumber, Integer userId);
+
+    @Transactional
+    @Modifying
+    @Query("update UserBookstore u set u.isFromBusiness = ?1, u.companyName = ?2 where u.id = ?3")
+    void updateUserInfoById(boolean isFromBusiness, String companyName, Integer userId);
 }

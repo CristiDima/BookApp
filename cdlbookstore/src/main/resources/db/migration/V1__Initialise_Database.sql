@@ -32,6 +32,9 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`employees` (
   `id` INT NOT NULL,
   `email` VARCHAR(200) NULL,
   `business_id` INT NOT NULL,
+  `name` VARCHAR(200) NULL DEFAULT '',
+  `token` VARCHAR(200) NULL,
+  `expires_at` DATE NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (business_id) REFERENCES user_bookstore(id));
 

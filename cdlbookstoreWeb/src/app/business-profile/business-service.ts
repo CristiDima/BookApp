@@ -10,6 +10,7 @@ import { UserBusinessSubscription } from '../models/user.model';
 export interface Employee {
     email: string;
     isSelected: boolean;
+    name?: string;
   }
 
 @Injectable({
@@ -31,7 +32,7 @@ export class BusinessService {
         .subscribe((responseData: any[]) => {
           if (responseData) {
             responseData.forEach(employee => {
-              const tempEmployee: Employee = {email: employee.email, isSelected: false};
+              const tempEmployee: Employee = {email: employee.email, isSelected: false, name: employee.name};
               this.employees.push(tempEmployee);
             });
             this.canShowContent = true;

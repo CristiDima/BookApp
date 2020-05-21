@@ -65,7 +65,6 @@ export class UserDetailsService {
     }
 
     public get isBusinessSubscription(): boolean {
-        console.log(this.userBusinessSubscription, this.userBusinessSubscription.valid);
         if (this.userBusinessSubscription && this.userBusinessSubscription.valid) {
             return true;
         }

@@ -71,6 +71,42 @@ public class EmailServiceImpl implements EmailService {
         this.getJavaMailSender().send(message);
     }
 
+    @Override
+    public void createBusinessAccountEmail(String to, String companyName, String link) {
+        MimeMessage message = this.getJavaMailSender().createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            helper.setTo(to);
+            helper.setSubject("Create Bookstore account");
+            Map<String, String> values = new HashMap<>();
+            values.put("companyName", companyName);
+            values.put("link", link);
+            helper.setText(this.generateMailHtml(values, "CreateBusinessAccountTemplate"), true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        this.getJavaMailSender().send(message);
+    }
+
+    @Override
+    public void updateBusinessAccountEmail(String to, String companyName, String userName) {
+        MimeMessage message = this.getJavaMailSender().createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            helper.setTo(to);
+            helper.setSubject("Create Bookstore account");
+            Map<String, String> values = new HashMap<>();
+            values.put("companyName", companyName);
+            values.put("username", userName);
+            helper.setText(this.generateMailHtml(values, "UpdateBusinessAccountTemplate"), true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        this.getJavaMailSender().send(message);
+    }
+
     public String generateMailHtml(Map<String, String> values, String emailTemplateName)
     {
         Map<String, Object> variables = new HashMap<>();

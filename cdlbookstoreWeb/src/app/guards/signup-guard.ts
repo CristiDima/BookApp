@@ -11,11 +11,11 @@ export class SignupGuard implements CanActivate, CanActivateChild {
   canActivate(route: ActivatedRouteSnapshot,
               state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const token: string = route.queryParams.token;
-    const companyName: string = route.queryParams.id;
-    if (!token || !companyName) {
+    const id: number = route.queryParams.id;
+    if (!token || !id) {
       return false;
     }
-    return this.authService.canCreateAccount(token, companyName).pipe(
+    return this.authService.canCreateAccount(token, id).pipe(
       map(response =>
         {
           if (response === true) {

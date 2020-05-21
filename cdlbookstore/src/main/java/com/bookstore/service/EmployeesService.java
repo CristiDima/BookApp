@@ -13,4 +13,8 @@ public interface EmployeesService {
     Optional<List<EmployeesDto>> getByBusinessId(int businessId);
     Optional<EmployeesDto> saveEmployee(String email, int businessId);
     Optional<Boolean> deleteByEmail(Map<String, List<String>> emailsMap);
+    Optional<Boolean> deleteByEmail(String email);
+
+    Optional<List<String>> getAllEmployeesName(int businessId);
+    Optional<Boolean> isTokenValid(int userId, String token);
 }

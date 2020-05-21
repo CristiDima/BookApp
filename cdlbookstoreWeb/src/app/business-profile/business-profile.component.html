@@ -9,6 +9,7 @@
                 <app-business-payment *ngIf="businessService.canShowContent"></app-business-payment>
             </mat-tab>
             <mat-tab label="View employers">
+                <app-employees *ngIf="businessService.canShowContent"></app-employees>
             </mat-tab>
           </mat-tab-group>
     </div>

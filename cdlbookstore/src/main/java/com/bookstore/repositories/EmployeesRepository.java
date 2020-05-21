@@ -12,6 +12,8 @@ public interface EmployeesRepository extends CrudRepository<Employees, Integer> 
     List<Employees> findByBusinessId(int businessId);
     Employees findByEmail(String email);
 
+    Employees findAllByBusinessIdAndToken(int businessId, String token);
+
     @Transactional
     void deleteByEmail(String email);
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "employees")
@@ -25,4 +26,15 @@ public class Employees {
     @Column (name = "business_id")
     @NotNull
     private int businessId;
+
+    @Column
+    private String name;
+
+    @Column
+    @NotNull
+    private String token;
+
+    @Column (name = "expires_at")
+    @NotNull
+    private Date expiresAt;
 }
