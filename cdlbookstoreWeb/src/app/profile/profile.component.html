@@ -8,7 +8,7 @@
             <mat-tab class="mat-tab" label="Details">
                 <app-details *ngIf="userDetailsService.isLoadedInitialData"></app-details>
             </mat-tab>
-            <mat-tab label="Payment">
+            <mat-tab label="Payment" *ngIf="!userSessionService.user.fromBusiness">
                 <app-payment *ngIf="userDetailsService.isLoadedInitialData"></app-payment>
             </mat-tab>
             <mat-tab label="Wishlist">

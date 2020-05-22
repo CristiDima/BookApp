@@ -27,6 +27,7 @@ import { UserGuard } from './guards/user-guard';
 import { SignupGuard } from './guards/signup-guard';
 import { BusinessGuard } from './guards/business-guard';
 import { BusinessProfileComponent } from './business-profile/business-profile.component';
+import { EmployerSignupComponent } from './employer-signup/employer-signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -34,7 +35,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'signup', component: SignupComponent},
   { path: 'businessSignup', component: BusinessSignupComponent},
-  { path: 'employerSignup', canActivate: [SignupGuard], component: BusinessSignupComponent},
+  { path: 'employerSignup', canActivate: [SignupGuard], component: EmployerSignupComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
   { path: 'new-password', canActivate: [ResetPassGuard], component: NewPasswordComponent},
   { path: 'books', canActivate: [AuthGuard, UserGuard], component: BooksComponent},

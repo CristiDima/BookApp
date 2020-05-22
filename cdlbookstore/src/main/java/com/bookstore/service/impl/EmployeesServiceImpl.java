@@ -59,7 +59,7 @@ public class EmployeesServiceImpl implements EmployeesService {
         LocalDateTime tempLocalDateTime = localDateTime.plusDays(VALIDITY);
         employees.setExpiresAt(java.sql.Timestamp.valueOf(tempLocalDateTime));
         Employees tempEmployees = employeesRepository.save(employees);
-        UserBookstoreDto userBookstoreDto = userBookstoreService.getUserByEmail(email);
+        UserBookstoreDto userBookstoreDto = userBookstoreService.getUserByEmail(email).orElse(null);
         UserBookstoreDto companyDto = userBookstoreService.getUserById(businessId).orElse(null);
         if (userBookstoreDto == null) {
             String link = "http://localhost:4200/new-employerSignup" + "?token=" + employees.getToken() +
@@ -114,7 +114,7 @@ public class EmployeesServiceImpl implements EmployeesService {
             return Optional.ofNullable(true);
         }
 
-        return Optional.ofNullable(false);
+        return Optional.ofNullable(true);
     }
 
 }

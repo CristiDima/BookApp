@@ -27,13 +27,13 @@
                             <input matInput formControlName="phoneNumber" class="form-control">
                         </mat-form-field>
                     </div>
-                    <div fxLayout fxLayout="row" fxLayoutAlign="center">
+                    <div fxLayout fxLayout="row" fxLayoutAlign="center" *ngIf="!userSessionService.user.fromBusiness">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
                             <mat-label for="address">Address(Street, Number...):*</mat-label>
                             <input matInput formControlName="address" class="form-control">
                         </mat-form-field>
                     </div>
-                    <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+                    <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group" *ngIf="!userSessionService.user.fromBusiness">
                         <mat-form-field class="form-group"  appearance="outline" fxLayout="column">
                             <mat-label for="city">City:*</mat-label>
                             <input matInput formControlName="city" class="form-control">

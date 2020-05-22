@@ -70,7 +70,7 @@ public class BusinessController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/businessSignup/{id}/{token}")
+    @GetMapping("/businessSignup/{id}/{token}")
     private ResponseEntity<Boolean> getAllEmployees(@PathVariable int id, @PathVariable String token) {
         return employeesService.isTokenValid(id, token)
                 .map(ResponseEntity::ok)

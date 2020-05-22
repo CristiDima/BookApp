@@ -98,7 +98,7 @@ public class UserBookstoreServiceImpl implements UserBookstoreService {
     public Optional<List<String>> getUsersNameByEmail(List<String> emails) {
         List<String> usersName = new ArrayList<>();
         for (String email : emails) {
-            UserBookstoreDto userBookstoreDto = getUserByEmail(email);
+            UserBookstoreDto userBookstoreDto = getUserByEmail(email).orElse(null);
             String name = userBookstoreDto.getFirstName() + " " + userBookstoreDto.getLastName();
             usersName.add(name);
         }
@@ -107,8 +107,11 @@ public class UserBookstoreServiceImpl implements UserBookstoreService {
     }
 
     @Override
-    public UserBookstoreDto getUserByEmail(String email) {
+    public Optional<UserBookstoreDto> getUserByEmail(String email) {
         UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByEmail(email);
-        return getUserById(userCredentialsDto.getUserId()).orElse(null);
+        if (userCredentialsDto == null) {
+            return Optional.ofNullable(null);
+        }
+        return Optional.ofNullable(getUserById(userCredentialsDto.getUserId()).orElse(null));
     }
 }

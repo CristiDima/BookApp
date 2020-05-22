@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserDetailsService } from '../shared/user-details.service';
 import { MatTabChangeEvent } from '@angular/material';
+import { UserSessionService } from '../shared/user-session.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +12,7 @@ export class ProfileComponent implements OnInit {
 
   public isPageLoaded: boolean = false;
 
-  constructor(private userDetailsService: UserDetailsService) { }
+  constructor(private userDetailsService: UserDetailsService, private userSessionService: UserSessionService) { }
 
   ngOnInit(){
   }

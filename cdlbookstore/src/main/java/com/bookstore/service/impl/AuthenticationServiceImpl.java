@@ -90,7 +90,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return Optional.ofNullable(null);
         }
 
-        if (userDetails.get("address") == null || userDetails.get("city") == null && userDetails.get("district") == null) {
+        if ((userDetails.get("address") == null || userDetails.get("city") == null && userDetails.get("district") == null) &&
+                userDetails.get("is_from_business") == null) {
             return Optional.ofNullable(null);
         }
 
@@ -114,8 +115,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             userBookstore.setAddressId(addressDto.getId());
         } else {
             userBookstore.setFromBusiness(true);
-            UserBookstoreDto tempUserBookstore = userBookstoreService.getByCompanyName(userDetails.get("companyName"));
+            UserBookstoreDto tempUserBookstore
+                    = userBookstoreService.getUserById(Integer.parseInt(userDetails.get("companyId"))).orElse(null);
             userBookstore.setAddressId(tempUserBookstore.getAddressId());
+            userBookstore.setCompanyName(tempUserBookstore.getCompanyName());
         }
 
         if (userDetails.get("isAdmin") == null) {

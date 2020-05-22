@@ -16,5 +16,5 @@ public interface UserBookstoreService {
     void removeUserFromCompany(String email);
 
     Optional<List<String>> getUsersNameByEmail( List<String> emails);
-    UserBookstoreDto getUserByEmail(String email);
+    Optional<UserBookstoreDto> getUserByEmail(String email);
 }
