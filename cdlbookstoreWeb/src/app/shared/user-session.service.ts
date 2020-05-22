@@ -27,6 +27,8 @@ export class UserSessionService {
         this.spinner.show();
         this.apiRequest.requst('GET', this.pathRequest.userPath + '/' + userId).subscribe((responseData: User) => {
             this.user = responseData;
+            const userDetails = JSON.parse(localStorage.getItem('currentUser'));
+            this.user.email = userDetails['email'];
             this.userSession.userId = this.user.id;
             this.spinner.hide()
         }, error => {

@@ -5,7 +5,8 @@
     <mat-toolbar-row class="title-name">Bookstore</mat-toolbar-row>
     <mat-toolbar-row class="title">“You can always edit a bad page. You can’t edit a blank page.” ― Jodi Picoult</mat-toolbar-row>
     <mat-toolbar-row class="title">
-        <button mat-menu-item class="home-button">Log in</button>
+        <button *ngIf="!userSession.isLoggedIn()" mat-menu-item class="home-button" (click)="onLogin()">Log in</button>
+        <button *ngIf="userSession.isLoggedIn()" mat-menu-item class="home-button" (click)="onLogout()">Log out</button>
     </mat-toolbar-row>
 </mat-toolbar>
 <div class="about-us" fxLayout="row" fxLayoutAlign="center center">

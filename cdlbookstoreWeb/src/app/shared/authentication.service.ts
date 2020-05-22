@@ -42,7 +42,7 @@ export class AuthenticationService {
                 tokenExpirationDate.setMinutes(tokenExpirationDate.getMinutes() + 60);
                 const currentUser: any = {'userId': this.userSessionService.user.id,
                     'token': this.userSessionService.userSession.token, 
-                    'tokenExpirationDate': tokenExpirationDate}
+                    'tokenExpirationDate': tokenExpirationDate, 'email': this.userSessionService.user.email};
                 this.setLocalStorageValue('currentUser', currentUser);
                 
               }

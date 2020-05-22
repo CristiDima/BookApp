@@ -9,8 +9,7 @@ import { AuthenticationService } from '../shared/authentication.service';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-    constructor(private _authService: AuthenticationService, private _pagesRouting: PagesRouting,
-                private _userService: UserSessionService) {
+    constructor(private _authService: AuthenticationService, private _pagesRouting: PagesRouting, private _userService: UserSessionService) {
     }
 
     public isAdmin(): boolean {

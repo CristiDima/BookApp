@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Book } from '../models/book.model';
 import { BookService } from '../shared/book.service';
 import { interval } from 'rxjs';
+import { PagesRouting } from '../shared/pages-routing.service';
+import { UserSessionService } from '../shared/user-session.service';
+import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({
     selector: 'app-home-page',
@@ -28,13 +31,23 @@ export class HomePageComponent {
         {author:'Carl Sagan', quote:'“One glance at a book and you hear the voice of another person, perhaps someone dead for 1,000 years. To read is to voyage through time.”'},
     ];
 
-    constructor(private _bookService: BookService) {
+    constructor(private _bookService: BookService, private _pagesRouting: PagesRouting, private _authService: AuthenticationService,
+                private userSession: UserSessionService) {
         interval(100).subscribe(() => { // will execute every 30 seconds
             if (this.books.length === 0) {
                 this.getRandomBooks();
             }
           });
     }
+
+    protected onLogin(): void {
+        this._pagesRouting.LoginPage();
+    }
+
+    protected onLogout(): void {
+        this._authService.logout();
+    }
+
 
     private getRandomBooks(): void {
         if (this._bookService.books.length <= 5) {
