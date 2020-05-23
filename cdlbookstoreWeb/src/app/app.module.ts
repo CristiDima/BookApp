@@ -52,6 +52,7 @@ import { SignupGuard } from './guards/signup-guard';
 import { BusinessProfileModule } from './business-profile/business-profile.module';
 import { UserGuard } from './guards/user-guard';
 import { BusinessGuard } from './guards/business-guard';
+import { QuizModule } from './quiz/quiz.module';
 
 const config = {
     apiKey: "AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc",
@@ -88,6 +89,7 @@ const config = {
     FlexLayoutModule,
     HttpClientModule,
     AdminModule,
+    QuizModule,
     ManagementModule,
     ProfileModule,
     BusinessProfileModule,

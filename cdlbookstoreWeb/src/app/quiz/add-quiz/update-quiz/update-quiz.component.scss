@@ -1,0 +1,33 @@
+@import "src/styles.scss";
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+
+    .standard-button {
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+    }
+
+    .standard-button:disabled {
+        color: $app-secondary;
+        background-color: $background-color;
+    }
+
+    .upload-button {
+        color: $app-secondary;
+        background-color: $app-primary;
+        padding: 1em;
+        border: 1px $app-secondary;
+        width: 150px;
+    }
+
+    .selected-domain {
+        margin: 0.5em;
+        div {
+            padding: 0.5em;
+        }
+    }
+}

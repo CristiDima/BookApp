@@ -60,5 +60,9 @@ export class HeaderComponent {
     protected onBusinessProfilePage(): any {
         this._pagesRouting.BusinessProfilePage();
     }
+
+    protected onAddQuizPage(): any {
+        this._pagesRouting.AddQuizPage();
+    }
     //endregion
 }

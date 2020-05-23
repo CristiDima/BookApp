@@ -55,4 +55,8 @@ export class PagesRouting {
     public BusinessProfilePage(): any {
         return this._router.navigate(['businessProfile']);
     }
+
+    public AddQuizPage(): any {
+        return this._router.navigate(['add-quiz']);
+    }
 }

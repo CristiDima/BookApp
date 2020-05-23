@@ -28,6 +28,10 @@ export  class PathRequestService {
     public updateBusinessAccountPath = environment.url + '/businessAccount/update'
     //#endregion
 
+    //#region quiz
+    public quizPath = environment.url + '/quiz';
+    //#endregion
+
     public onlineAccountPath = environment.url + '/onlineAccount'
     public physicalAccountPath = environment.url + '/physicalAccount'
     public readListBookPath = environment.url + '/readListBook'

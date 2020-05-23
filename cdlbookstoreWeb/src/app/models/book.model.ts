@@ -1,5 +1,6 @@
 import { Author } from './author.model';
 import { Genre } from './genre.model';
+import { Quiz } from '../quiz/quiz.model';
 
 export class Book {
   public id: number;
@@ -16,6 +17,7 @@ export class Book {
 
   public loaned: number = 0;
   public total: number = 0;
+  public quiz: Quiz[] = null;
 
   public uiImage: File;
   public uiFile: string;

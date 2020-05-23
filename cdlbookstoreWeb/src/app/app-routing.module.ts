@@ -28,6 +28,7 @@ import { SignupGuard } from './guards/signup-guard';
 import { BusinessGuard } from './guards/business-guard';
 import { BusinessProfileComponent } from './business-profile/business-profile.component';
 import { EmployerSignupComponent } from './employer-signup/employer-signup.component';
+import { AddQuizComponent } from './quiz/add-quiz/add-quiz.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'businessSignup', component: BusinessSignupComponent},
   { path: 'employerSignup', canActivate: [SignupGuard], component: EmployerSignupComponent},
   { path: 'reset-password', component: ResetPasswordComponent},
+  { path: 'add-quiz', canActivate: [AuthGuard, AdminGuard], component: AddQuizComponent},
   { path: 'new-password', canActivate: [ResetPassGuard], component: NewPasswordComponent},
   { path: 'books', canActivate: [AuthGuard, UserGuard], component: BooksComponent},
   { path: 'book', canActivate: [AuthGuard, BookGuard, UserGuard], component: BookComponent},

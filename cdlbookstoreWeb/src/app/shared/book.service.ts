@@ -113,6 +113,36 @@ export class BookService {
         return false;
     }
 
+    public hasValueByName (bookName: string): boolean {
+        if (!bookName) {
+            return false;
+        }
+        
+        if (this.booksName.includes(bookName)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public hasQuizByName (quizQuestion: string, book: Book): boolean {
+        if (!quizQuestion) {
+            return false;
+        }
+
+        let hasQuiz: boolean = false;
+        
+        for (let index = 0; index < book.quiz.length; index++) {
+            const element = book.quiz[index];
+            if (element.question.toLocaleLowerCase() === quizQuestion.toLocaleLowerCase()) {
+                hasQuiz = true;
+                break;
+            }
+        }
+
+        return hasQuiz;
+    }
+
     private getBooksRequest() {
         this.spinner.show();
         this._apiRequest.requst('GET', this._pathRequest.bookPath).subscribe((responseData: Book[]) => {

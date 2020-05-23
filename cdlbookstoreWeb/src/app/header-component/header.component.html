@@ -17,7 +17,7 @@
             <mat-menu #menu="matMenu" xPosition="before">
                 <!-- admin -->
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button" (click)="onAdminPage()">Update Books</button>
-                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button">Create Quiz</button>
+                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button" (click)="onAddQuizPage()">Create Quiz</button>
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button" (click)="onManaagementPage()">Check Books</button>
                 <!-- user -->
                 <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>

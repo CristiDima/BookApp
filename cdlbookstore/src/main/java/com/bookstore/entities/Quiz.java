@@ -39,6 +39,10 @@ public class Quiz {
     @NotNull
     private String fourthChoice;
 
+    @Column(name = "correct_choice")
+    @NotNull
+    private String correctChoice;
+
     @Column(name = "book_id")
     @NotNull
     private int bookId;

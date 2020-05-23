@@ -21,5 +21,7 @@ public class QuizDto {
 
     private String fourthChoice;
 
+    private String correctChoice;
+
     private int bookId;
 }
