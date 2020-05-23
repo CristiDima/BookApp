@@ -64,5 +64,9 @@ export class HeaderComponent {
     protected onAddQuizPage(): any {
         this._pagesRouting.AddQuizPage();
     }
+
+    protected onTakeQuizPage(): any {
+        this._pagesRouting.TakeQuizPage();
+    }
     //endregion
 }

@@ -148,7 +148,7 @@ export class UpdateQuizComponent implements OnInit {
     }
 
     protected getQuiz(): void {
-      this.toastr.show();
+      this.spinner.show();
       const warningMsg: string = 'The book: `' + this.selectedBook.name + '` do not have questions added.'
       this._apiRequest.requst('GET', this._pathRequest.quizPath + '/' + this.selectedBook.id).subscribe((responseData: Quiz[]) => {
         this.selectedBook.quiz = responseData;

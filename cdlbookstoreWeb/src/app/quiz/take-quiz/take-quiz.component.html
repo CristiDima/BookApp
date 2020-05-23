@@ -1,0 +1,41 @@
+<div class="container" fxLayout fxLayout="column" fxLayoutAlign="center">
+    <div class="inside-container">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Quiz</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div fxLayout="column" fxLayoutAlign="center" class="mat-form-group" *ngIf="!canStartQuiz">
+                    <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                        <mat-label for="booksName">Select book:*</mat-label>
+                        <input type="text" matInput  [formControl]="bookControl" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let book of filteredBook | async" [value]="book.name">
+                            {{book.name}}
+                        </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <hr>
+                    <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+                        <button type="button" [disabled]="!canShowContent" class="standard-button" mat-raised-button (click)="onStartQuiz()">Start quiz</button>
+                    </div>
+                </div>
+                <div fxLayout fxLayout="column" fxLayoutAlign="center" class="mat-form-group selected-domain" *ngIf="canStartQuiz">
+                    <p>{{question.question}}</p>
+                    <div  *ngFor="let item of correctChoice | keyvalue; let i = index" fxLayout="row">
+                        <mat-checkbox  [checked]="selected === item" (change)="selected = item">{{i}}. {{choice(i)}}</mat-checkbox>
+                    </div>
+                    <p *ngIf="canGoToNextQuestion" [class.corect-answer]="isCorrectChoiche" [class.wrong-answer]="isWrongChoice" >{{message}}</p>
+                    <hr>
+                    <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
+                        <button type="button" [disabled]="canGoToNextQuestion" class="large-button" mat-raised-button (click)="onCheckQuestion()">Check question</button>
+                        <button type="button" [disabled]="!canGoToNextQuestion" *ngIf="!isFinalQuestion" class="large-button" mat-raised-button (click)="onNextQuestion()">Next question</button>
+                        <button type="button" [disabled]="!canGoToNextQuestion" *ngIf="isFinalQuestion" class="large-button" mat-raised-button (click)="onFinishQuiz()">Take another quiz</button>                    
+                    </div>
+                </div>
+                
+            </mat-card-content>
+        </mat-card>
+    </div>
+    
+</div>

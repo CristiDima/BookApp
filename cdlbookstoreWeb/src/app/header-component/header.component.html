@@ -16,12 +16,13 @@
             </button>
             <mat-menu #menu="matMenu" xPosition="before">
                 <!-- admin -->
-                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button" (click)="onAdminPage()">Update Books</button>
-                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button" (click)="onAddQuizPage()">Create Quiz</button>
-                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="large-button" (click)="onManaagementPage()">Check Books</button>
+                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAdminPage()">Books</button>
+                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAddQuizPage()">Quiz</button>
+                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onManaagementPage()">Clients</button>
                 <!-- user -->
-                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>
                 <button *ngIf="isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBooksPage()">Books</button>
+                <button *ngIf="isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onTakeQuizPage()">Quiz</button>
+                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>
                 <!-- business -->
                 <button *ngIf=" isBusiness() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBusinessProfilePage()">Profile</button>
                 <!-- both -->

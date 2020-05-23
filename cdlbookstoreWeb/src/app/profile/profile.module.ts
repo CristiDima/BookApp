@@ -6,7 +6,6 @@ import { LoannedBooksComponent } from './loanned-books/loanned-books.component';
 import { OnlineBooksComponent } from './online-books/online-books.component';
 import { PaymentComponent } from './payment/payment.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
-import { AdminModule } from '../admin/admin.module';
 import { ProfileComponent } from './profile.component';
 import { LibraryComponent } from './library/library.component';
 
@@ -20,7 +19,7 @@ import { LibraryComponent } from './library/library.component';
       WishlistComponent,
       LibraryComponent
     ],
-    imports: [MaterialModule, BrowserModule, AdminModule],
+    imports: [MaterialModule, BrowserModule],
     providers: [],
     bootstrap: [],
     exports: []

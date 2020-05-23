@@ -59,4 +59,8 @@ export class PagesRouting {
     public AddQuizPage(): any {
         return this._router.navigate(['add-quiz']);
     }
+
+    public TakeQuizPage(): any {
+        return this._router.navigate(['take-quiz']);
+    }
 }

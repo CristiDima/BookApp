@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { ManagementComponent } from './management.component';
 import { ManagementService } from './management.service';
 import { OrderedBooksComponent } from './ordered-books/ordered-books.component';
-import { AdminModule } from '../admin/admin.module';
 import { ReturnedBooksComponent } from './returned-books/returned-books.component';
 import { ExpiredLoanComponent } from './expired-loan/expired-loan.component';
 
@@ -16,7 +15,7 @@ import { ExpiredLoanComponent } from './expired-loan/expired-loan.component';
         ReturnedBooksComponent,
         ExpiredLoanComponent
     ],
-    imports: [MaterialModule, BrowserModule, AdminModule],
+    imports: [MaterialModule, BrowserModule],
     providers: [ManagementService],
     bootstrap: [],
     exports: []

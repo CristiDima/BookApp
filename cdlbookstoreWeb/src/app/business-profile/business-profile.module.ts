@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../shared/material.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { AdminModule } from '../admin/admin.module';
 import { BusinessProfileComponent } from './business-profile.component';
 import { BusinessPaymentComponent } from './business-payment/business-payment.component';
 import { BusinessService } from './business-service';
@@ -13,7 +12,7 @@ import { EmployeesComponent } from './employees/employees.component';
         BusinessPaymentComponent,
         EmployeesComponent
     ],
-    imports: [MaterialModule, BrowserModule, AdminModule],
+    imports: [MaterialModule, BrowserModule],
     providers: [BusinessService],
     bootstrap: [],
     exports: []
