@@ -41,7 +41,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
         return '';
       }
 
-    //region Events
+    //#region Events
     public onChangeMode(): void {
         this.getAuthorsRequest();
     }
@@ -88,9 +88,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
           'img': new FormControl(null, [])
       });
       }
-      //endregion
+      //#endregion
 
-      //region Requests
+      //#region Requests
       private getAuthorsRequest(): void {
         this.spinner.show();
         this._apiRequest.requst('GET', this._pathRequest.authorPath).subscribe((responseData: Author[]) => {
@@ -121,5 +121,5 @@ import { NgxSpinnerService } from 'ngx-spinner';
             this.toastr.error(errorMsg);
           });
       }
-      //endregion
+      //#endregion
   }

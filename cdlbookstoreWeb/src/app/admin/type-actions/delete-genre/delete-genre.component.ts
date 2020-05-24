@@ -40,7 +40,7 @@ import * as _ from "lodash";
       return !_.isNil(this.selectedGenre);
     }
   
-    //region Events
+    //#region Events
     protected onSubmit(): void {
       if (!this.selectedGenre || this._genreService.isGenreUsed(this.selectedGenre)) {
         this.deleteGenreForm.controls['genreName'].setErrors({'incorrect': true});
@@ -59,9 +59,9 @@ import * as _ from "lodash";
         'genreName': new FormControl(null, [Validators.required])
     });
     }
-    //endregion
+    //#endregion
 
-    //region Requests
+    //#region Requests
     private getGenresRequest(): void {
       this.spinner.show();
       this._apiRequest.requst('GET', this._pathRequest.genrePath).subscribe((responseData: Genre[]) => {
@@ -87,7 +87,7 @@ import * as _ from "lodash";
         this.toastr.error(errorMsg);
       });
     }
-    //endregion
+    //#endregion
 
     //#region filters
     private filterAuthor(value: string): Genre[] {

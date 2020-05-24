@@ -25,7 +25,7 @@
     <slideshow [imageUrls]="imageUrlArray" [showArrows]="true" [autoPlay]="true" [showDots]="true" [arrowSize]="'15px'">
     </slideshow>
 </div>
-<div class="about-us" fxLayout="row" fxLayoutAlign="center center">
+<div class="about-us" fxLayout="row" fxLayoutAlign="center center" *ngIf="userSession.isLoggedIn()">
     <div fxLayout fxLayout="row" *ngFor="let book of books">
         <mat-card class="book-card">
             <mat-card-header>

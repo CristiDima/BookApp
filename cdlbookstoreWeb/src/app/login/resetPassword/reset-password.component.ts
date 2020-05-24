@@ -32,6 +32,4 @@ export class ResetPasswordComponent {
     this.resetePassword.reset();
     this._pagesRouting.LoginPage();
   }
-
-
 }

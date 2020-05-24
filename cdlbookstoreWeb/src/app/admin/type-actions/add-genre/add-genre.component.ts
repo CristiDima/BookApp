@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
         this.onResetForm();
     }
 
-    //region Events 
+    //#region Events 
     public onChangeMode(): void {
         this.getGenresRequest();
     }
@@ -52,9 +52,9 @@ import { ToastrService } from 'ngx-toastr';
             'description': new FormControl(null, [Validators.required])
         });
     }
-    //endregion
+    //#endregion
 
-    //region Requests 
+    //#region Requests 
     private getGenresRequest(): void {
         this.spinner.show();
         this._apiRequest.requst('GET', this._pathRequest.genrePath).subscribe((responseData: Genre[]) => {
@@ -78,6 +78,5 @@ import { ToastrService } from 'ngx-toastr';
             this.toastr.error(errorMsg);
         });
     }
-    //endregion
-
+    //#endregion
   }

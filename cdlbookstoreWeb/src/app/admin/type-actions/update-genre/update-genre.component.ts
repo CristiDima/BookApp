@@ -36,7 +36,7 @@ import { Genre } from 'src/app/models/genre.model';
     }
 
   
-    //region Events
+    //#region Events
     protected onSubmit(): void {
       this.selectedGenre.name = this.updateGenreForm.value.genre;
       this.selectedGenre.description = this.updateGenreForm.value.description;
@@ -54,9 +54,9 @@ import { Genre } from 'src/app/models/genre.model';
       });
     }
 
-    //endregion
+    //#endregion
 
-    //region Requests
+    //#region Requests
     private updateGenreRequest(genre: Genre): void {
       this.spinner.show();
       const succesMsg: string = 'The author: `' + genre.name + '` was updated';
@@ -71,7 +71,7 @@ import { Genre } from 'src/app/models/genre.model';
         this.toastr.error(errorMsg);
       });
     }
-    //endregion
+    //#endregion
 
     //#region filters
     private filterAuthor(value: string): Genre[] {

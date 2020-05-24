@@ -89,7 +89,7 @@ export class AddBookComponent implements OnInit {
       return '';
     }
   
-    //region Events
+    //#region Events
     protected onChangeMode(): void {
       this.getBooksRequest();
     }
@@ -138,8 +138,6 @@ export class AddBookComponent implements OnInit {
       }
     }
 
-
-
     public onImgFileChange(event): void {
       const reader = new FileReader();
       let fileToUpload: File = null;
@@ -182,9 +180,9 @@ export class AddBookComponent implements OnInit {
       });
       this.setFilters();
     }
-    //endregion
+    //#endregion
 
-    //region Requests
+    //#region Requests
     private getBooksRequest(): void {
       this.spinner.show();
       this._apiRequest.requst('GET', this._pathRequest.bookPath).subscribe((responseData: Book[]) => {
@@ -217,7 +215,7 @@ export class AddBookComponent implements OnInit {
         this.toastr.error(errorMsg);
       });
     }
-    //endregion
+    //#endregion
 
     //#region filters
     private filterAuthor(filter: string): Author[] {

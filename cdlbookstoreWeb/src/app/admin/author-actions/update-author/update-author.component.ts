@@ -50,7 +50,7 @@ import { startWith, map } from 'rxjs/operators';
       return this.selectedAuthor ? this.selectedAuthor.photo : '';
     }
   
-    //region Events
+    //#region Events
     protected onSubmit(): void {
       this.selectedAuthor.name = this.updateAuthorForm.value.authorname;
       this.selectedAuthor.description = this.updateAuthorForm.value.description;
@@ -87,9 +87,9 @@ import { startWith, map } from 'rxjs/operators';
         };
       }
     }
-    //endregion
+    //#endregion
 
-    //region Requests
+    //#region Requests
     private updateAuthorRequest(author: Author): void {
       this.spinner.show();
       const succesMsg: string = 'The author: `' + author.name + '` was deleted';
@@ -107,7 +107,7 @@ import { startWith, map } from 'rxjs/operators';
         this.toastr.error(errorMsg);
       });
     }
-    //endregion
+    //#endregion
 
     //#region filters
     private filterAuthor(value: string): Author[] {
@@ -131,4 +131,5 @@ import { startWith, map } from 'rxjs/operators';
           map(value => this.filterAuthor(value))
       );
     }
+    //#endregion
   }

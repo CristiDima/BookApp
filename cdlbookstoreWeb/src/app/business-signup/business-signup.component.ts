@@ -6,6 +6,7 @@ import { PagesRouting } from 'src/app/shared/pages-routing.service';
 import { CustomValidatorService } from 'src/app/validators/custom-validator.service';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { PathRequestService } from 'src/app/shared/path-request.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-business-signup',
@@ -15,11 +16,9 @@ import { PathRequestService } from 'src/app/shared/path-request.service';
 export class BusinessSignupComponent implements OnInit {
 
   protected signupForm: FormGroup = null;
-  protected hasError: boolean = false;
-  protected errorMessage: string = '';
   private phoneNumberRegex: any = /^(?:(?:(?:00\s?|\+)40\s?|0)(?:7\d{2}\s?\d{3}\s?\d{3}|(21|31)\d{1}\s?\d{3}\s?\d{3}|((2|3)[3-7]\d{1})\s?\d{3}\s?\d{3}|(8|9)0\d{1}\s?\d{3}\s?\d{3}))$/;
 
-  constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService,
+  constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService, private toastr: ToastrService,
               private pathRequest: PathRequestService, private customValidatorsService: CustomValidatorService,
               private spinner: NgxSpinnerService) {}
 
@@ -40,7 +39,7 @@ export class BusinessSignupComponent implements OnInit {
     });
   }
 
-  //region events
+  //#region events
   protected onSubmit():void {
     const userDetails: Map<string, any> = new Map<string, string>();
     Object.keys(this.signupForm.controls).forEach(key => {
@@ -57,27 +56,27 @@ export class BusinessSignupComponent implements OnInit {
   protected onCancel(): void {
     this.signupForm.reset();
   }
-  //endregion
+  //#endregion
 
 
-  //request events
+  //#request events
   private saveUserRequest(userDetails: Map<string, any>): void {
     const convMap = {};
     userDetails.forEach((val: string, key: string) => {
       convMap[key] = val;
     });
     this.spinner.show();
+    const errorMsg: string = 'An account with this email already exist.'
     this.apiRequest.requst('POST', this.pathRequest.signupPath, convMap).subscribe((responseData: any) => {
-        this.hasError = false;
         this._pagesRouting.LoginPage();
         this.signupForm.reset();
         this.spinner.hide();
     }, 
     error => {
-      this.hasError = true;
-      this.errorMessage = error.error;
+      this.onCancel();
+      this.toastr.error(errorMsg);
       this.spinner.hide();
   });
   }
-  //endregion
+  //#endregion
 }

@@ -6,7 +6,8 @@ import { PathRequestService } from '../shared/path-request.service';
 import { Md5 } from 'md5-typescript';
 import { CustomValidatorService } from '../validators/custom-validator.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ActivatedRouteSnapshot, Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-employer-signup',
@@ -16,13 +17,12 @@ import { ActivatedRouteSnapshot, Router, ActivatedRoute } from '@angular/router'
 export class EmployerSignupComponent implements OnInit {
 
   protected signupForm: FormGroup = null;
-  protected hasError: boolean = false;
-  protected errorMessage: string = '';
   private phoneNumberRegex: any = /^(?:(?:(?:00\s?|\+)40\s?|0)(?:7\d{2}\s?\d{3}\s?\d{3}|(21|31)\d{1}\s?\d{3}\s?\d{3}|((2|3)[3-7]\d{1})\s?\d{3}\s?\d{3}|(8|9)0\d{1}\s?\d{3}\s?\d{3}))$/;
   private businessId: number = null;
 
   constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService, private route: ActivatedRoute,
-              private pathRequest: PathRequestService, private customValidatorsService: CustomValidatorService, private spinner: NgxSpinnerService) {
+              private pathRequest: PathRequestService, private customValidatorsService: CustomValidatorService,
+              private spinner: NgxSpinnerService,  private toastr: ToastrService,) {
     this.businessId = this.route.snapshot.queryParams.id;
   }
 
@@ -70,17 +70,16 @@ export class EmployerSignupComponent implements OnInit {
 
     convMap['is_from_business'] = true;
     convMap['companyId'] = this.businessId;
-    
+    const errorMsg: string = 'An account with this email already exist.'
     this.spinner.show();
     this.apiRequest.requst('POST', this.pathRequest.signupPath, convMap).subscribe((responseData: any) => {
-        this.hasError = false;
         this._pagesRouting.LoginPage();
         this.signupForm.reset();
         this.spinner.hide();
     }, 
     error => {
-      this.hasError = true;
-      this.errorMessage = error.error;
+      this.onCancel();
+      this.toastr.error(errorMsg);
       this.spinner.hide();
   });
   }

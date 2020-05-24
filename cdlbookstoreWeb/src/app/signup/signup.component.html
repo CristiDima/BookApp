@@ -2,8 +2,7 @@
     <div fxFlex="100%" class="signup" fxLayoutAlign="center">
         <mat-card class="mat-card">
             <mat-card-header>
-                <div mat-card-avatar></div>
-                <mat-card-title>Bookster</mat-card-title>
+                <mat-card-title>Signup</mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
@@ -58,9 +57,8 @@
                     <hr>
                     <div fxLayout fxLayout="row" fxLayoutAlign="center">
                         <button [disabled]="!signupForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
-                        <button class="standard-button" mat-raised-button click="onCancel()">Cancel</button>
+                        <button class="standard-button" mat-raised-button click="onCancel()" type="reset">Cancel</button>
                     </div>
-                    <mat-error *ngIf="hasError">{{errorMessage}}</mat-error>
                 </form>
             </mat-card-content>
         </mat-card>

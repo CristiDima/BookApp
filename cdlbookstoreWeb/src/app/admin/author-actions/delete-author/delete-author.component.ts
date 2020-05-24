@@ -41,7 +41,7 @@ import * as _ from "lodash";
       return !_.isNil(this.selectedAuthor);
     }
   
-    //region Events
+    //#region Events
     protected onSubmit(): void {
       const authorName: string = this.deleteAuthorForm.value.authorName;
       const author: Author = this._authorService.getAuthorByName(authorName);
@@ -62,9 +62,9 @@ import * as _ from "lodash";
         'authorName': this.authorControl
       });
     }
-    //endregion
+    //#endregion
 
-    //region Requests
+    //#region Requests
     private deleteAuthorRequest(author: Author): void {
       this.spinner.show();
       const succesMsg: string = 'The author: `' + author.name + '` was deleted';
@@ -83,7 +83,7 @@ import * as _ from "lodash";
         this.toastr.error(errorMsg);
       });
     }
-    //endregion
+    //#endregion
 
     //#region filters
     private filterAuthor(value: string): Author[] {
