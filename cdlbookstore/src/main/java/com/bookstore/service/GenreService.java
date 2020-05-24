@@ -12,4 +12,5 @@ public interface GenreService {
 
     Optional<GenreDto> saveGenre(GenreDto genreDto);
     Optional<GenreDto> deleteGenre(int id);
+    Optional<GenreDto> updateGenre(GenreDto genreDto);
 }

@@ -2,6 +2,8 @@ package com.bookstore.service.impl;
 
 import com.bookstore.dto.*;
 import com.bookstore.entities.*;
+import com.bookstore.mapper.AuthorMapper;
+import com.bookstore.mapper.GenreMapper;
 import com.bookstore.repositories.*;
 import com.bookstore.service.*;
 import com.bookstore.mapper.BookMapper;
@@ -80,8 +82,8 @@ public class BookServiceImpl implements BookService {
             genreSet.add(genreRepository.findById(genre.getId()).orElse(null));
         }
         book.setGenres(genreSet);
-        bookRepository.save(book);
-        return Optional.ofNullable(bookDto);
+        Book tempBook = bookRepository.save(book);
+        return Optional.ofNullable(bookMapper.bookToBookDto(tempBook));
     }
 
     @Override
@@ -89,6 +91,13 @@ public class BookServiceImpl implements BookService {
         BookDto bookDto = getBookById(id);
         bookRepository.delete(bookMapper.bookDtoToBook(bookDto));
         return Optional.ofNullable(bookDto);
+    }
+
+    @Override
+    public Optional<BookDto> updateBook (BookDto bookDto) {
+        Book book = bookMapper.bookDtoToBook(bookDto);
+        bookRepository.save(book);
+        return Optional.ofNullable(getBookById(bookDto.getId()));
     }
 
     @Override

@@ -11,24 +11,32 @@ import { Genre } from 'src/app/models/genre.model';
 import { FileSaveService } from 'src/app/shared/file-save.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { _ } from 'core-js';
 
 @Component({
     selector: 'app-add-book',
     templateUrl: './add-book.component.html',
     styleUrls: ['./add-book.component.scss']
   })
-  export class AddBookComponent implements OnInit {
+export class AddBookComponent implements OnInit {
     @ViewChild('fileInput', {static: false}) fileInput: ElementRef;
     @ViewChild('imageInput', {static: false}) imageInput: ElementRef;
-    protected isOnAddPageMode: boolean = true;
-    protected isOnRemovePageMode: boolean = false;
     public years: number[] = [];
   
     protected addbookForm: FormGroup = null;
     protected authors: string[] = [];
-    protected selectedAuthors = new FormControl([Validators.required]);
-    protected selectedGenres = new FormControl([Validators.required]);
     protected hasValue: boolean = false;
+
+    public filteredAuthors: Observable<Author[]>;
+    public filteredGenres: Observable<Genre[]>;
+    protected authorControl = new FormControl([Validators.required]);
+    protected genreControl = new FormControl([Validators.required]);
+    public selectedAuthors: Author[] = [];
+    public selectedGenres: Genre[] = [];
+    private lastAuthorFilter: string = '';
+    private lastGenreFilter: string = '';
   
     constructor(private _authorService: AuthorService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
                 private _genreService: GenreService, private _bookService: BookService, public fb: FormBuilder,
@@ -39,6 +47,7 @@ import { ToastrService } from 'ngx-toastr';
     ngOnInit() {
       this.onResetForm();
       this.setYears();
+      this.setFilters();
     }
 
     private setYears(): void {
@@ -55,7 +64,7 @@ import { ToastrService } from 'ngx-toastr';
     public get genresName(): string[] {
       return this._genreService.genresName;
     }
- 
+
     public get uploadedFileName(): string {
       if (!this.fileInput || !this.fileInput.nativeElement) {
         return '';
@@ -94,15 +103,8 @@ import { ToastrService } from 'ngx-toastr';
       book.total = this.addbookForm.value.total;
       book.photo = this.addbookForm.value.img ? this.addbookForm.value.img.name : '';
       book.file = this.addbookForm.value.pdfFile ? this.addbookForm.value.pdfFile.name : '';
-      this.addbookForm.value.authorsName.forEach(element => {
-        const author: Author = this._authorService.getAuthorByName(element);
-        book.authors.push(author);
-      });
-
-      this.addbookForm.value.typesArray.forEach(element => {
-        const type: Genre = this._genreService.getGenreByName(element);
-        book.genres.push(type);
-      });
+      book.authors = this.selectedAuthors;
+      book.genres = this.selectedGenres;
   
 
       if (!book || this._bookService.hasValue(book)) {
@@ -159,8 +161,8 @@ import { ToastrService } from 'ngx-toastr';
     private onResetForm(): void {
       this.addbookForm = this.fb.group({
         'bookname': new FormControl('', [Validators.required]),
-        'authorsName': this.selectedAuthors,
-        'typesArray': this.selectedGenres,
+        'authorsName': this.authorControl,
+        'typesArray': this.genreControl,
         'pages': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
         'year': new FormControl(0, [Validators.required]),
         'total': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
@@ -168,6 +170,17 @@ import { ToastrService } from 'ngx-toastr';
         'pdfFile': new FormControl(null, []),
         'img': new FormControl(null, [])
       });
+      this.authorControl = new FormControl(null, [Validators.required]);
+      this.genreControl = new FormControl(null, [Validators.required]);
+      this.lastAuthorFilter = '';
+      this.lastGenreFilter = '';
+      this.selectedAuthors.forEach(el => {
+        el.uiSelected = false;
+      });
+      this.selectedGenres.forEach(el => {
+        el.uiSelected = false;
+      });
+      this.setFilters();
     }
     //endregion
 
@@ -178,8 +191,6 @@ import { ToastrService } from 'ngx-toastr';
         this._bookService.books = responseData;
         this._bookService.getPhoto();
         this._bookService.getFile();
-        this.isOnAddPageMode  = !this.isOnAddPageMode;
-        this.isOnRemovePageMode = !this.isOnRemovePageMode;
         this.spinner.hide();
       }, error => {
         this.spinner.hide();
@@ -207,4 +218,90 @@ import { ToastrService } from 'ngx-toastr';
       });
     }
     //endregion
-  }
+
+    //#region filters
+    private filterAuthor(filter: string): Author[] {
+      this.lastAuthorFilter = filter;
+      if (filter) {
+        return this._authorService.authors.filter(option => {
+          return option.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+        })
+      } else {
+        return this._authorService.authors.slice();
+      }
+    }
+
+    private filterGenre(filter: string): Genre[] {
+      this.lastGenreFilter = filter;
+      if (filter) {
+        return this._genreService.genres.filter(option => {
+          return option.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
+        })
+      } else {
+        return this._genreService.genres.slice();
+      }
+    }
+
+    public displayFn(value: any[] | string): string | undefined {
+      let displayValue: string;
+      if (Array.isArray(value)) {
+        value.forEach((displayVal, index) => {
+          if (index === 0) {
+            displayValue = displayVal.name;
+          } else {
+            displayValue += ', ' + displayVal.name;
+          }
+        });
+      } else {
+        displayValue = value;
+      }
+      return displayValue;
+    }
+
+    public optionClicked(event: Event, value: Book | Author | Genre): void {
+      event.stopPropagation(); if (value instanceof Author) {
+        this.toggleAuthorSelection(value);
+      } else if (value instanceof Genre) {
+        this.toggleGenreSelection(value);
+      }
+    }
+
+    public toggleAuthorSelection(author: Author): void {
+      author.uiSelected = !author.uiSelected;
+      if (author.uiSelected) {
+        this.selectedAuthors.push(author);
+      } else {
+        const i = this.selectedAuthors.findIndex(value => value.name === author.name);
+        this.selectedAuthors.splice(i, 1);
+      }
+
+      this.authorControl.setValue(this.selectedAuthors);
+      console.log(this.authorControl);
+    }
+
+    public toggleGenreSelection(genre: Genre): void {
+      genre.uiSelected = !genre.uiSelected;
+      if (genre.uiSelected) {
+        this.selectedGenres.push(genre);
+      } else {
+        const i = this.selectedGenres.findIndex(value => value.name === genre.name);
+        this.selectedGenres.splice(i, 1);
+      }
+
+      this.genreControl.setValue(this.selectedGenres);
+    }
+
+    private setFilters(): void {
+      this.filteredAuthors = this.authorControl.valueChanges.pipe(
+        startWith<string | Author[]>(''),
+        map(value => typeof value === 'string' ? value : this.lastAuthorFilter),
+        map(filter => this.filterAuthor(filter))
+      );
+      this.filteredGenres = this.genreControl.valueChanges.pipe(
+        startWith<string | Genre[]>(''),
+        map(value => typeof value === 'string' ? value : this.lastGenreFilter),
+        map(filter => this.filterGenre(filter))
+      );
+    }
+    //#endregion
+}

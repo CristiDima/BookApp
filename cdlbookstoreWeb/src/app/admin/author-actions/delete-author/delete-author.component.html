@@ -1,16 +1,27 @@
-<form [formGroup]="deleteAuthorForm" (ngSubmit)="onSubmit()">
-    <div fxLayout fxLayout="column" class="mat-form-group">
-        <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-            <mat-label for="authorname">Author name:*</mat-label>
-            <mat-select formControlName="authorName" class="form-control">
-                <mat-option *ngFor="let author of authorList" [value]="author">{{author}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="isAuthorUsed">This author is added to at least one book.</mat-error>
-        </mat-form-field>
-    </div>
-    <hr>
-    <div fxLayout="row" class="mat-form-group">
-        <button [disabled]="!deleteAuthorForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
-        <button [disabled]="!deleteAuthorForm.valid" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
-    </div>
-</form>
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Delete author</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="deleteAuthorForm" (ngSubmit)="onSubmit()">
+                <div fxLayout fxLayout="column" class="mat-form-group">
+                    <mat-form-field class="form-group" appearance="outline" fxLayout="column">
+                        <mat-label for="authorsNmae">Author:*</mat-label>
+                        <input type="text" matInput  [formControl]="authorControl" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let author of filteredAuthor | async" [value]="author.name">
+                            {{author.name}}
+                        </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <hr>
+                <div fxLayout="row" class="mat-form-group">
+                    <button [disabled]="!deleteAuthorForm.valid && !canSubmit" class="standard-button" mat-raised-button type="submit">Save</button>
+                    <button [disabled]="!deleteAuthorForm.valid && !canSubmit" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

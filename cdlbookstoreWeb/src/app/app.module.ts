@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './shared/material.module';
 import { HomePageComponent } from './home-page/home-page.component';
-import { UsersComponent } from './users/users.component';
 import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -70,7 +69,6 @@ const config = {
   declarations: [
     AppComponent, 
     HomePageComponent,
-    UsersComponent,
     LoginComponent,
     SignupComponent,
     BooksComponent,

@@ -10,5 +10,6 @@ public interface AuthorService {
     AuthorDto getAuthorById(int id);
     Optional<List<AuthorDto>> getAuthors ();
     Optional<AuthorDto> saveAuthor (AuthorDto authorDto);
+    Optional<AuthorDto> updateAuthor (AuthorDto authorDto);
     Optional<AuthorDto> deleteAuthor(int id);
 }

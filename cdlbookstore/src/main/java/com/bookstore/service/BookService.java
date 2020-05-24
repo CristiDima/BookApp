@@ -14,6 +14,7 @@ public interface BookService {
     Optional<List<BookDto>> getBooks ();
     Optional<BookDto> saveBook(BookDto bookDto);
     Optional<BookDto> deleteBook (int id);
+    Optional<BookDto> updateBook (BookDto bookDto);
     Optional<Map<String, Double>> updateRating (int bookId, int userId, double rating);
     //endregion
 

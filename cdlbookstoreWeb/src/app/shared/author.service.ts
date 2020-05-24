@@ -86,6 +86,18 @@ export class AuthorService {
         return false;
     }
 
+    public hasValueByName (authorName: string): boolean {
+        if (!authorName) {
+            return false;
+        }
+        
+        if (this.authorsName.includes(authorName)) {
+            return true;
+        }
+
+        return false;
+    }
+
     private getAuthorsRequest() {
         this.spinner.show();
         this._apiRequest.requst('GET', this._pathRequest.authorPath).subscribe((responseData: Author[]) => {

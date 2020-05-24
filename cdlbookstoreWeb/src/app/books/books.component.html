@@ -5,7 +5,8 @@
         </div>
         <div class="mat-form-group">
             <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
-                <input type="text" placeholder="Genres" aria-label="Genres" matInput
+                <mat-label for="bookname">Genres:</mat-label>
+                <input type="text" matInput
                     [matAutocomplete]="autoGenre" [formControl]="genreControl" [readonly]="isSearchByGenresDisable"> 
             </mat-form-field>
             
@@ -21,7 +22,8 @@
 
         <div class="mat-form-group">
             <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
-                <input type="text" placeholder="Authors" aria-label="Authors" matInput
+                <mat-label for="bookname">Authors:</mat-label>
+                <input type="text" matInput
                     [matAutocomplete]="autoAuthor" [formControl]="authorControl" [readonly]="isSearchByAuthorsDisable"> 
             </mat-form-field>
             
@@ -37,7 +39,8 @@
 
         <div class="mat-form-group">
             <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
-                <input type="text" placeholder="Books" aria-label="Books" matInput
+                <mat-label for="bookname">Books:</mat-label>
+                <input type="text" matInput
                     [matAutocomplete]="auto" [formControl]="bookControl" [readonly]="isSearchByBooksDisable"> 
             </mat-form-field>
             

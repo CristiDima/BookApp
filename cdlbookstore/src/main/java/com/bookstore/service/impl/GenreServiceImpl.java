@@ -37,8 +37,14 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Optional<GenreDto> saveGenre(GenreDto genreDto) {
-        genreRepository.save(genreMapper.genreDtoToGenre(genreDto));
-        return Optional.ofNullable(genreDto);
+        Genre genre = genreRepository.save(genreMapper.genreDtoToGenre(genreDto));
+        return Optional.ofNullable(genreMapper.genreToGenreDto(genre));
+    }
+
+    @Override
+    public Optional<GenreDto> updateGenre(GenreDto genreDto) {
+        Genre genre = genreRepository.save(genreMapper.genreDtoToGenre(genreDto));
+        return Optional.ofNullable(genreMapper.genreToGenreDto(genre));
     }
 
     @Override

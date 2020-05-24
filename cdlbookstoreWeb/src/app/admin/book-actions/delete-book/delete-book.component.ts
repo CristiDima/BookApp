@@ -7,6 +7,9 @@ import { Book } from 'src/app/models/book.model';
 import { FileSaveService } from 'src/app/shared/file-save.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import * as _ from "lodash";
 
 @Component({
     selector: 'app-delete-book',
@@ -14,10 +17,12 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./delete-book.component.scss']
   })
   export class DeleteBookComponent implements OnInit {
-    @Input() isOnAddPageMode: boolean;
-    @Input() isOnRemovePageMode: boolean;
   
     protected deleteBookForm: FormGroup = null;
+
+    public bookControl: FormControl = new FormControl(null, [Validators.required]);
+    public filteredBook: Observable<Book[]>;
+    private selectedBook: Book;
 
     constructor(private _bookService: BookService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
                 private fileSaveService: FileSaveService, private spinner: NgxSpinnerService,  private toastr: ToastrService) {
@@ -25,22 +30,20 @@ import { ToastrService } from 'ngx-toastr';
   
     ngOnInit() {
       this.onResetForm();
+      this.setFilters();
     }
 
     public get booksList(): string[] {
       return this._bookService.booksName;
     }
-  
-    //region Events
-    public onChangeMode(): void {
-      this.isOnAddPageMode  = !this.isOnAddPageMode;
-      this.isOnRemovePageMode = !this.isOnRemovePageMode;
-    }
 
+    public get canSubmit(): boolean {
+      return !_.isNil(this.selectedBook);
+    }
+  
+    //#region Events
     protected onSubmit(): void {
-      const bookName: string = this.deleteBookForm.value.bookName;
-      const book: Book = this._bookService.getBookByName(bookName);
-      this.deleteBookRequest(book)
+      this.deleteBookRequest(this.selectedBook)
     }
   
     public onCancel(): void {
@@ -49,12 +52,14 @@ import { ToastrService } from 'ngx-toastr';
 
     private onResetForm(): void {
       this.deleteBookForm = new FormGroup({
-        'bookName': new FormControl(null, [Validators.required])
+        'bookName': this.bookControl
       });
+      this.bookControl = new FormControl(null, [Validators.required]);
+      this.setFilters();
     }
-    //endregion
+    //#endregion
   
-    //region Requests
+    //#region Requests
     private deleteBookRequest(book: Book): void {
       this.spinner.show();
       const succesMsg: string = 'The book: `' + book.name + '` was deleted';
@@ -76,6 +81,30 @@ import { ToastrService } from 'ngx-toastr';
         this.toastr.error(errorMsg);
       });
     }
-    //endregion
+    //#endregion
 
+    //#region filters
+    private filterBook(value: string): Book[] {
+      if (_.isNil(value)) {
+        return;
+      }
+      const filterValue = value.toLowerCase();
+      if (this._bookService.hasValueByName(value)) {
+          this.selectedBook = this._bookService.books.filter(option => option.name.toLowerCase().includes(filterValue))[0];
+          if (_.isNil(this.selectedBook.quiz)) {
+          }
+      } else {
+        this.selectedBook = undefined;
+      }
+      return this._bookService.books.filter(option => option.name.toLowerCase().includes(filterValue));
+    }
+
+    private setFilters(): void {
+      this.filteredBook = this.bookControl.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this.filterBook(value))
+      );
+    }
+    //#endregion
   }

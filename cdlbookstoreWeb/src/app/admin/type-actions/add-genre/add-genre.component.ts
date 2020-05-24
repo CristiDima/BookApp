@@ -14,8 +14,6 @@ import { ToastrService } from 'ngx-toastr';
   })
   export class AddGenreComponent implements OnInit {
     protected addGenreForm: FormGroup = null;
-    protected isOnAddPageMode: boolean = true;
-    protected isOnRemovePageMode: boolean = false;
     protected hasValue: boolean = false;
 
     constructor(private _apiRequest: APIRequestService, private _pathRequest: PathRequestService, private _genreService: GenreService,
@@ -61,8 +59,6 @@ import { ToastrService } from 'ngx-toastr';
         this.spinner.show();
         this._apiRequest.requst('GET', this._pathRequest.genrePath).subscribe((responseData: Genre[]) => {
             this._genreService.genres = responseData;
-            this.isOnAddPageMode  = !this.isOnAddPageMode;
-            this.isOnRemovePageMode = !this.isOnRemovePageMode;
             this.spinner.hide();
         }, error => {
             this.spinner.hide();

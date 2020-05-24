@@ -6,6 +6,9 @@ import { PathRequestService } from 'src/app/shared/path-request.service';
 import { Genre } from 'src/app/models/genre.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import * as _ from "lodash";
 
 @Component({
     selector: 'app-delete-genre',
@@ -13,11 +16,12 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./delete-genre.component.scss']
   })
   export class DeleteGenreComponent implements OnInit {
-    @Input() isOnAddPageMode: boolean;
-    @Input() isOnRemovePageMode: boolean;
   
     protected deleteGenreForm: FormGroup = null;
-    protected isGenreUsed: boolean = false;
+
+    public genreControl: FormControl = new FormControl(null, [Validators.required]);
+    public filteredGenre: Observable<Genre[]>;
+    private selectedGenre: Genre;
   
     constructor(private _genreService: GenreService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
                 private spinner: NgxSpinnerService,  private toastr: ToastrService) {
@@ -25,27 +29,24 @@ import { ToastrService } from 'ngx-toastr';
   
     ngOnInit() {
       this.onResetForm();
+      this.setFilters();
     }
 
     public get genreList(): string[] {
       return this._genreService.genresName;
     }
+
+    public get canSubmit(): boolean {
+      return !_.isNil(this.selectedGenre);
+    }
   
     //region Events
-    public onChangeMode(): void {
-      this.isOnAddPageMode  = !this.isOnAddPageMode;
-      this.isOnRemovePageMode = !this.isOnRemovePageMode;
-    }
-
     protected onSubmit(): void {
-      const genreName: string = this.deleteGenreForm.value.genreName;
-      const genre: Genre = this._genreService.getGenreByName(genreName);
-      if (!genre || this._genreService.isGenreUsed(genre)) {
+      if (!this.selectedGenre || this._genreService.isGenreUsed(this.selectedGenre)) {
         this.deleteGenreForm.controls['genreName'].setErrors({'incorrect': true});
-        this.isGenreUsed = true;
+        this.toastr.error('This genre is added to at least one book. You can not delete a genre if is added to a book');
       } else {
-        this.isGenreUsed = false;
-        this.deleteGenreRequest(genre);
+        this.deleteGenreRequest(this.selectedGenre);
       }
     }
 
@@ -87,5 +88,28 @@ import { ToastrService } from 'ngx-toastr';
       });
     }
     //endregion
+
+    //#region filters
+    private filterAuthor(value: string): Genre[] {
+      if (_.isNil(value)) {
+        return;
+      }
+      const filterValue = value.toLowerCase();
+      if (this._genreService.hasValueByName(value)) {
+          this.selectedGenre = this._genreService.genres.filter(option => option.name.toLowerCase().includes(filterValue))[0];
+      } else {
+        this.selectedGenre = undefined;
+      }
+      return this._genreService.genres.filter(option => option.name.toLowerCase().includes(filterValue));
+    }
+
+    private setFilters(): void {
+      this.filteredGenre = this.genreControl.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this.filterAuthor(value))
+      );
+    }
+    //#endregion
 
   }

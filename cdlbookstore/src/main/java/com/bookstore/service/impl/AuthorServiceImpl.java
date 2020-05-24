@@ -37,8 +37,14 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Optional<AuthorDto> saveAuthor(AuthorDto authorDto) {
-        authorRepository.save(authorMapper.authorDtoToAuthor(authorDto));
-        return Optional.ofNullable(authorDto);
+        Author author = authorRepository.save(authorMapper.authorDtoToAuthor(authorDto));
+        return Optional.ofNullable(authorMapper.authorToAuthorDto(author));
+    }
+
+    @Override
+    public Optional<AuthorDto> updateAuthor(AuthorDto authorDto) {
+        Author author = authorRepository.save(authorMapper.authorDtoToAuthor(authorDto));
+        return Optional.ofNullable(authorMapper.authorToAuthorDto(author));
     }
 
     @Override

@@ -15,8 +15,15 @@ public class GenreController {
     private GenreService genreService;
 
     @PostMapping("/genre")
-    private ResponseEntity<GenreDto> getGenre(@RequestBody GenreDto genreDto) {
+    private ResponseEntity<GenreDto> saveGenre(@RequestBody GenreDto genreDto) {
         return this.genreService.saveGenre(genreDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/genre")
+    private ResponseEntity<GenreDto> updateGenre(@RequestBody GenreDto genreDto) {
+        return this.genreService.updateGenre(genreDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

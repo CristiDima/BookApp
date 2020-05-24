@@ -26,6 +26,14 @@ public class BookController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/book")
+    public ResponseEntity<BookDto> updateBook(@RequestBody BookDto bookDto)
+    {
+        return bookService.updateBook(bookDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/book")
     public ResponseEntity<List<BookDto>> getBooks()
     {

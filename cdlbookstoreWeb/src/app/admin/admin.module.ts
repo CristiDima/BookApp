@@ -10,6 +10,12 @@ import { AddGenreComponent } from './type-actions/add-genre/add-genre.component'
 import { DeleteBookComponent } from './book-actions/delete-book/delete-book.component';
 import { DeleteAuthorComponent } from './author-actions/delete-author/delete-author.component';
 import { DeleteGenreComponent } from './type-actions/delete-genre/delete-genre.component';
+import { BookActionsComponent } from './book-actions/book-actions.component';
+import { UpdateBookComponent } from './book-actions/update-book/update-book.component';
+import { AuthorActionsComponent } from './author-actions/author-actions.component';
+import { UpdateAuthorComponent } from './author-actions/update-author/update-author.component';
+import { GenreActionsComponent } from './type-actions/genre-actions.component';
+import { UpdateGenreComponent } from './type-actions/update-genre/update-genre.component';
 
 @NgModule({
     declarations: [
@@ -22,6 +28,12 @@ import { DeleteGenreComponent } from './type-actions/delete-genre/delete-genre.c
       DeleteGenreComponent,
       HeaderComponent,
       FooterComponent,
+      BookActionsComponent,
+      UpdateBookComponent,
+      AuthorActionsComponent,
+      UpdateAuthorComponent,
+      GenreActionsComponent,
+      UpdateGenreComponent
     ],
     imports: [MaterialModule,
         BrowserModule

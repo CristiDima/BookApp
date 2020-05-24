@@ -1,12 +1,20 @@
 @import "src/styles.scss";
 
-.mat-form-group {
-    .standard-button:disabled {
-        color: $app-secondary;
-        background-color: $background-color;
-    }
-    .standard-button {
-        margin-left: 0.2em;
-        margin-right: 0.2em;
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+
+    .mat-form-group {
+        .standard-button:disabled {
+            color: $app-secondary;
+            background-color: $background-color;
+        }
+        .standard-button {
+            margin-left: 0.2em;
+            margin-right: 0.2em;
+        }
     }
 }

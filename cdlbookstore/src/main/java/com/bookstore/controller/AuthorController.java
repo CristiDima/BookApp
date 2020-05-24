@@ -21,6 +21,13 @@ public class AuthorController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/author")
+    public ResponseEntity<AuthorDto> updateAuthor(@RequestBody AuthorDto authorDto) {
+        return authorService.saveAuthor(authorDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/author")
     public ResponseEntity<List<AuthorDto>> getAuthors() {
         return authorService.getAuthors()

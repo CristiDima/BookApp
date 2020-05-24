@@ -7,6 +7,9 @@ import { Author } from 'src/app/models/author.model';
 import { FileSaveService } from 'src/app/shared/file-save.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import * as _ from "lodash";
 
 @Component({
     selector: 'app-delete-author',
@@ -14,11 +17,12 @@ import { ToastrService } from 'ngx-toastr';
     styleUrls: ['./delete-author.component.scss']
   })
   export class DeleteAuthorComponent implements OnInit {
-    @Input() isOnAddPageMode: boolean;
-    @Input() isOnRemovePageMode: boolean;
   
     protected deleteAuthorForm: FormGroup = null;
-    protected isAuthorUsed: boolean = false;
+
+    public authorControl: FormControl = new FormControl(null, [Validators.required]);
+    public filteredAuthor: Observable<Author[]>;
+    private selectedAuthor: Author;
 
     constructor(private _authorService: AuthorService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
                 private fileSaveService: FileSaveService, private spinner: NgxSpinnerService,  private toastr: ToastrService) {
@@ -26,26 +30,25 @@ import { ToastrService } from 'ngx-toastr';
   
     ngOnInit() {
       this.onResetForm();
+      this.setFilters();
     }
 
     public get authorList(): string[]  {
       return this._authorService.authorsName;
     }
+
+    public get canSubmit(): boolean {
+      return !_.isNil(this.selectedAuthor);
+    }
   
     //region Events
-    protected onChangeMode(): void {
-      this.isOnAddPageMode  = !this.isOnAddPageMode;
-      this.isOnRemovePageMode = !this.isOnRemovePageMode;
-    }
-
     protected onSubmit(): void {
       const authorName: string = this.deleteAuthorForm.value.authorName;
       const author: Author = this._authorService.getAuthorByName(authorName);
       if (!author || this._authorService.isAuthorUsed(author)) {
         this.deleteAuthorForm.controls['authorName'].setErrors({'incorrect': true});
-        this.isAuthorUsed = true;
+        this.toastr.error('This author is added to at least one book. You can not delete a author if is added to a book');
       } else {
-        this.isAuthorUsed = false;
         this.deleteAuthorRequest(author)
       }
     }
@@ -56,7 +59,7 @@ import { ToastrService } from 'ngx-toastr';
 
     protected onResetForm(): void {
       this.deleteAuthorForm = new FormGroup({
-        'authorName': new FormControl(null, [Validators.required])
+        'authorName': this.authorControl
       });
     }
     //endregion
@@ -81,4 +84,27 @@ import { ToastrService } from 'ngx-toastr';
       });
     }
     //endregion
+
+    //#region filters
+    private filterAuthor(value: string): Author[] {
+      if (_.isNil(value)) {
+        return;
+      }
+      const filterValue = value.toLowerCase();
+      if (this._authorService.hasValueByName(value)) {
+          this.selectedAuthor = this._authorService.authors.filter(option => option.name.toLowerCase().includes(filterValue))[0];
+      } else {
+        this.selectedAuthor = undefined;
+      }
+      return this._authorService.authors.filter(option => option.name.toLowerCase().includes(filterValue));
+    }
+
+    private setFilters(): void {
+      this.filteredAuthor = this.authorControl.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this.filterAuthor(value))
+      );
+    }
+    //#endregion
   }

@@ -79,6 +79,18 @@ export class GenreService {
         return false;
     }
 
+    public hasValueByName (genreName: string): boolean {
+        if (!genreName) {
+            return false;
+        }
+        
+        if (this.genresName.includes(genreName)) {
+            return true;
+        }
+
+        return false;
+    }
+
     private getGenresRequest(): void {
         this.spinner.show();
         this._apiRequest.requst('GET', this._pathRequest.genrePath).subscribe((responseData: Genre[]) => {
