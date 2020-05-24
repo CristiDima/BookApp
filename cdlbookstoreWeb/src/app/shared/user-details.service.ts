@@ -1,6 +1,6 @@
 import { UserSessionService } from './user-session.service';
 import { Injectable } from '@angular/core';
-import { UserOnlineSubscription, UserPhysicalSubscription, UserAddress, UserBusinessSubscription } from '../models/user.model';
+import {UserPhysicalSubscription, UserAddress, UserBusinessSubscription } from '../models/user.model';
 import { Book } from '../models/book.model';
 import { PathRequestService } from './path-request.service';
 import { APIRequestService } from './api-request.service';
@@ -10,7 +10,6 @@ import { FileSaveService } from './file-save.service';
 @Injectable()
 export class UserDetailsService {
 
-    public userOnlineSubscription: UserOnlineSubscription = null;
     public userPhysicalSubscription: UserPhysicalSubscription = null;
     public userBusinessSubscription: UserBusinessSubscription = null;
     public loanedBooks: Book[] = [];
@@ -19,7 +18,6 @@ export class UserDetailsService {
     public library: Book[] = [];
     public address: UserAddress = null;
 
-    private isUserOnlineSubscriptionRequestFinish: boolean = false;
     private isUserPhysicalSubscriptionRequestFinish: boolean = false;
     private isLoannedBooksRequestFinish: boolean = false;
     private isOnlineBooksRequestFinish: boolean = false;
@@ -33,30 +31,13 @@ export class UserDetailsService {
     }
 
     public get isLoadedInitialData(): boolean {
-        return (this.isUserOnlineSubscriptionRequestFinish && this.isUserPhysicalSubscriptionRequestFinish &&
+        return (this.isUserPhysicalSubscriptionRequestFinish &&
             this.isLoannedBooksRequestFinish && this.isOnlineBooksRequestFinish && this.isAddressRequestFinish &&
             this.isWishlistRequestFinish && this.isLibraryRequestFinish)
     }
 
     public get isPhysicalSubcription(): boolean {
         if ((this.userPhysicalSubscription && this.userPhysicalSubscription.valid) ||
-            (this.userBusinessSubscription && this.userBusinessSubscription.valid)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public get isFullSubcription(): boolean {
-        if (this.isOnlineSubcription && this.isPhysicalSubcription) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public get isOnlineSubcription(): boolean {
-        if ((this.userOnlineSubscription && this.userOnlineSubscription.valid) ||
             (this.userBusinessSubscription && this.userBusinessSubscription.valid)) {
             return true;
         }
@@ -139,11 +120,9 @@ export class UserDetailsService {
         }
 
         if (this.userSession.user.fromBusiness || this.userSession.user.business) {
-            this.isUserOnlineSubscriptionRequestFinish = true;
             this.isUserPhysicalSubscriptionRequestFinish = true;
             this.getBusinessSubscriptionRequest(this.userSession.user.id);
         } else {
-            this.getUserOnlineSubscriptionRequest(this.userSession.user.id);
             this.getUserPhysicalSubscriptionRequest(this.userSession.user.id);
         }
         
@@ -165,22 +144,6 @@ export class UserDetailsService {
             }
             this.spinner.hide();
         }, error => {
-            this.spinner.hide();
-        });
-    }cum 
-
-    private getUserOnlineSubscriptionRequest(userId: number): void {
-        this.spinner.show();
-        this.apiRequest.requst('GET', this.pathRequest.onlineAccountPath + '/' + userId).subscribe((responseData: UserOnlineSubscription) => {
-            if (responseData) {
-                this.userOnlineSubscription = responseData;
-            }
-            this.spinner.hide();
-            this.isUserOnlineSubscriptionRequestFinish = true;
-        }, error => {
-            if (error.error === null) {
-                this.isUserOnlineSubscriptionRequestFinish = true;
-            }
             this.spinner.hide();
         });
     }

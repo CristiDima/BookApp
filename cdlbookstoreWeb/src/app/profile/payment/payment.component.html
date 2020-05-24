@@ -6,31 +6,11 @@
         <mat-card-content>
             <mat-card class="inside-mat-card">
                 <mat-card-header>
-                    <mat-card-title>Online books subscription</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                </mat-card-content>
-                <div class="mat-form-group">
-                    <button [disabled]="isOnlineSubscriptions" class="large-button mat-form-group" mat-raised-button
-                    (click)="onOnlineSubscription()">Activate</button>
-                </div>
-            </mat-card>
-            <mat-card class="inside-mat-card">
-                <mat-card-header>
-                    <mat-card-title>Physical books subscription</mat-card-title>
+                    <mat-card-subtitle>5$ / Month</mat-card-subtitle>
                 </mat-card-header>
                 <div class="mat-form-group">
                     <button [disabled]="isPhysicalSubscriptions" class="large-button mat-form-group" mat-raised-button
                     (click)="onPhysicalSubscription()">Activate</button>
-                </div>
-            </mat-card>
-            <mat-card class="inside-mat-card">
-                <mat-card-header>
-                    <mat-card-title>Full subscription</mat-card-title>
-                </mat-card-header>
-                <div class="mat-form-group">
-                    <button [disabled]="isPhysicalSubscriptions || isOnlineSubscriptions" class="large-button mat-form-group" 
-                    mat-raised-button  (click)="onFullSubscription()">Activate</button>
                 </div>
             </mat-card>
         </mat-card-content>

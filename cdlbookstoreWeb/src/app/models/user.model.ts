@@ -27,14 +27,6 @@ export class UserSession {
     public userId: number;
 }
 
-export class UserOnlineSubscription {
-    public id: number;
-    public valid: boolean = false;
-    public expiresAt: Date;
-    public activatedAt: Date;
-    public userId: number;
-}
-
 export class UserPhysicalSubscription {
     public id: number;
     public valid: boolean = false;

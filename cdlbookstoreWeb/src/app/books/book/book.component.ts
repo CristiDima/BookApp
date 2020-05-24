@@ -11,7 +11,7 @@ import { MatDialog } from '@angular/material';
 import { ConfirmationComponent } from 'src/app/dialog/confirmation.component';
 import { BookService } from 'src/app/shared/book.service';
 import { PagesRouting } from 'src/app/shared/pages-routing.service';
-
+import * as _ from "lodash";
 
 @Component({
     selector: 'app-book',
@@ -32,12 +32,12 @@ export class BookComponent {
     }
 
     public get canBorrowBook(): boolean {
-        return (this.userDetailsService.isPhysicalSubcription || this.userDetailsService.isFullSubcription) &&
+        return this.userDetailsService.isPhysicalSubcription &&
             this.userDetailsService.loanedBooks.length <= this.userSesion.user.totalBooks;       
     }
 
     public get canReadOnline(): boolean {
-        return this.userDetailsService.isOnlineSubcription || this.userDetailsService.isFullSubcription
+        return !_.isNil(this.selectedBook.uiFile)
     }
 
     public get isFavourite(): boolean {

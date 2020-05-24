@@ -1,5 +1,4 @@
 com\bookstore\entities\BusinessAccount.class
-com\bookstore\controller\UserOnlineAccountController.class
 com\bookstore\dto\WishlistDto.class
 com\bookstore\mapper\LibraryMapperImpl.class
 com\bookstore\entities\UserSession.class
@@ -12,7 +11,6 @@ com\bookstore\mapper\LibraryMapper.class
 com\bookstore\dto\UserPhysicalAccountDto.class
 com\bookstore\dto\UserCredentialsDto.class
 com\bookstore\mapper\GenreMapperImpl.class
-com\bookstore\mapper\UserOnlineAccountMapperImpl.class
 com\bookstore\dto\EmployeesDto.class
 com\bookstore\mapper\BookMapperImpl.class
 com\bookstore\entities\Library.class
@@ -89,17 +87,13 @@ com\bookstore\forms\LoginForm.class
 com\bookstore\mapper\AddressMapperImpl.class
 com\bookstore\service\AddressService.class
 com\bookstore\dto\UserResetPasswordDto.class
-com\bookstore\service\UserOnlineAccountService.class
 com\bookstore\mapper\AuthorMapper.class
 com\bookstore\service\impl\GenreServiceImpl.class
-com\bookstore\service\impl\UserOnlineAccountServiceImpl.class
-com\bookstore\dto\UserOnlineAccountDto.class
 com\bookstore\mapper\OnlineBookMapper.class
 com\bookstore\service\UserCredentialsService.class
 com\bookstore\service\impl\UserBookstoreServiceImpl.class
 com\bookstore\service\GenreService.class
 com\bookstore\mapper\LoanedBookMapperImpl.class
-com\bookstore\entities\UserOnlineAccount.class
 com\bookstore\mapper\OnlineBookMapperImpl.class
 com\bookstore\service\UserSessionService.class
 com\bookstore\mapper\QuizMapperImpl.class
@@ -117,7 +111,6 @@ com\bookstore\repositories\LoanedBookRepository.class
 com\bookstore\entities\Author.class
 com\bookstore\mapper\UserPhysicalAccountMapper.class
 com\bookstore\controller\UserBookstoreController.class
-com\bookstore\repositories\UserOnlineAccountRepository.class
 com\bookstore\repositories\UserCredentialsRepository.class
 com\bookstore\service\impl\UserPhysicalAccountServiceImpl.class
 com\bookstore\entities\UserVote.class
@@ -125,7 +118,6 @@ com\bookstore\service\impl\AddressServiceImpl.class
 com\bookstore\mapper\UserPhysicalAccountMapperImpl.class
 com\bookstore\repositories\AddressRepository.class
 com\bookstore\mapper\AddressMapper.class
-com\bookstore\mapper\UserOnlineAccountMapper.class
 com\bookstore\service\QuizService.class
 com\bookstore\dto\AuthorDto.class
 com\bookstore\mapper\QuizMapper.class

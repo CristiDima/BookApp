@@ -61,18 +61,6 @@ CREATE TABLE IF NOT EXISTS `cdlstore`.`user_reset_password` (
   FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
 
 -- -----------------------------------------------------
--- Table `cdlstore`.`user_online_account`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cdlstore`.`user_online_account` (
-  `id` INT NOT NULL,
-  `is_valid` boolean NOT NULL,
-  `activated_at` DATETIME NOT NULL,
-  `expires_at` DATETIME NULL,
-  `user_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (user_id) REFERENCES user_bookstore(id));
-
--- -----------------------------------------------------
 -- Table `cdlstore`.`user_physical_account`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cdlstore`.`user_physical_account` (
