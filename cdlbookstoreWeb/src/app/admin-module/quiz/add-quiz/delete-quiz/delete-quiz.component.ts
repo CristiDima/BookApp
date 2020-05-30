@@ -7,9 +7,9 @@ import { startWith, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { Quiz } from 'src/app/models/quiz.model';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
     selector: 'app-delete-quiz',
@@ -26,7 +26,7 @@ export class DeleteQuizComponent implements OnInit {
     private selectedQuiz: Quiz;
 
     constructor(private bookService: BookService, public fb: FormBuilder, private apiRequest: APIRequestService,
-                private pathRequest: PathRequestService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
+                private pathRequest: PathRequestService, private spinner: NgxSpinnerService, private apiMessage: APIMessagesService) {
     }
 
     ngOnInit() {
@@ -49,8 +49,6 @@ export class DeleteQuizComponent implements OnInit {
     //#region events
     protected onDelete(): void {
         this.spinner.show();
-        const successMsg: string = 'You deleted a question for the book: `' + this.selectedBook.name + '`';
-        const errorMsg = 'An error occured. The question was not saved. Please try again';
         this.apiRequest.requst('DELETE', this.pathRequest.quizPath, this.selectedQuiz.id)
         .subscribe((responseData: Quiz) => {
           if (responseData) {
@@ -58,10 +56,10 @@ export class DeleteQuizComponent implements OnInit {
             this.selectedBook.quiz.splice(index, 1);
           }
           this.spinner.hide();
-          this.toastr.success(successMsg);
+          this.apiMessage.onDeleteQuizMsg(this.selectedBook);
         }, error => {
           this.spinner.hide();
-          this.toastr.error(errorMsg);
+          this.apiMessage.onDeleteQuizMsg(error, true);
         });
     }
 
@@ -115,19 +113,21 @@ export class DeleteQuizComponent implements OnInit {
     }
     //#endregion
 
+    //#region request
     protected getQuiz(): void {
       this.spinner.show();
-      const warningMsg: string = 'The book: `' + this.selectedBook.name + '` do not have questions added.';
-      this.apiRequest.requst('GET', this.pathRequest.quizPath + '/' + this.selectedBook.id).subscribe((responseData: Quiz[]) => {
+      this.apiRequest.requst('GET', this.pathRequest.quizPath + '/' + this.selectedBook.id)
+      .subscribe((responseData: Quiz[]) => {
         this.selectedBook.quiz = responseData;
         if (this.selectedBook.quiz.length === 0) {
-          this.toastr.warning(warningMsg);
+          this.apiMessage.onInvalidQuizMsg();
         }
         this.spinner.hide();
       }, error => {
         this.selectedBook.quiz = [];
-        this.toastr.warning(warningMsg);
+        this.apiMessage.onInvalidQuizMsg();
         this.spinner.hide();
       });
     }
+    //#endregion
 }

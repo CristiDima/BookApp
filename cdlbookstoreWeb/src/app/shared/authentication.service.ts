@@ -6,99 +6,89 @@ import { UserSessionService } from './user-session.service';
 import { PagesRouting } from './pages-routing.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { interval, Observable } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { APIMessagesService } from './api-messages.service';
 
 @Injectable()
 export class AuthenticationService {
-    
+
     public lastMouseMove: Date = new Date();
-    public isValidResponse: boolean = false;
+    public isValidResponse = false;
 
     constructor(private apiRequest: APIRequestService, private pathRequest: PathRequestService,
-                private userSessionService: UserSessionService, private _pagesRouting: PagesRouting,
-                private spinner: NgxSpinnerService, private toastr: ToastrService,
+                private userSessionService: UserSessionService, private pagesRouting: PagesRouting,
+                private spinner: NgxSpinnerService, private apiMessage: APIMessagesService,
                 private route: ActivatedRoute) {
       interval(3000000).subscribe(() => { // will execute every 30 seconds
-        // this.heartbeat()
+        this.heartbeat();
       });
     }
 
-    //login region
+    //#region auth
     public login(userCredentials: UserCredentials): void {
-      const msg: string = 'Email or password are incorrect';
-       this.spinner.show();
-        this.apiRequest.requst('POST', this.pathRequest.loginPath, userCredentials).subscribe((responseData: Map<string, any>) => {
-            if (responseData) {
-              this.userSessionService.user = responseData['user'];
-              this.userSessionService.userSession = new UserSession();
-              
-              if ( this.userSessionService.user) {
-                this._pagesRouting.HomePage();
-                this.userSessionService.userSession.token =  responseData['token'];
-                this.userSessionService.userSession.userId = this.userSessionService.user.id;
-                this.userSessionService.user.email = userCredentials.username;
-                const tokenExpirationDate = new Date();
-                tokenExpirationDate.setMinutes(tokenExpirationDate.getMinutes() + 60);
-                const currentUser: any = {'userId': this.userSessionService.user.id,
-                    'token': this.userSessionService.userSession.token, 
-                    'tokenExpirationDate': tokenExpirationDate, 'email': this.userSessionService.user.email};
-                this.setLocalStorageValue('currentUser', currentUser);
-                
-              }
-
-            } else {
-              this.toastr.error(msg);
+      this.spinner.show();
+      this.apiRequest.requst('POST', this.pathRequest.loginPath, userCredentials)
+      .subscribe((responseData: any) => {
+          if (responseData) {
+            this.userSessionService.user = responseData.user;
+            this.userSessionService.userSession = new UserSession();
+            if ( this.userSessionService.user) {
+              this.pagesRouting.HomePage();
+              this.userSessionService.userSession.token =  responseData.token;
+              this.userSessionService.userSession.userId = this.userSessionService.user.id;
+              this.userSessionService.user.email = userCredentials.username;
+              const tokenExpirationDate = new Date();
+              tokenExpirationDate.setMinutes(tokenExpirationDate.getMinutes() + 60);
+              const currentUser: any = {userId: this.userSessionService.user.id,
+                  token: this.userSessionService.userSession.token,
+                  tokenExpirationDate, email: this.userSessionService.user.email};
+              this.setLocalStorageValue('currentUser', currentUser);
             }
-            this.spinner.hide();
-        }, error => {
-          this.toastr.error(msg);
+
+          } else {
+            this.apiMessage.onLoginFailedMsg();
+          }
           this.spinner.hide();
-        });
+      }, error => {
+        this.apiMessage.onLoginFailedMsg();
+        this.spinner.hide();
+      });
     }
 
-    public logout(msg?: string): void {
+    public logout(isSessionExpired?: boolean): void {
       this.removeLocalStorageValue('currentUser');
       this.spinner.show();
-      let logOutMsg: string = ''
-      if (msg) {
-        logOutMsg = msg;
-      }
       this.apiRequest.requst('PUT', this.pathRequest.logoutPath, this.userSessionService.userSession.token).subscribe(() => {
         this.userSessionService.user = null;
-        this._pagesRouting.HomePage();
-        if (msg) {
-          this.toastr.warning(logOutMsg);
+        this.pagesRouting.HomePage();
+        if (isSessionExpired) {
+          this.apiMessage.onLogoutMsg(isSessionExpired, null);
         }
         this.spinner.hide();
       }, error => {
         this.spinner.hide();
-        this.toastr.warning('Logut failed');
+        this.apiMessage.onLogoutMsg(null, error);
       });
     }
 
     public resetPassword(email: string): void {
-      const errorMsg: string = 'Email address is invalid, please try again';
-      const successMsg: string = 'An email to reset your password was send';
       this.spinner.show();
       this.apiRequest.requst('POST', this.pathRequest.resetPasswordPath, email).subscribe((responseData: string) => {
         this.spinner.hide();
         if (responseData) {
-          this.toastr.error(successMsg);
+          this.apiMessage.onResetPassMsg();
         } else {
-          this.toastr.error(errorMsg);
+          this.apiMessage.onResetPassMsg(true);
           this.isValidResponse = false;
         }
       }, error => {
         this.spinner.hide();
-        this.toastr.error(errorMsg);
+        this.apiMessage.onResetPassMsg(error);
       });
     }
 
     public changePassword(password: string): void {
       this.spinner.show();
-      const successMsg: string = 'Your password was changed';
-      const errorMsg: string = 'An error occured, your password was not changed, please try again';
       let id: number = null;
       this.route.queryParams.subscribe(params => {
         id = params.id;
@@ -112,14 +102,14 @@ export class AuthenticationService {
       });
       this.apiRequest.requst('PUT', this.pathRequest.changePasswordPath, convMap).subscribe((responseDate: string) => {
         if (responseDate) {
-          this.toastr.success(successMsg);
+          this.apiMessage.onChangePassMsg();
         } else {
-          this.toastr.error(errorMsg);
+          this.apiMessage.onChangePassMsg(true);
         }
         this.spinner.hide();
       }, error => {
         this.spinner.hide();
-        this.toastr.error(errorMsg);
+        this.apiMessage.onChangePassMsg(error);
       });
     }
 
@@ -131,19 +121,23 @@ export class AuthenticationService {
       if (!userDetails) {
         return;
       }
-      const expirationTokenDate: Date = userDetails ? new Date(userDetails['tokenExpirationDate']) : null;
-      if (expirationTokenDate.toUTCString() < new Date().toUTCString()) {
-        if (this.lastMouseMove.toUTCString() < new Date().toUTCString()) {
-          const sessionExpiredMsg = 'Your session has expired';
-          this.logout(sessionExpiredMsg);
+      const expirationTokenDate: Date = userDetails ? new Date(userDetails.tokenExpirationDate) : null;
+      const currentDate: Date = new Date();
+      if (expirationTokenDate < currentDate) {
+        currentDate.setMinutes(currentDate.getMinutes() - 30);
+        console.log(this.lastMouseMove, 'lastMouseMove');
+        if (this.lastMouseMove < currentDate) {
+          this.logout(true);
+          console.log('logout');
         } else {
+          console.log('heartbeat');
           this.apiRequest.heartbeat();
         }
       }
     }
     //#endregion
-   
-    //region auth guard
+
+    //#region authguard
     public isAuthenticated(): Promise<boolean> {
         const promise = new Promise<boolean>(
             (resolve, reject) => {
@@ -152,7 +146,7 @@ export class AuthenticationService {
               });
             }
           );
-          return promise;
+        return promise;
     }
 
     public canResetPassword(token: string, userId: number): Observable<boolean> {
@@ -171,7 +165,7 @@ export class AuthenticationService {
             });
           }
         );
-        return promise;
+      return promise;
   }
 
     public isBusiness(): Promise<boolean> {
@@ -182,7 +176,7 @@ export class AuthenticationService {
             });
           }
         );
-        return promise;
+      return promise;
     }
 
   public isUser(): Promise<boolean> {
@@ -193,11 +187,11 @@ export class AuthenticationService {
           });
         }
       );
-      return promise;
+    return promise;
   }
-  //endregion
+  //#endregion
 
-  //region local storage
+  //#region local storage
   public setLocalStorageValue(name: string, value: any): void {
     localStorage.setItem(name, JSON.stringify(value));
   }
@@ -209,6 +203,5 @@ export class AuthenticationService {
   public removeLocalStorageValue(name: string): void {
     localStorage.removeItem(name);
   }
-  //endregion
-
+  //#endregion
 }

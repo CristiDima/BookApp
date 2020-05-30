@@ -1,12 +1,12 @@
 <div class="container">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Delete questions</mat-card-title>
+            <mat-card-title>Sterge o intrebare</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                 <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                    <mat-label for="booksName">Select book:*</mat-label>
+                    <mat-label for="booksName">Selecteaza cartea:*</mat-label>
                     <input type="text" matInput  [formControl]="bookControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let book of filteredBook | async" [value]="book.name">
@@ -17,7 +17,7 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group" *ngIf="canShowQuestions">
                 <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                    <mat-label for="booksName">Select question:*</mat-label>
+                    <mat-label for="booksName">Selecteaza o intrebare:*</mat-label>
                     <input type="text" matInput  [formControl]="quizControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let quiz of filteredQuiz | async" [value]="quiz.question">
@@ -28,10 +28,10 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                 <button class="standard-button" mat-raised-button type="submit" (click)="onDelete()">
-                    Delete
+                    Sterge
                 </button>
                 <button class="standard-button" mat-raised-button type="reset" 
-                    click="onCancel()"> Cancel
+                    click="onCancel()"> Anuleaza
                 </button>
             </div>
         </mat-card-content>

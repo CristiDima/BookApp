@@ -10,8 +10,8 @@ export class Quiz {
 }
 
 export enum CorrectChoice {
-    firstChoice = "firstChoice",
-    secondChoice = "secondChoice",
-    thirdChoice = "thirdChoice",
-    fourthChoice = "fourthChoice",
+    A = 'A',
+    B = 'B',
+    C = 'C',
+    D = 'D',
 }

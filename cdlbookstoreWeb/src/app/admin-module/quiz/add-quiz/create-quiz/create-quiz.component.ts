@@ -7,9 +7,9 @@ import { startWith, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { CorrectChoice, Quiz } from 'src/app/models/quiz.model';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
     selector: 'app-create-quiz',
@@ -26,7 +26,7 @@ export class CreateQuizComponent implements OnInit {
 
     protected addQuizForm: FormGroup = null;
     constructor(private bookService: BookService, public fb: FormBuilder, private apiRequest: APIRequestService,
-                private pathRequest: PathRequestService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
+                private pathRequest: PathRequestService, private spinner: NgxSpinnerService, private apiMessage: APIMessagesService) {
         this.onResetForm();
     }
 
@@ -49,17 +49,16 @@ export class CreateQuizComponent implements OnInit {
     //#region events
     protected onSubmit(): void {
         this.spinner.show();
-        const successMsg = 'You added a  quiz for the book: `' + this.selectedBook.name + '`';
-        const errorMsg = 'An error occured. The question was not saved. Please try again';
         const convMap = {};
+        // tslint:disable-next-line: no-string-literal
         convMap['quiz'] = this.selectedBook.quiz;
         this.apiRequest.requst('POST', this.pathRequest.quizPath, convMap).subscribe((responseData: Quiz[]) => {
           this.selectedBook.quiz = responseData;
           this.spinner.hide();
-          this.toastr.success(successMsg);
+          this.apiMessage.onCreateQuizMessages(this.selectedBook);
         }, error => {
           this.spinner.hide();
-          this.toastr.error(errorMsg);
+          this.apiMessage.onCreateQuizMessages(error, true);
         });
     }
 
@@ -68,14 +67,12 @@ export class CreateQuizComponent implements OnInit {
     }
 
     public onAddQuestion(): void {
-      const warningMsg: string =
-        'You added a question to the quiz for the book: `' + this.selectedBook.name + '`. To save the quiz please press save button.';
       const quiz: Quiz = this.createQuiz();
       if (_.isNil(this.selectedBook.quiz)) {
         this.selectedBook.quiz = [];
       }
       this.selectedBook.quiz.push(quiz);
-      this.toastr.warning(warningMsg);
+      this.apiMessage.onAddQuestion(this.selectedBook);
       this.addQuizForm.reset();
     }
 

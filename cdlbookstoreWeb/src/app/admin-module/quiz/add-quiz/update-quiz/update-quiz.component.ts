@@ -7,9 +7,9 @@ import { startWith, map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { Quiz, CorrectChoice } from 'src/app/models/quiz.model';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
     selector: 'app-update-quiz',
@@ -32,7 +32,7 @@ export class UpdateQuizComponent implements OnInit {
     protected addQuizForm: FormGroup = null;
 
     constructor(private bookService: BookService, public fb: FormBuilder, private apiRequest: APIRequestService,
-                private pathRequest: PathRequestService, private spinner: NgxSpinnerService, private toastr: ToastrService) {
+                private pathRequest: PathRequestService, private spinner: NgxSpinnerService, private apiMessage: APIMessagesService) {
     }
 
     ngOnInit() {
@@ -58,17 +58,15 @@ export class UpdateQuizComponent implements OnInit {
     //#region events
     protected onSubmit(): void {
         this.spinner.show();
-        const successMsg: string = 'You updated a question for the book: `' + this.selectedBook.name + '`';
-        const errorMsg = 'An error occured. The question was not saved. Please try again';
         this.updateQuiz();
         this.apiRequest.requst('PUT', this.pathRequest.quizPath + '/' + this.selectedQuiz.id, this.selectedQuiz)
         .subscribe((responseData: Quiz) => {
           this.selectedQuiz = responseData;
           this.spinner.hide();
-          this.toastr.success(successMsg);
+          this.apiMessage.onUpdateQuizMsg(this.selectedBook);
         }, error => {
           this.spinner.hide();
-          this.toastr.error(errorMsg);
+          this.apiMessage.onUpdateQuizMsg(error, true);
         });
     }
 
@@ -149,29 +147,28 @@ export class UpdateQuizComponent implements OnInit {
 
     protected getQuiz(): void {
       this.spinner.show();
-      const warningMsg: string = 'The book: `' + this.selectedBook.name + '` do not have questions added.';
       this.apiRequest.requst('GET', this.pathRequest.quizPath + '/' + this.selectedBook.id).subscribe((responseData: Quiz[]) => {
         this.selectedBook.quiz = responseData;
         if (this.selectedBook.quiz.length === 0) {
-          this.toastr.warning(warningMsg);
+          this.apiMessage.onInvalidQuizMsg();
         }
         this.spinner.hide();
       }, error => {
         this.selectedBook.quiz = [];
-        this.toastr.warning(warningMsg);
+        this.apiMessage.onInvalidQuizMsg();
         this.spinner.hide();
       });
     }
 
     private setCorrectChoice(): void {
-      if (this.selectedQuiz.correctChoice === CorrectChoice.firstChoice) {
-        this.selected = CorrectChoice.firstChoice;
-      } else if (this.selectedQuiz.correctChoice === CorrectChoice.secondChoice) {
-        this.selected = CorrectChoice.secondChoice;
-      } else if (this.selectedQuiz.correctChoice === CorrectChoice.thirdChoice) {
-        this.selected = CorrectChoice.thirdChoice;
-      } else if (this.selectedQuiz.correctChoice === CorrectChoice.fourthChoice) {
-        this.selected = CorrectChoice.fourthChoice;
+      if (this.selectedQuiz.correctChoice === CorrectChoice.A) {
+        this.selected = CorrectChoice.A;
+      } else if (this.selectedQuiz.correctChoice === CorrectChoice.B) {
+        this.selected = CorrectChoice.B;
+      } else if (this.selectedQuiz.correctChoice === CorrectChoice.C) {
+        this.selected = CorrectChoice.C;
+      } else if (this.selectedQuiz.correctChoice === CorrectChoice.D) {
+        this.selected = CorrectChoice.D;
       }
     }
 }

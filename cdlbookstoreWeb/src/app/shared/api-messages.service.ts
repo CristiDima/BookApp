@@ -94,4 +94,62 @@ export class APIMessagesService {
         }
         this.toastr.success('Cartea `' + value.name + '` a fost stearsa de la favorite');
     }
+
+    public onLoginFailedMsg(): void {
+        this.toastr.error('A aparut o eroare in timpul procesului. Emailul sau parola sunt incorecte');
+    }
+
+    public onLogoutMsg(value?: boolean, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        if (value) {
+            this.toastr.warning('A expirat sesiunea');
+        }
+    }
+
+    public onResetPassMsg(error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('Un email de resetare a fost trimis catre dumneavoastra');
+    }
+
+    public onChangePassMsg(error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('Parola dumneavoastra a fost schimbata');
+    }
+
+    public onCreateQuizMessages(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost adaugat un quiz pentru cartea: `' + value.name + '`');
+    }
+
+    public onAddQuestionMsg(value: any): void {
+        this.toastr.warning('A fost adaugat un intrebare pentru cartea: `' + value.name + '`. Pentru a salva quiz-ul apasati `Salveaza`');
+    }
+
+    public onUpdateQuizMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost actualizat o intrebare pentru cartea: `' + value.name + '`');
+    }
+
+    public onDeleteQuizMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost stearsa o intrebare pentru cartea: `' + value.name + '`');
+    }
 }

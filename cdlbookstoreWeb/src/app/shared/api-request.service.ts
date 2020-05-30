@@ -14,7 +14,7 @@ export class APIRequestService {
     }
 
     public requst(requestType: string, url: string, data?: any): Observable<any> {
-        this.heartbeat();
+        // this.heartbeat();
 
         switch (requestType) {
             case 'PUT': return this.putRequest(url, data);

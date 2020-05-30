@@ -1,12 +1,12 @@
 <div class="container">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Add questions</mat-card-title>
+            <mat-card-title>Adauga o intrebare</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                 <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                    <mat-label for="booksName">Select book:*</mat-label>
+                    <mat-label for="booksName">Selecteaza cartea:*</mat-label>
                     <input type="text" matInput  [formControl]="bookControl" [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let book of filteredBook | async" [value]="book.name">
@@ -15,56 +15,57 @@
                     </mat-autocomplete>
                 </mat-form-field>
             </div>
+            <hr *ngIf="canShowContent">
             <form [formGroup]="addQuizForm" (ngSubmit)="onSubmit()" *ngIf="canShowContent">
                 <div fxLayout fxLayout="column" fxLayoutAlign="center">
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group" *ngIf="canShowContent">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="question">Question:</mat-label>
+                            <mat-label for="question">Intrebare*:</mat-label>
                             <input matInput formControlName="question" class="form-control">
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="firstChoice">First Choice:</mat-label>
+                            <mat-label for="firstChoice">Prima varianta*:</mat-label>
                             <input matInput formControlName="firstChoice" class="form-control">
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="secondChoice">Second Choice:</mat-label>
+                            <mat-label for="secondChoice">A doua varianta:</mat-label>
                             <input matInput formControlName="secondChoice" class="form-control">
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="thirdChoice">Third Choice:</mat-label>
+                            <mat-label for="thirdChoice">A treia varianta:</mat-label>
                             <input matInput formControlName="thirdChoice" class="form-control">
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="fourthChoice">Fourth Choice:</mat-label>
+                            <mat-label for="fourthChoice">A patra varianta:</mat-label>
                             <input matInput formControlName="fourthChoice" class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
-                <mat-label for="booksName">Select correct choice:*</mat-label>
+                <mat-label for="booksName">Selecteaza varianta corecta:*</mat-label>
                 <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group selected-domain">
                     <div fxLayout fxLayout="column" *ngFor="let item of correctChoice | keyvalue">
-                        <mat-checkbox  [checked]="selected === item" (change)="selected = item">{{item.key}}</mat-checkbox>
+                        <mat-radio-button [checked]="selected === item" (change)="selected = item">{{item.key}}</mat-radio-button>
                     </div>
                 </div>
                 <hr>
                 <div fxLayout fxLayout="column" fxLayoutAlign="center" class="mat-form-group">
-                    <button [disabled]="!addQuizForm.valid || !isSelectedCorrectAnswer" type="button" class="standard-button" mat-raised-button (click)="onAddQuestion()">Add</button>
+                    <button [disabled]="!addQuizForm.valid || !isSelectedCorrectAnswer" type="button" class="standard-button" mat-raised-button (click)="onAddQuestion()">Adauga</button>
                 </div>
                 <hr>
                 <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                     <button class="standard-button" mat-raised-button type="submit">
-                        Save
+                        Salveaza
                     </button>
                     <button class="standard-button" mat-raised-button type="reset" 
-                        click="onCancel()"> Cancel
+                        click="onCancel()"> Anuleaza
                     </button>
                 </div>
             </form>

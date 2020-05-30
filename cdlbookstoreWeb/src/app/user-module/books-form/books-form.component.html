@@ -60,7 +60,7 @@
         <hr>
         <div fxLayout fxLayout="row" fxLayoutAlign="center" class="mat-form-group selected-domain">
             <div fxLayout fxLayout="column" *ngFor="let item of searchByValue | keyvalue">
-                <mat-radio-button  [checked]="selected === item" (change)="selected = item">{{item.key}}</mat-radio-button>
+                <mat-radio-button [checked]="selected === item" (change)="selected = item">{{item.key}}</mat-radio-button>
             </div>
         </div>
     </mat-sidenav>
