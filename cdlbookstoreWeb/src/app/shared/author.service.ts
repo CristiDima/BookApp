@@ -102,7 +102,7 @@ export class AuthorService {
         this.spinner.show();
         this._apiRequest.requst('GET', this._pathRequest.authorPath).subscribe((responseData: Author[]) => {
           this.authors = responseData;
-          this.getPhoto();
+        //   this.getPhoto();
           this.spinner.hide();
         }, error => {
           this.spinner.hide();

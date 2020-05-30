@@ -1,0 +1,31 @@
+@import "src/styles.scss";
+
+.container {
+    margin-top: 60px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .signup {
+        margin: 0.5em;
+    }
+
+    .standard-button {
+        margin-left: 0.2em;
+        margin-right: 0.2em;
+    }
+
+    .large-button:disabled {
+        color: $app-primary;
+        background-color: #d9d9d9;
+    }
+
+    .mat-card-content > :first-child, .mat-card > :first-child {
+        margin-top: 1em;
+    }
+
+    .mat-card-content > :last-child:not(.mat-card-footer), .mat-card > :last-child:not(.mat-card-footer) {
+        margin-bottom: 1em;
+    }
+
+}

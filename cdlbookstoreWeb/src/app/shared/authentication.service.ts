@@ -20,7 +20,7 @@ export class AuthenticationService {
                 private spinner: NgxSpinnerService, private toastr: ToastrService,
                 private route: ActivatedRoute) {
       interval(3000000).subscribe(() => { // will execute every 30 seconds
-        this.heartbeat()
+        // this.heartbeat()
       });
     }
 
@@ -134,14 +134,14 @@ export class AuthenticationService {
       const expirationTokenDate: Date = userDetails ? new Date(userDetails['tokenExpirationDate']) : null;
       if (expirationTokenDate.toUTCString() < new Date().toUTCString()) {
         if (this.lastMouseMove.toUTCString() < new Date().toUTCString()) {
-          const sessionExpiredMsg: string = 'Your session has expired';
+          const sessionExpiredMsg = 'Your session has expired';
           this.logout(sessionExpiredMsg);
         } else {
           this.apiRequest.heartbeat();
         }
-      } 
+      }
     }
-    //end region
+    //#endregion
    
     //region auth guard
     public isAuthenticated(): Promise<boolean> {

@@ -2,7 +2,7 @@
     <app-header></app-header>
 </div>
 <mat-toolbar class="header"> 
-    <mat-toolbar-row class="title-name">Bookstore</mat-toolbar-row>
+    <mat-toolbar-row class="title-name">BookStore</mat-toolbar-row>
     <mat-toolbar-row class="title">“You can always edit a bad page. You can’t edit a blank page.” ― Jodi Picoult</mat-toolbar-row>
     <mat-toolbar-row class="title">
         <button *ngIf="!userSession.isLoggedIn()" mat-menu-item class="home-button" (click)="onLogin()">Log in</button>
@@ -37,7 +37,7 @@
                   </span>
               </mat-card-subtitle>
             </mat-card-header>
-            <img class="book-image" mat-card-image [src]="book.uiImage" alt="">
+            <img class="book-image" mat-card-image [src]="book.uiImage ? book.uiImage : ''" alt="">
             <mat-card-content class="book-card-content">
                 <p> <b>Rating:</b> {{book.rating}} / {{book.votes}} </p>
                 <p> <b>Year:</b> {{book.year}} </p>

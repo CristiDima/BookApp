@@ -1,0 +1,3 @@
+<app-books-form *ngIf="canShowContent()" [books]="books" [authors]="authors" [genres]="genres" [isEBookPage]="true"
+    (parentEvent)="deleteFromOnlineRequest($event)">
+</app-books-form>

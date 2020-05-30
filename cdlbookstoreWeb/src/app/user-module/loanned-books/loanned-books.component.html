@@ -1,0 +1,3 @@
+<app-books-form *ngIf="canShowContent()" [books]="books" [authors]="authors" [genres]="genres" [isLoanedPage]="true"
+    (parentEvent)="onReturnBookRequest($event)">
+</app-books-form>

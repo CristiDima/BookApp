@@ -1,0 +1,12 @@
+<div class="container">
+    <div >
+        <mat-tab-group class="mat-tab-group">
+            <mat-tab class="mat-tab" label="Detalii">
+                <app-details *ngIf="userDetailsService.isLoadedInitialData"></app-details>
+            </mat-tab>
+            <mat-tab label="Abonament" *ngIf="!userSessionService.user.fromBusiness">
+                <app-payment *ngIf="userDetailsService.isLoadedInitialData"></app-payment>
+            </mat-tab>
+          </mat-tab-group>
+    </div>
+</div>

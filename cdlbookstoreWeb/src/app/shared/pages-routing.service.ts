@@ -5,62 +5,78 @@ import { Book } from '../models/book.model';
 @Injectable()
 export class PagesRouting {
 
-    constructor (private _router: Router){
+    constructor(private router: Router) {
     }
 
     public HomePage(): any {
-        return this._router.navigate(['home']);
+        return this.router.navigate(['home']);
     }
 
     public LoginPage(): any {
-        return this._router.navigate(['login']);
+        return this.router.navigate(['login']);
     }
 
     public SignUpPage(): any {
-        return this._router.navigate(['signup']);
+        return this.router.navigate(['signup']);
     }
 
     public BusinessSignUpPage(): any {
-        return this._router.navigate(['businessSignup']);
+        return this.router.navigate(['businessSignup']);
     }
 
     public ResetPasswordPage(): any {
-        return this._router.navigate(['reset-password']);
+        return this.router.navigate(['reset-password']);
     }
 
     public BooksPage(): any {
-        return this._router.navigate(['books']);
+        return this.router.navigate(['books']);
     }
 
     public BookPage(book: Book): any {
-        return this._router.navigate(['book'], { state: { book: book } });
+        return this.router.navigate(['book'], { state: { book } });
     }
 
     public PdfViewerPage(book: Book): any {
-        return this._router.navigate(['pdf-viewer'], { state: { book: book } });
+        return this.router.navigate(['pdf-viewer'], { state: { book } });
     }
 
     public AdminPage(): any {
-        return this._router.navigate(['admin']);
+        return this.router.navigate(['admin']);
     }
 
     public ManagementPage(): any {
-        return this._router.navigate(['management']);
+        return this.router.navigate(['management']);
     }
 
-    public UserAccountPage(): any {
-        return this._router.navigate(['account']);
+    public UserProfilePage(): any {
+        return this.router.navigate(['profile']);
     }
 
     public BusinessProfilePage(): any {
-        return this._router.navigate(['businessProfile']);
+        return this.router.navigate(['businessProfile']);
     }
 
     public AddQuizPage(): any {
-        return this._router.navigate(['add-quiz']);
+        return this.router.navigate(['add-quiz']);
     }
 
     public TakeQuizPage(): any {
-        return this._router.navigate(['take-quiz']);
+        return this.router.navigate(['take-quiz']);
+    }
+
+    public LibraryPage(): any {
+        return this.router.navigate(['library']);
+    }
+
+    public EBookPage(): any {
+        return this.router.navigate(['e-book']);
+    }
+
+    public LoanedPage(): any {
+        return this.router.navigate(['loaned']);
+    }
+
+    public WishlistPage(): any {
+        return this.router.navigate(['wishlist']);
     }
 }

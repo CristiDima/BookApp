@@ -1,0 +1,20 @@
+<div class="container" >
+    <mat-card class="mat-card">
+        <mat-card-header>
+            <mat-card-title>Abonament</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-card class="inside-mat-card">
+                <mat-card-header>
+                    <mat-card-subtitle *ngIf="!isPhysicalSubscriptions">45 RON</mat-card-subtitle>
+                    <mat-card-subtitle *ngIf="isPhysicalSubscriptions">Activ pana la: {{date | date: 'dd/MM/yyyy'}}</mat-card-subtitle>
+                </mat-card-header>
+                <div class="mat-form-group">
+                    <button [disabled]="isPhysicalSubscriptions" class="large-button mat-form-group" mat-raised-button
+                    (click)="onPhysicalSubscription()">Activare</button>
+                </div>
+                
+            </mat-card>
+        </mat-card-content>
+    </mat-card>
+</div>

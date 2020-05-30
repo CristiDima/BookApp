@@ -5,16 +5,18 @@ import { APIRequestService } from './api-request.service';
 import { PathRequestService } from './path-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Subject } from 'rxjs';
+import { AuthorService } from './author.service';
+import { Author } from '../models/author.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class BookService {
-    
+
     public books: Book[] = [];
     public isBooksDownloadedSubject: Subject<boolean> = new Subject<boolean>();
-    
-    constructor(private fileService: FileSaveService, private _apiRequest: APIRequestService,  private _pathRequest: PathRequestService,
+
+    constructor(private fileService: FileSaveService, private apiRequest: APIRequestService,  private pathRequest: PathRequestService,
                 private spinner: NgxSpinnerService) {
         this.getBooksRequest();
     }
@@ -49,63 +51,41 @@ export class BookService {
         return value;
     }
 
-    public searchBooksByBooksName(booksName: string[]): Book[] {
-        const matchedBooks: Book[] = [];
-        booksName.forEach(el => {
-            this.books.forEach(book => {
-                if (book.name === el) {
-                    matchedBooks.push(book);
-                }
-            })
-        });
-        return matchedBooks;
-    }
-
-    public searchBooksByAuthorsName(authorsName: string[]): Book[] {
-        const matchedBooks: Book[] = [];
-        authorsName.forEach(el => {
-            this.books.forEach(book => {
-                book.authors.forEach(author => {
-                    if (author.name === el) {
-                        matchedBooks.push(book);
-                    }
-                });
-            });
-        });
-        return matchedBooks;
-    }
-
-    public searchBooksByGenresName(genresName: string[]): Book[] {
-        const matchedBooks: Book[] = [];
-        genresName.forEach(el => {
-            this.books.forEach(book => {
-                book.genres.forEach(genre => {
-                    if (genre.name === el) {
-                        matchedBooks.push(book);
-                    }
-                });
-            });
-        });
-        return matchedBooks;
-    }
-
-    public getPhoto (): any {
+    public getPhoto(): any {
         this.books.forEach(book => {
             this.fileService.getBookImg(book);
         });
     }
 
-    public getFile (): any {
+    public getAuthorPhoto(authors: Author[]): void {
+        authors.forEach(author => {
+            this.fileService.getAuthorImg(author);
+        });
+    }
+
+    public getFile(): any {
         this.books.forEach(book => {
             this.fileService.getBookPdf(book);
         });
     }
 
-    public hasValue (book: Book): boolean {
+    public getBookFile(book: Book): any {
+        this.fileService.getBookPdf(book);
+    }
+
+    public getBookPhoto(book: Book): any {
+        this.fileService.getBookImg(book);
+    }
+
+    public findBookById(id: number): Book {
+        return this.books.filter(el => el.id === id)[0];
+    }
+
+    public hasValue(book: Book): boolean {
         if (!book) {
             return false;
         }
-        
+
         if (this.booksName.includes(book.name)) {
             return true;
         }
@@ -113,11 +93,11 @@ export class BookService {
         return false;
     }
 
-    public hasValueByName (bookName: string): boolean {
+    public hasValueByName(bookName: string): boolean {
         if (!bookName) {
             return false;
         }
-        
+
         if (this.booksName.includes(bookName)) {
             return true;
         }
@@ -125,13 +105,14 @@ export class BookService {
         return false;
     }
 
-    public hasQuizByName (quizQuestion: string, book: Book): boolean {
+    public hasQuizByName(quizQuestion: string, book: Book): boolean {
         if (!quizQuestion) {
             return false;
         }
 
-        let hasQuiz: boolean = false;
-        
+        let hasQuiz = false;
+
+        // tslint:disable-next-line: prefer-for-of
         for (let index = 0; index < book.quiz.length; index++) {
             const element = book.quiz[index];
             if (element.question.toLocaleLowerCase() === quizQuestion.toLocaleLowerCase()) {
@@ -145,8 +126,11 @@ export class BookService {
 
     private getBooksRequest() {
         this.spinner.show();
-        this._apiRequest.requst('GET', this._pathRequest.bookPath).subscribe((responseData: Book[]) => {
+        this.apiRequest.requst('GET', this.pathRequest.bookPath).subscribe((responseData: Book[]) => {
           this.books = responseData;
+          this.books.forEach(book => {
+            this.getAuthorPhoto(book.authors);
+          });
           this.getPhoto();
           this.getFile();
           this.spinner.hide();

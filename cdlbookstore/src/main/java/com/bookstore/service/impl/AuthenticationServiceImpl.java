@@ -11,6 +11,7 @@ import com.bookstore.mapper.AddressMapper;
 import com.bookstore.mapper.UserBookstoreMapper;
 import com.bookstore.mapper.UserCredentialsMapper;
 import com.bookstore.mapper.UserSessionMapper;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ import java.util.*;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+
+    private final static int SESSION_LIFETIME = 60;
 
     @Autowired
     UserCredentialsService userCredentialsService;
@@ -177,8 +180,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (userSessionDto == null) {
             return Optional.ofNullable(null);
         }
-
-        if (userSessionDto.getCreated().before(new Date())) {
+        Date currentDate = new Date();
+        Date targetTime = DateUtils.addMinutes(userSessionDto.getCreated(), SESSION_LIFETIME);
+        if (targetTime.compareTo(currentDate) < 0) {
             userSessionDto.setValid(false);
             userSessionService.updateUserSession(userSessionDto.isValid(), userSessionDto.getUserId());
             return Optional.ofNullable(null);

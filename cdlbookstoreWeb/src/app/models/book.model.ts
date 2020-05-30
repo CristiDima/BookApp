@@ -1,6 +1,6 @@
 import { Author } from './author.model';
 import { Genre } from './genre.model';
-import { Quiz } from '../quiz/quiz.model';
+import { Quiz } from './quiz.model';
 
 export class Book {
   public id: number;
@@ -15,13 +15,13 @@ export class Book {
   public file: string;
   public photo: string;
 
-  public loaned: number = 0;
-  public total: number = 0;
+  public loaned = 0;
+  public total = 0;
   public quiz: Quiz[] = null;
 
   public uiImage: File;
   public uiFile: string;
-  public uiSelected: boolean = false;
+  public uiSelected = false;
 
   public get available(): number {
     return this.total - this.loaned;

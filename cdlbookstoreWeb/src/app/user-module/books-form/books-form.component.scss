@@ -1,0 +1,36 @@
+@import "src/styles.scss";
+
+.nav-container {
+    top: 60px;
+    bottom: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    .side-nav {
+        width: 25%;
+        height: 100%;
+
+        .selected-domain {
+            margin: 0.5em;
+            div {
+                padding: 0.5em;
+            }
+        }
+    }
+
+    .nav-content {
+        padding: 0.5em;
+    }
+
+    .form-group{
+        width: auto;
+    }
+}
+
+.container {
+    .book-card {
+        height: 400px;
+        margin: 1.5em;
+    }
+}

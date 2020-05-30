@@ -182,11 +182,23 @@ button.mat-menu-item:hover {
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
     opacity: 0.03 !important;
     background-color: $hover-color!important;
-  }
+}
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
     background-color: $hover-color;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color: $hover-color; 
   }
+  
+.mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color:$hover-color;
+    background-color: $hover-color;
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: $hover-color;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

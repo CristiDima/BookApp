@@ -9,64 +9,86 @@ import { AuthenticationService } from '../shared/authentication.service';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-    constructor(private _authService: AuthenticationService, private _pagesRouting: PagesRouting, private _userService: UserSessionService) {
+    constructor(private authService: AuthenticationService, private pagesRouting: PagesRouting, private userService: UserSessionService) {
     }
 
     public isAdmin(): boolean {
-        return this._userService.isAdmin();
+        return this.userService.isAdmin();
     }
 
     public isUser(): boolean {
-        return this._userService.isUser();
+        return this.userService.isUser();
     }
 
     public isBusiness(): boolean {
-        return this._userService.isBusiness();
+        return this.userService.isBusiness();
     }
 
     public isLoggedId(): boolean {
-        return this._userService.isLoggedIn();
+        return this.userService.isLoggedIn();
     }
 
-    //region events
+    //#region general events
     protected onLogin(): void {
-        this._pagesRouting.LoginPage();
+        this.pagesRouting.LoginPage();
     }
 
-    protected onLogout():void {
-        this._authService.logout();
+    protected onLogout(): void {
+        this.authService.logout();
     }
 
     protected onHomePage(): void {
-        this._pagesRouting.HomePage();
+        this.pagesRouting.HomePage();
     }
+    //#endregion
 
+    //#region user events
     protected onBooksPage(): void {
-        this._pagesRouting.BooksPage();
+        this.pagesRouting.BooksPage();
     }
 
-    protected onAccountPage(): void {
-        this._pagesRouting.UserAccountPage();
-    }
-
-    protected onAdminPage(): any {
-        this._pagesRouting.AdminPage();
-    }
-
-    protected onManaagementPage(): any {
-        this._pagesRouting.ManagementPage();
-    }
-
-    protected onBusinessProfilePage(): any {
-        this._pagesRouting.BusinessProfilePage();
-    }
-
-    protected onAddQuizPage(): any {
-        this._pagesRouting.AddQuizPage();
+    protected onProfilePage(): void {
+        this.pagesRouting.UserProfilePage();
     }
 
     protected onTakeQuizPage(): any {
-        this._pagesRouting.TakeQuizPage();
+        this.pagesRouting.TakeQuizPage();
     }
-    //endregion
+
+    protected onLibraryPagePage(): any {
+        this.pagesRouting.LibraryPage();
+    }
+
+    protected onLoanedPage(): any {
+        this.pagesRouting.LoanedPage();
+    }
+
+    protected onWishlistPage(): any {
+        this.pagesRouting.WishlistPage();
+    }
+
+    protected onEBookPage(): any {
+        this.pagesRouting.EBookPage();
+    }
+    //#endregion
+
+    //#region admin events
+    protected onAdminPage(): any {
+        this.pagesRouting.AdminPage();
+    }
+
+    protected onManaagementPage(): any {
+        this.pagesRouting.ManagementPage();
+    }
+
+    protected onAddQuizPage(): any {
+        this.pagesRouting.AddQuizPage();
+    }
+    //#endregion
+
+    //#region business events
+    protected onBusinessProfilePage(): any {
+        this.pagesRouting.BusinessProfilePage();
+    }
+    //#endregion
 }

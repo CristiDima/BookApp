@@ -13,7 +13,6 @@ export class BookGuard implements CanActivate, CanActivateChild {
     } else {
         this.router.navigate(['/books']);
     }
-          
   }
 
   canActivateChild(route: ActivatedRouteSnapshot,

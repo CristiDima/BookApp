@@ -7,14 +7,13 @@ import { PathRequestService } from './path-request.service';
 export class APIRequestService {
     private httpOptions = {
         headers: new HttpHeaders({
-            'Accept': 'application/json',
+            Accept: 'application/json',
             'Content-Type': 'application/json'})
-      }
+        };
     constructor(private httpClient: HttpClient, private pathRequest: PathRequestService) {
     }
 
     public requst(requestType: string, url: string, data?: any): Observable<any> {
-        
         this.heartbeat();
 
         switch (requestType) {
@@ -26,11 +25,11 @@ export class APIRequestService {
         }
     }
 
-    private getRequest(url: string):  Observable<any> {
+    private getRequest(url: string): Observable<any> {
         return this.httpClient.get(url);
     }
 
-    private putRequest(url: string, data: any):  Observable<any> {
+    private putRequest(url: string, data: any): Observable<any> {
         return this.httpClient.put(url, data, this.httpOptions);
     }
 
@@ -47,14 +46,14 @@ export class APIRequestService {
         if (!userDetails) {
             return;
         }
-        const token: string = userDetails['token'];
+        const token: string = userDetails.token;
         this.httpClient.post(this.pathRequest.userSessionPath, token, this.httpOptions)
         .subscribe(() => {
             const tokenExpirationDate = new Date();
             tokenExpirationDate.setMinutes(tokenExpirationDate.getMinutes() + 60);
-            const currentUser: any = {'userId': userDetails['userId'],
-                'token': userDetails['token'], 
-                'tokenExpirationDate': tokenExpirationDate };
+            const currentUser: any = {userId: userDetails.userId,
+                token: userDetails.token,
+                tokenExpirationDate };
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
         }, error => {
             // localStorage.clear();

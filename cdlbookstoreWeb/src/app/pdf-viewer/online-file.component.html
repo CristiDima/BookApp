@@ -1,4 +1,4 @@
 <div class="container">
-    <pdf-viewer [src]="selectedBook.uiFile"
-                [original-size]="false" [(page)]="page" [show-borders]="true"></pdf-viewer>
+    <pdf-viewer *ngIf="selectedBook.uiFile" [src]="selectedBook.uiFile"
+        [original-size]="false" [(page)]="page" [show-borders]="true"></pdf-viewer>
   </div>

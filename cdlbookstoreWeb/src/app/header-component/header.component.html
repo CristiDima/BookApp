@@ -18,13 +18,17 @@
                 <!-- admin -->
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAdminPage()">Books</button>
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAddQuizPage()">Quiz</button>
-                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onManaagementPage()">Clients</button>
+                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onManaagementPage()">Clienti</button>
                 <!-- user -->
-                <button *ngIf="isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBooksPage()">Books</button>
+                <button *ngIf="isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBooksPage()">BookStore</button>
                 <button *ngIf="isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onTakeQuizPage()">Quiz</button>
-                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAccountPage()">Profile</button>
+                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onLibraryPagePage()">Librarie</button>
+                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onEBookPage()">E-Librarie</button>
+                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onWishlistPage()">Favorite</button>
+                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onLoanedPage()">Imprumutate</button>
+                <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onProfilePage()">Profil</button>
                 <!-- business -->
-                <button *ngIf=" isBusiness() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBusinessProfilePage()">Profile</button>
+                <button *ngIf=" isBusiness() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBusinessProfilePage()">Profil</button>
                 <!-- both -->
                 <button *ngIf="!isLoggedId()" mat-menu-item class="standard-button" (click)="onLogin()">Log in</button>
                 <button *ngIf="isLoggedId()" mat-menu-item class="standard-button" (click)="onLogout()">Log out</button>
