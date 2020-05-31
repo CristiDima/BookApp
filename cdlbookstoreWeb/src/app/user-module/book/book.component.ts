@@ -34,7 +34,7 @@ export class BookComponent {
 
     public get canBorrowBook(): boolean {
         return this.userDetailsService.isPhysicalSubcription &&
-            this.userDetailsService.loanedBooks.length <= 5;
+            this.userSesion.user.totalBooks > this.userDetailsService.loanedBooks.length;
     }
 
     public get canReadOnline(): boolean {
@@ -46,7 +46,7 @@ export class BookComponent {
     }
 
     private canBorrowBooks(): boolean {
-        return 5 >= this.userDetailsService.loanedBooks.length;
+        return this.userSesion.user.totalBooks > this.userDetailsService.loanedBooks.length;
     }
 
     private isBookLoaned(): boolean {
@@ -55,6 +55,10 @@ export class BookComponent {
 
     private isBookOnline(): boolean {
         return this.userDetailsService.hasOnlineBook(this.selectedBook);
+    }
+
+    private isBookAvailable(): boolean {
+        return this.selectedBook.total > this.selectedBook.loaned;
     }
 
     //#region events
@@ -93,6 +97,11 @@ export class BookComponent {
             return;
         }
 
+        if (this.isBookAvailable()) {
+            this.apiMessage.onNotAvailableBookMsg();
+            return;
+        }
+
         const message: string = 'Cartea va fi livrata la adresa: ' + this.userDetailsService.address.address +
             ',' + this.userDetailsService.address.city + ',' + this.userDetailsService.address.district;
         const dialogRef = this.dialog.open(ConfirmationComponent, {
@@ -126,7 +135,7 @@ export class BookComponent {
             this.apiMessage.onBorrowBookMsg(book);
         }, error => {
             this.spinner.hide();
-            this.apiMessage.onBorrowBookMsg(error, true);
+            this.apiMessage.onNotAvailableBookMsg();
         });
     }
 

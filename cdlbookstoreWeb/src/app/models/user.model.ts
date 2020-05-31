@@ -8,7 +8,7 @@ export class User {
     public admin: boolean;
     public business: boolean;
     public fromBusiness: boolean;
-    public totalBooks: number = 5;
+    public totalBooks = 5;
 }
 
 export class UserAddress {
@@ -19,7 +19,7 @@ export class UserAddress {
 }
 export class UserCredentials {
     public username: string;
-    public password: string; 
+    public password: string;
 }
 
 export class UserSession {
@@ -29,7 +29,7 @@ export class UserSession {
 
 export class UserPhysicalSubscription {
     public id: number;
-    public valid: boolean = false;
+    public valid = false;
     public expiresAt: Date;
     public activatedAt: Date;
     public userId: number;
@@ -37,7 +37,7 @@ export class UserPhysicalSubscription {
 
 export class UserBusinessSubscription {
     public id: number;
-    public valid: boolean = false;
+    public valid = false;
     public expiresAt: Date;
     public activatedAt: Date;
     public userId: number;

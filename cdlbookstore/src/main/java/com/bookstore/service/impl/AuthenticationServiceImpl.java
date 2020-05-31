@@ -21,6 +21,7 @@ import java.util.*;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final static int SESSION_LIFETIME = 60;
+    private final static int NUMBER_OF_BOOKS = 5;
 
     @Autowired
     UserCredentialsService userCredentialsService;
@@ -139,6 +140,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         userBookstore.setPhoneNumber(userDetails.get("phoneNumber"));
+        userBookstore.setTotalBooks(NUMBER_OF_BOOKS);
         userBookstoreDto = userBookstoreService.saveUser(userBookstoreMapper.userBookstoreToUserBookstoreDto(userBookstore));
 
         UserCredentials userCredentials = new UserCredentials();

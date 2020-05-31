@@ -71,6 +71,11 @@ export class APIMessagesService {
         this.toastr.warning('Cartea aceasta este deja la dumneavoastra. Puteti imprumuta alta carte');
     }
 
+    public onNotAvailableBookMsg(): void {
+        this.toastr.warning('Cartea nu este disponibila momentan in stoc');
+    }
+
+
     public onBorrowBookMsg(value: any, error?: any): void {
         if (error) {
             this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
