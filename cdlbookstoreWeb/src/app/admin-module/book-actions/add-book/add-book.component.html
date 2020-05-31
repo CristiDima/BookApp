@@ -1,19 +1,19 @@
 <div class="container">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Add new book</mat-card-title>
+            <mat-card-title>Adauga o carte</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <form [formGroup]="addbookForm" (ngSubmit)="onSubmit()">
                 <div fxLayout fxLayout="column" fxLayoutAlign="center">
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="bookname">Book Name:*</mat-label>
+                            <mat-label for="bookname">Nume:*</mat-label>
                             <input matInput formControlName="bookname" class="form-control">
-                            <mat-error *ngIf="hasValue">This book was already added</mat-error>
+                            <mat-error *ngIf="hasValue">Aceasta carte este deja adaugata</mat-error>
                         </mat-form-field>
                         <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
-                            <mat-label for="bookname">Authors:*</mat-label>
+                            <mat-label for="bookname">Autor:*</mat-label>
                             <input type="text" matInput [matAutocomplete]="autoAuthor" [formControl]="authorControl"> 
                         </mat-form-field>
                         
@@ -28,23 +28,23 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="bookname">Pages:</mat-label>
+                            <mat-label for="bookname">Pagini:</mat-label>
                             <input matInput type="number" pattern="[0-9]*" formControlName="pages" class="form-control">
                         </mat-form-field>
                         <mat-form-field class="small-form" appearance="outline" fxLayout="column">
-                            <mat-label for="bookname">Years:</mat-label>
+                            <mat-label for="bookname">An:</mat-label>
                             <mat-select formControlName="year">
                                 <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field class="small-form" appearance="outline" fxLayout="column">
-                            <mat-label for="bookname">Total books:</mat-label>
+                            <mat-label for="bookname">Disponibile:</mat-label>
                             <input matInput type="number" pattern="[0-9]*" formControlName="total" class="form-control">
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
-                            <mat-label for="bookname">Genres:*</mat-label>
+                            <mat-label for="bookname">Gen:*</mat-label>
                             <input type="text" matInput  [matAutocomplete]="autoGenre" [formControl]="genreControl"> 
                         </mat-form-field>
                         
@@ -59,32 +59,32 @@
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="description">Description:*</mat-label>
+                            <mat-label for="description">Descriere:*</mat-label>
                             <textarea matInput formControlName="description" class="form-control"></textarea>
                         </mat-form-field>
                     </div>
                     <div fxLayout="row">
                         <button class="large-button" mat-raised-button (click)="fileInput.click()" type='button'>
-                            <span>Upload PDF:</span>
+                            <span>Incarca un fisier:</span>
                             <input #fileInput type="file" style="display:none;" (change)="onPdfFileChange($event)" accept="application/pdf"/>
                         </button>
-                        <mat-label>{{uploadedFileName ? uploadedFileName : 'No file was uploaded'}}</mat-label>
+                        <mat-label>{{uploadedFileName ? uploadedFileName : 'Nu a fost incarcata nici un fisier'}}</mat-label>
                     </div>
                     <div fxLayout="row">
                         <button class="large-button" mat-raised-button (click)="imageInput.click()" type='button'> 
-                            <span>Upload Photo:</span>
+                            <span>Incarca o fotografie:</span>
                             <input #imageInput type="file" style="display:none;" (change)="onImgFileChange($event)" accept="image/*"/>
                         </button>
-                        <mat-label>{{uploadedImgName ? uploadedImgName : 'No file was uploaded'}}</mat-label>
+                        <mat-label>{{uploadedImgName ? uploadedImgName : 'Nu a fost incarcata nici o fotografie'}}</mat-label>
                     </div>
                 </div>
                 <hr>
                 <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                     <button [disabled]="!addbookForm.valid" class="standard-button" mat-raised-button type="submit">
-                        Save
+                        Salveaza
                     </button>
                     <button [disabled]="!addbookForm.valid" class="standard-button" mat-raised-button type="reset" 
-                        click="onCancel()"> Cancel
+                        click="onCancel()"> Anuleaza
                     </button>
                 </div>
             </form>

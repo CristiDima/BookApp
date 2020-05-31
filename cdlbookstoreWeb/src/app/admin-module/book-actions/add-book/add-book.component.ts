@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { _ } from 'core-js';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
     selector: 'app-add-book',
@@ -24,10 +25,10 @@ export class AddBookComponent implements OnInit {
     @ViewChild('fileInput', {static: false}) fileInput: ElementRef;
     @ViewChild('imageInput', {static: false}) imageInput: ElementRef;
     public years: number[] = [];
-  
+
     protected addbookForm: FormGroup = null;
     protected authors: string[] = [];
-    protected hasValue: boolean = false;
+    protected hasValue = false;
 
     public filteredAuthors: Observable<Author[]>;
     public filteredGenres: Observable<Genre[]>;
@@ -35,15 +36,15 @@ export class AddBookComponent implements OnInit {
     protected genreControl = new FormControl([Validators.required]);
     public selectedAuthors: Author[] = [];
     public selectedGenres: Genre[] = [];
-    private lastAuthorFilter: string = '';
-    private lastGenreFilter: string = '';
-  
-    constructor(private _authorService: AuthorService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
-                private _genreService: GenreService, private _bookService: BookService, public fb: FormBuilder,
+    private lastAuthorFilter = '';
+    private lastGenreFilter = '';
+
+    constructor(private authorService: AuthorService, private apiRequest: APIRequestService, private pathRequest: PathRequestService,
+                private genreService: GenreService, private bookService: BookService, public fb: FormBuilder,
                 private cd: ChangeDetectorRef, private fileSaveService: FileSaveService, private spinner: NgxSpinnerService,
-                private toastr: ToastrService) {
+                private apiMessages: APIMessagesService) {
     }
-  
+
     ngOnInit() {
       this.onInitForm();
       this.setYears();
@@ -52,17 +53,17 @@ export class AddBookComponent implements OnInit {
 
     private setYears(): void {
       const currentYear: number = +(new Date()).getFullYear();
-      for(let i = 0; i <= currentYear; i++) {
+      for (let i = 0; i <= currentYear; i++) {
         this.years.push(i);
       }
     }
 
     public get authorsName(): string[] {
-      return this._authorService.authorsName;
+      return this.authorService.authorsName;
     }
 
     public get genresName(): string[] {
-      return this._genreService.genresName;
+      return this.genreService.genresName;
     }
 
     public get uploadedFileName(): string {
@@ -70,7 +71,7 @@ export class AddBookComponent implements OnInit {
         return '';
       }
       const files: any[] = this.fileInput.nativeElement.files;
-      if(files && files[0]) {
+      if (files && files[0]) {
         return files[0].name;
       }
 
@@ -82,13 +83,13 @@ export class AddBookComponent implements OnInit {
         return '';
       }
       const files: any[] = this.imageInput.nativeElement.files;
-      if(files && files[0]) {
+      if (files && files[0]) {
         return files[0].name;
       }
 
       return '';
     }
-  
+
     //#region Events
     protected onChangeMode(): void {
       this.getBooksRequest();
@@ -105,18 +106,18 @@ export class AddBookComponent implements OnInit {
       book.file = this.addbookForm.value.pdfFile ? this.addbookForm.value.pdfFile.name : '';
       book.authors = this.selectedAuthors;
       book.genres = this.selectedGenres;
-  
+
       this.fileInput.nativeElement.files = null;
       this.imageInput.nativeElement.files = null;
-      if (!book || this._bookService.hasValue(book)) {
-        this.addbookForm.controls['bookname'].setErrors({'incorrect': true});
+      if (!book || this.bookService.hasValue(book)) {
+        this.addbookForm.controls.bookname.setErrors({incorrect: true});
         this.hasValue = true;
       } else {
         this.hasValue = false;
         this.addBookRequest(book);
       }
     }
-  
+
     protected onCancel(): void {
       this.addbookForm.reset();
     }
@@ -124,7 +125,7 @@ export class AddBookComponent implements OnInit {
     public onPdfFileChange(event): void {
       const reader = new FileReader();
       let fileToUpload: File = null;
-      if(event.target.files && event.target.files.length) {
+      if (event.target.files && event.target.files.length) {
         const file = event.target.files[0];
         reader.readAsDataURL(file);
         fileToUpload = file;
@@ -132,7 +133,6 @@ export class AddBookComponent implements OnInit {
           this.addbookForm.patchValue({
             pdfFile: fileToUpload
          });
-        
           // need to run CD since file load runs outside of zone
           this.cd.markForCheck();
         };
@@ -142,7 +142,7 @@ export class AddBookComponent implements OnInit {
     public onImgFileChange(event): void {
       const reader = new FileReader();
       let fileToUpload: File = null;
-      if(event.target.files && event.target.files.length) {
+      if (event.target.files && event.target.files.length) {
         const file = event.target.files[0];
         reader.readAsDataURL(file);
         fileToUpload = file;
@@ -150,7 +150,6 @@ export class AddBookComponent implements OnInit {
           this.addbookForm.patchValue({
             img: fileToUpload
          });
-        
           // need to run CD since file load runs outside of zone
           this.cd.markForCheck();
         };
@@ -158,20 +157,19 @@ export class AddBookComponent implements OnInit {
     }
 
     private onInitForm(): void {
-      
       this.addbookForm = this.fb.group({
-        'bookname': new FormControl('', [Validators.required]),
-        'authorsName': this.authorControl,
-        'typesArray': this.genreControl,
-        'pages': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
-        'year': new FormControl(0, [Validators.required]),
-        'total': new FormControl(0, [Validators.required,  Validators.pattern("^[0-9]*$")]),
-        'description': new FormControl('', [Validators.required]),
-        'pdfFile': new FormControl(null, []),
-        'img': new FormControl(null, [])
+        bookname: new FormControl('', [Validators.required]),
+        authorsName: this.authorControl,
+        typesArray: this.genreControl,
+        pages: new FormControl(0, [Validators.required,  Validators.pattern('^[0-9]*$')]),
+        year: new FormControl(0, [Validators.required]),
+        total: new FormControl(0, [Validators.required,  Validators.pattern('^[0-9]*$')]),
+        description: new FormControl('', [Validators.required]),
+        pdfFile: new FormControl(null, []),
+        img: new FormControl(null, [])
       });
-      
     }
+
     private onResetForm(): void {
       this.addbookForm.reset();
       this.addbookForm.value.img = null;
@@ -193,8 +191,8 @@ export class AddBookComponent implements OnInit {
     //#region Requests
     private getBooksRequest(): void {
       this.spinner.show();
-      this._apiRequest.requst('GET', this._pathRequest.bookPath).subscribe((responseData: Book[]) => {
-        this._bookService.books = responseData;
+      this.apiRequest.requst('GET', this.pathRequest.bookPath).subscribe((responseData: Book[]) => {
+        this.bookService.books = responseData;
         // this._bookService.getPhoto();
         // this._bookService.getFile();
         this.spinner.hide();
@@ -205,22 +203,20 @@ export class AddBookComponent implements OnInit {
 
     private addBookRequest(book: Book): void {
       this.spinner.show();
-      const succesMsg: string = 'The book: `' + book.name + '` was added';
-      const errorMsg: string = 'An error occured. Please try again.'
-      this._apiRequest.requst('POST', this._pathRequest.bookPath, book).subscribe((responseData: Book) => {
+      this.apiRequest.requst('POST', this.pathRequest.bookPath, book).subscribe((responseData: Book) => {
         if (this.addbookForm.value.pdfFile) {
           this.fileSaveService.uploadFile(this.addbookForm.value.pdfFile);
         }
         if (this.addbookForm.value.img) {
           this.fileSaveService.uploadFile(this.addbookForm.value.img);
         }
-        this._bookService.books.push(responseData);
+        this.bookService.books.push(responseData);
         this.onResetForm();
         this.spinner.hide();
-        this.toastr.success(succesMsg);
+        this.apiMessages.onAddAuthorMsg(book);
       }, error => {
         this.spinner.hide();
-        this.toastr.error(errorMsg);
+        this.apiMessages.onAddAuthorMsg(error, true);
       });
     }
     //#endregion
@@ -229,22 +225,22 @@ export class AddBookComponent implements OnInit {
     private filterAuthor(filter: string): Author[] {
       this.lastAuthorFilter = filter;
       if (filter) {
-        return this._authorService.authors.filter(option => {
+        return this.authorService.authors.filter(option => {
           return option.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
-        })
+        });
       } else {
-        return this._authorService.authors.slice();
+        return this.authorService.authors.slice();
       }
     }
 
     private filterGenre(filter: string): Genre[] {
       this.lastGenreFilter = filter;
       if (filter) {
-        return this._genreService.genres.filter(option => {
+        return this.genreService.genres.filter(option => {
           return option.name.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
-        })
+        });
       } else {
-        return this._genreService.genres.slice();
+        return this.genreService.genres.slice();
       }
     }
 

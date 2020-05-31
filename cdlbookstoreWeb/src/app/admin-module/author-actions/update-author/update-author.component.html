@@ -1,20 +1,19 @@
 <div class="container">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Update author</mat-card-title>
+            <mat-card-title>Actualizeaza un autor</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <form>
                 <div fxLayout fxLayout="column" class="mat-form-group">
                     <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                        <mat-label for="authorsNmae">Author:*</mat-label>
+                        <mat-label for="authorsNmae">Selecteaza un autor:*</mat-label>
                         <input type="text" matInput  [formControl]="authorControl" [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let author of filteredAuthor | async" [value]="author.name">
                             {{author.name}}
                         </mat-option>
                         </mat-autocomplete>
-                        <mat-error *ngIf="isAuthorUsed">This author is added to at least one book.</mat-error>
                     </mat-form-field>
                 </div>
             </form>
@@ -23,28 +22,28 @@
                 <div fxLayout fxLayout="column" fxLayoutAlign="center">
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="description">Author name:*</mat-label>
+                            <mat-label for="description">Nume:*</mat-label>
                             <input matInput formControlName="authorname" class="form-control">
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="description">Description:*</mat-label>
+                            <mat-label for="description">Descriere:*</mat-label>
                             <textarea matInput formControlName="description" class="form-control"></textarea>
                         </mat-form-field>
                     </div>
                     <div fxLayout="row">
                         <button class="large-button" mat-raised-button (click)="imageInput.click()" type='button'> 
-                            <span>Upload Photo:</span>
+                            <span>Incarca o fotografie:</span>
                             <input #imageInput type="file" style="display:none;" (change)="onImgFileChange($event)" accept="image/*"/>
                         </button>
-                        <mat-label>{{uploadedImgName ? uploadedImgName : 'No file was uploaded'}}</mat-label>
+                        <mat-label>{{uploadedImgName ? uploadedImgName : 'Nu a fost incarcata nici o fotografie'}}</mat-label>
                     </div>
                 </div>
                 <hr>
                 <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
-                    <button [disabled]="!updateAuthorForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
-                    <button [disabled]="!updateAuthorForm.valid" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
+                    <button [disabled]="!updateAuthorForm.valid" class="standard-button" mat-raised-button type="submit">Salveaza</button>
+                    <button [disabled]="!updateAuthorForm.valid" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Anuleaza</button>
                 </div>
             </form>
         </mat-card-content>

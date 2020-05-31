@@ -1,13 +1,13 @@
 <div class="container">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Update genre</mat-card-title>
+            <mat-card-title>Actualizeaza un gen literar</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <form>
                 <div fxLayout fxLayout="column" fxLayoutAlign="center" class="mat-form-group">
                     <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                        <mat-label for="authorsNmae">Genre:*</mat-label>
+                        <mat-label for="authorsNmae">Selecteaza un gen:*</mat-label>
                         <input type="text" matInput  [formControl]="genreControl" [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let genre of filteredGenre| async" [value]="genre.name">
@@ -22,21 +22,21 @@
                 <div fxLayout fxLayout="column" fxLayoutAlign="center" >
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="description">Genre name:*</mat-label>
+                            <mat-label for="description">Nume:*</mat-label>
                             <input matInput formControlName="genre" class="form-control">
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                            <mat-label for="description">Description:*</mat-label>
+                            <mat-label for="description">Descriere:*</mat-label>
                             <textarea matInput formControlName="description" class="form-control"></textarea>
                         </mat-form-field>
                     </div>
                 </div>
                 <hr>
                 <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
-                    <button [disabled]="!updateGenreForm.valid && !canSubmit" class="standard-button" mat-raised-button type="submit">Save</button>
-                    <button [disabled]="!updateGenreForm.valid && !canSubmit" class="standard-button" mat-raised-button type="reset" click="onCancel()">Cancel</button>
+                    <button [disabled]="!updateGenreForm.valid && !canSubmit" class="standard-button" mat-raised-button type="submit">Salveaza</button>
+                    <button [disabled]="!updateGenreForm.valid && !canSubmit" class="standard-button" mat-raised-button type="reset" click="onCancel()">Anuleaza</button>
                 </div>
             </form>
         </mat-card-content>

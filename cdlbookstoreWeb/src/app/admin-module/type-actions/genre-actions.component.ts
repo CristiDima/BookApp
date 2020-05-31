@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
     templateUrl: './genre-actions.component.html',
     styleUrls: ['./genre-actions.component.scss']
   })
-export class GenreActionsComponent {}
+export class GenreActionsComponent {
+
+}

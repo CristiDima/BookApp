@@ -6,65 +6,63 @@ import { APIRequestService } from 'src/app/shared/api-request.service';
 import { Book } from 'src/app/models/book.model';
 import { FileSaveService } from 'src/app/shared/file-save.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import * as _ from "lodash";
+import * as _ from 'lodash';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
     selector: 'app-delete-book',
     templateUrl: './delete-book.component.html',
     styleUrls: ['./delete-book.component.scss']
-  })
-  export class DeleteBookComponent implements OnInit {
-  
+})
+export class DeleteBookComponent implements OnInit {
+
     protected deleteBookForm: FormGroup = null;
 
     public bookControl: FormControl = new FormControl(null, [Validators.required]);
     public filteredBook: Observable<Book[]>;
     private selectedBook: Book;
 
-    constructor(private _bookService: BookService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
-                private fileSaveService: FileSaveService, private spinner: NgxSpinnerService,  private toastr: ToastrService) {
+    constructor(private bookService: BookService, private apiRequest: APIRequestService, private pathRequest: PathRequestService,
+                private fileSaveService: FileSaveService, private spinner: NgxSpinnerService, private apiMessage: APIMessagesService) {
     }
-  
+
     ngOnInit() {
       this.onResetForm();
       this.setFilters();
     }
 
     public get booksList(): string[] {
-      return this._bookService.booksName;
+      return this.bookService.booksName;
     }
 
     public get canSubmit(): boolean {
       return !_.isNil(this.selectedBook);
     }
-  
+
     //#region Events
     protected onSubmit(): void {
-      this.deleteBookRequest(this.selectedBook)
+      this.deleteBookRequest(this.selectedBook);
     }
-  
+
     public onCancel(): void {
       this.deleteBookForm.reset();
     }
 
     private onResetForm(): void {
       this.deleteBookForm = new FormGroup({
-        'bookName': this.bookControl
+        bookName: this.bookControl
       });
       this.bookControl = new FormControl(null, [Validators.required]);
       this.setFilters();
     }
     //#endregion
-  
+
     //#region Requests
     private deleteBookRequest(book: Book): void {
       this.spinner.show();
-      const succesMsg: string = 'The book: `' + book.name + '` was deleted';
-      const errorMsg: string = 'An error occured. Please try again.'
-      this._apiRequest.requst('DELETE', this._pathRequest.bookPath, book.id).subscribe((responseData: Book) => {
+      this.apiRequest.requst('DELETE', this.pathRequest.bookPath, book.id).subscribe((responseData: Book) => {
         this.onResetForm();
         if (book.photo) {
           this.fileSaveService.deleteFile(book.photo);
@@ -72,13 +70,13 @@ import * as _ from "lodash";
         if (book.file) {
           this.fileSaveService.deleteFile(book.file);
         }
-        const index: number = this._bookService.books.findIndex(el => el.name === responseData.name);
-        this._bookService.books.splice(index, 1);
+        const index: number = this.bookService.books.findIndex(el => el.name === responseData.name);
+        this.bookService.books.splice(index, 1);
         this.spinner.hide();
-        this.toastr.success(succesMsg);
+        this.apiMessage.onDeleteBookMsg(book);
       }, error => {
         this.spinner.hide();
-        this.toastr.error(errorMsg);
+        this.apiMessage.onDeleteBookMsg(error, true);
       });
     }
     //#endregion
@@ -89,14 +87,14 @@ import * as _ from "lodash";
         return;
       }
       const filterValue = value.toLowerCase();
-      if (this._bookService.hasValueByName(value)) {
-          this.selectedBook = this._bookService.books.filter(option => option.name.toLowerCase().includes(filterValue))[0];
+      if (this.bookService.hasValueByName(value)) {
+          this.selectedBook = this.bookService.books.filter(option => option.name.toLowerCase().includes(filterValue))[0];
           if (_.isNil(this.selectedBook.quiz)) {
           }
       } else {
         this.selectedBook = undefined;
       }
-      return this._bookService.books.filter(option => option.name.toLowerCase().includes(filterValue));
+      return this.bookService.books.filter(option => option.name.toLowerCase().includes(filterValue));
     }
 
     private setFilters(): void {
@@ -107,4 +105,4 @@ import * as _ from "lodash";
       );
     }
     //#endregion
-  }
+}

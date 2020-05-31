@@ -152,4 +152,85 @@ export class APIMessagesService {
         }
         this.toastr.success('A fost stearsa o intrebare pentru cartea: `' + value.name + '`');
     }
+
+    public onAddAuthorMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost adaugat autorul: `' + value.name + '`');
+    }
+
+    public onExistAuthorMsg(): void {
+        this.toastr.warning('Acest autor nu poate fi sters deoarece este alocat unei carti');
+    }
+
+    public onDeleteAuthorMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost sters autorul: `' + value.name + '`');
+    }
+
+    public onUpdateAuthorMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost actualizat autorul: `' + value.name + '`');
+    }
+
+    public onAddGenreMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost adaugat genul: `' + value.name + '`');
+    }
+
+    public onExistGenreMsg(): void {
+        this.toastr.warning('Acest gen nu poate fi sters deoarece este alocat unei carti');
+    }
+
+    public onDeleteGenreMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost sters genul: `' + value.name + '`');
+    }
+
+    public onUpdateGenreMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost actualizat genul: `' + value.name + '`');
+    }
+
+    public onAddBookMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost adaugata cartea: `' + value.name + '`');
+    }
+
+    public onDeleteBookMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost stearsa cartea: `' + value.name + '`');
+    }
+
+    public onUpdateBookMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('A fost actualizata cartea: `' + value.name + '`');
+    }
+
 }

@@ -8,15 +8,16 @@ import { PathRequestService } from 'src/app/shared/path-request.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FileSaveService } from 'src/app/shared/file-save.service';
-import * as _ from "lodash";
+import * as _ from 'lodash';
 import { startWith, map } from 'rxjs/operators';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
-    selector: 'app-update-author',
-    templateUrl: './update-author.component.html',
-    styleUrls: ['./update-author.component.scss']
-  })
-  export class UpdateAuthorComponent implements OnInit {
+  selector: 'app-update-author',
+  templateUrl: './update-author.component.html',
+  styleUrls: ['./update-author.component.scss']
+})
+export class UpdateAuthorComponent implements OnInit {
     @ViewChild('imageInput', {static: false}) imageInput: ElementRef;
     protected updateAuthorForm: FormGroup = null;
 
@@ -24,8 +25,8 @@ import { startWith, map } from 'rxjs/operators';
     public filteredAuthor: Observable<Author[]>;
     private selectedAuthor: Author;
 
-    constructor(private _authorService: AuthorService, private _apiRequest: APIRequestService, private _pathRequest: PathRequestService,
-                private fileSaveService: FileSaveService, private spinner: NgxSpinnerService,  private toastr: ToastrService,
+    constructor(private authorService: AuthorService, private apiRequest: APIRequestService, private pathRequest: PathRequestService,
+                private fileSaveService: FileSaveService, private spinner: NgxSpinnerService, private apiMessages: APIMessagesService,
                 private cd: ChangeDetectorRef) {
 
     }
@@ -43,13 +44,13 @@ import { startWith, map } from 'rxjs/operators';
         return this.selectedAuthor ? this.selectedAuthor.photo : '';
       }
       const files: any[] = this.imageInput.nativeElement.files;
-      if(files && files[0]) {
+      if (files && files[0]) {
         return files[0].name;
       }
 
       return this.selectedAuthor ? this.selectedAuthor.photo : '';
     }
-  
+
     //#region Events
     protected onSubmit(): void {
       this.selectedAuthor.name = this.updateAuthorForm.value.authorname;
@@ -57,16 +58,16 @@ import { startWith, map } from 'rxjs/operators';
       this.selectedAuthor.photo = this.updateAuthorForm.value.img ? this.updateAuthorForm.value.img.name : '';
       this.updateAuthorRequest(this.selectedAuthor);
     }
-  
+
     protected onCancel(): void {
       this.selectedAuthor = null;
     }
 
     protected onSetForm(): void {
       this.updateAuthorForm = new FormGroup({
-        'authorname': new FormControl(this.selectedAuthor.name, [Validators.required]),
-        'description': new FormControl(this.selectedAuthor.description, [Validators.required]),
-        'img': new FormControl(null, [])
+        authorname: new FormControl(this.selectedAuthor.name, [Validators.required]),
+        description: new FormControl(this.selectedAuthor.description, [Validators.required]),
+        img: new FormControl(null, [])
       });
     }
 
@@ -81,7 +82,6 @@ import { startWith, map } from 'rxjs/operators';
           this.updateAuthorForm.patchValue({
             img: fileToUpload
           });
-        
           // need to run CD since file load runs outside of zone
           this.cd.markForCheck();
         };
@@ -92,19 +92,17 @@ import { startWith, map } from 'rxjs/operators';
     //#region Requests
     private updateAuthorRequest(author: Author): void {
       this.spinner.show();
-      const succesMsg: string = 'The author: `' + author.name + '` was deleted';
-      const errorMsg: string = 'An error occured. Please try again.'
-      this._apiRequest.requst('PUT', this._pathRequest.authorPath, author).subscribe((responseData: Author) => {
+      this.apiRequest.requst('PUT', this.pathRequest.authorPath, author).subscribe((responseData: Author) => {
         if (this.updateAuthorForm.value.img) {
           this.fileSaveService.uploadFile(this.updateAuthorForm.value.img);
         }
-        this.selectedAuthor = responseData
+        this.selectedAuthor = responseData;
         this.selectedAuthor = null;
         this.spinner.hide();
-        this.toastr.success(succesMsg);
+        this.apiMessages.onUpdateAuthorMsg(author);
       }, error => {
         this.spinner.hide();
-        this.toastr.error(errorMsg);
+        this.apiMessages.onUpdateAuthorMsg(error, true);
       });
     }
     //#endregion
@@ -115,13 +113,13 @@ import { startWith, map } from 'rxjs/operators';
         return;
       }
       const filterValue = value.toLowerCase();
-      if (this._authorService.hasValueByName(value)) {
-          this.selectedAuthor = this._authorService.authors.filter(option => option.name.toLowerCase().includes(filterValue))[0];
+      if (this.authorService.hasValueByName(value)) {
+          this.selectedAuthor = this.authorService.authors.filter(option => option.name.toLowerCase().includes(filterValue))[0];
           this.onSetForm();
       } else {
         this.selectedAuthor = undefined;
       }
-      return this._authorService.authors.filter(option => option.name.toLowerCase().includes(filterValue));
+      return this.authorService.authors.filter(option => option.name.toLowerCase().includes(filterValue));
     }
 
     private setFilters(): void {
@@ -132,4 +130,4 @@ import { startWith, map } from 'rxjs/operators';
       );
     }
     //#endregion
-  }
+}

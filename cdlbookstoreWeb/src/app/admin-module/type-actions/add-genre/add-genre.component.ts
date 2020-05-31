@@ -6,25 +6,26 @@ import { PathRequestService } from 'src/app/shared/path-request.service';
 import { GenreService } from 'src/app/shared/genre.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
     selector: 'app-add-genre',
     templateUrl: './add-genre.component.html',
     styleUrls: ['./add-genre.component.scss']
-  })
-  export class AddGenreComponent implements OnInit {
+})
+export class AddGenreComponent implements OnInit {
     protected addGenreForm: FormGroup = null;
-    protected hasValue: boolean = false;
+    protected hasValue = false;
 
-    constructor(private _apiRequest: APIRequestService, private _pathRequest: PathRequestService, private _genreService: GenreService,
-                private spinner: NgxSpinnerService, private toastr: ToastrService){
+    constructor(private apiRequest: APIRequestService, private pathRequest: PathRequestService, private genreService: GenreService,
+                private spinner: NgxSpinnerService, private apiMessage: APIMessagesService) {
     }
 
     ngOnInit() {
         this.onResetForm();
     }
 
-    //#region Events 
+    //#region events
     public onChangeMode(): void {
         this.getGenresRequest();
     }
@@ -33,32 +34,32 @@ import { ToastrService } from 'ngx-toastr';
         const genre: Genre = new Genre();
         genre.name = this.addGenreForm.value.genre;
         genre.description = this.addGenreForm.value.description;
-        if (!genre || this._genreService.hasValue(genre)) {
-            this.addGenreForm.controls['genre'].setErrors({'incorrect': true});
+        if (!genre || this.genreService.hasValue(genre)) {
+            this.addGenreForm.controls.genre.setErrors({incorrect: true});
             this.hasValue = true;
         } else {
             this.hasValue = false;
             this.addGenreRequest(genre);
         }
     }
-    
+
     protected onCancel(): void {
         this.addGenreForm.reset();
     }
 
     private onResetForm() {
         this.addGenreForm = new FormGroup({
-            'genre': new FormControl(null, [Validators.required]),
-            'description': new FormControl(null, [Validators.required])
+            genre: new FormControl(null, [Validators.required]),
+            description: new FormControl(null, [Validators.required])
         });
     }
     //#endregion
 
-    //#region Requests 
+    //#region requests
     private getGenresRequest(): void {
         this.spinner.show();
-        this._apiRequest.requst('GET', this._pathRequest.genrePath).subscribe((responseData: Genre[]) => {
-            this._genreService.genres = responseData;
+        this.apiRequest.requst('GET', this.pathRequest.genrePath).subscribe((responseData: Genre[]) => {
+            this.genreService.genres = responseData;
             this.spinner.hide();
         }, error => {
             this.spinner.hide();
@@ -67,17 +68,15 @@ import { ToastrService } from 'ngx-toastr';
 
     private addGenreRequest(genre: Genre): void {
         this.spinner.show();
-        const succesMsg: string = 'The genre: `' + genre.name + '` was added.';
-        const errorMsg: string = 'An error occured. Please try again.'
-        this._apiRequest.requst('POST', this._pathRequest.genrePath, genre).subscribe((responseData: Genre) => {
-            this._genreService.genres.push(responseData);
+        this.apiRequest.requst('POST', this.pathRequest.genrePath, genre).subscribe((responseData: Genre) => {
+            this.genreService.genres.push(responseData);
             this.spinner.hide();
-            this.toastr.success(succesMsg);
+            this.apiMessage.onAddGenreMsg(genre);
             this.onCancel();
         }, error => {
             this.spinner.hide();
-            this.toastr.error(errorMsg);
+            this.apiMessage.onAddGenreMsg(error, true);
         });
     }
     //#endregion
-  }
+}

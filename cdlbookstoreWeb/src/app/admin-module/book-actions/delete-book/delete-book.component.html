@@ -1,13 +1,13 @@
 <div class="container">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Delete book</mat-card-title>
+            <mat-card-title>Sterge o carte</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <form [formGroup]="deleteBookForm" (ngSubmit)="onSubmit()">
                 <div  fxLayout fxLayout="column" class="mat-form-group">
                     <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                        <mat-label for="booksName">Book:*</mat-label>
+                        <mat-label for="booksName">Selecteaza o carte:*</mat-label>
                         <input type="text" matInput  [formControl]="bookControl" [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let book of filteredBook | async" [value]="book.name">
@@ -18,8 +18,8 @@
                 </div>
                 <hr>
                 <div fxLayout="row" class="mat-form-group">
-                    <button [disabled]="!deleteBookForm.valid && !canSubmit" class="standard-button" mat-raised-button type="submit">Save</button>
-                    <button [disabled]="!deleteBookForm.valid && !canSubmit" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
+                    <button [disabled]="!deleteBookForm.valid && !canSubmit" class="standard-button" mat-raised-button type="submit">Salveaza</button>
+                    <button [disabled]="!deleteBookForm.valid && !canSubmit" class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Anuleaza</button>
                 </div>
             </form>
         </mat-card-content>
