@@ -24,6 +24,7 @@ import { APIMessagesService } from 'src/app/shared/api-messages.service';
 export class AddBookComponent implements OnInit {
     @ViewChild('fileInput', {static: false}) fileInput: ElementRef;
     @ViewChild('imageInput', {static: false}) imageInput: ElementRef;
+    @ViewChild('selectValue', {static: false}) selectValue: ElementRef;
     public years: number[] = [];
 
     protected addbookForm: FormGroup = null;
@@ -32,8 +33,8 @@ export class AddBookComponent implements OnInit {
 
     public filteredAuthors: Observable<Author[]>;
     public filteredGenres: Observable<Genre[]>;
-    protected authorControl = new FormControl([Validators.required]);
-    protected genreControl = new FormControl([Validators.required]);
+    protected authorControl = new FormControl([], [Validators.required]);
+    protected genreControl = new FormControl([], [Validators.required]);
     public selectedAuthors: Author[] = [];
     public selectedGenres: Genre[] = [];
     private lastAuthorFilter = '';
@@ -120,6 +121,16 @@ export class AddBookComponent implements OnInit {
 
     protected onCancel(): void {
       this.addbookForm.reset();
+      this.fileInput.nativeElement.value = '';
+      this.imageInput.nativeElement.value = '';
+      this.authorControl.reset();
+      this.genreControl.reset();
+      this.selectedGenres.forEach(el => {
+        el.uiSelected = false;
+      });
+      this.selectedAuthors.forEach(el => {
+        el.uiSelected = false;
+      });
     }
 
     public onPdfFileChange(event): void {
@@ -170,22 +181,7 @@ export class AddBookComponent implements OnInit {
       });
     }
 
-    private onResetForm(): void {
-      this.addbookForm.reset();
-      this.addbookForm.value.img = null;
-      this.addbookForm.value.pdfFile = null;
-      this.authorControl = new FormControl([Validators.required]);
-      this.genreControl = new FormControl([Validators.required]);
-      this.lastAuthorFilter = '';
-      this.lastGenreFilter = '';
-      this.selectedAuthors.forEach(el => {
-        el.uiSelected = false;
-      });
-      this.selectedGenres.forEach(el => {
-        el.uiSelected = false;
-      });
-      this.setFilters();
-    }
+
     //#endregion
 
     //#region Requests
@@ -211,7 +207,7 @@ export class AddBookComponent implements OnInit {
           this.fileSaveService.uploadFile(this.addbookForm.value.img);
         }
         this.bookService.books.push(responseData);
-        this.onResetForm();
+        this.onCancel();
         this.spinner.hide();
         this.apiMessages.onAddAuthorMsg(book);
       }, error => {

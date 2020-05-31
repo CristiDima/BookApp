@@ -36,7 +36,7 @@
                 <hr>
                 <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                     <button [disabled]="!updateGenreForm.valid && !canSubmit" class="standard-button" mat-raised-button type="submit">Salveaza</button>
-                    <button [disabled]="!updateGenreForm.valid && !canSubmit" class="standard-button" mat-raised-button type="reset" click="onCancel()">Anuleaza</button>
+                    <button [disabled]="!updateGenreForm.valid && !canSubmit" class="standard-button" mat-raised-button type="reset" (click)="onCancel()">Anuleaza</button>
                 </div>
             </form>
         </mat-card-content>

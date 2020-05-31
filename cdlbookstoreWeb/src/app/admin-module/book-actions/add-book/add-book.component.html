@@ -45,13 +45,13 @@
                     <div fxLayout="row" fxLayoutAlign="center" class="mat-form-group">
                         <mat-form-field class="form-group" appearance="outline" fxLayout fxLayout="row" fxLayoutAlign="center">
                             <mat-label for="bookname">Gen:*</mat-label>
-                            <input type="text" matInput  [matAutocomplete]="autoGenre" [formControl]="genreControl"> 
+                            <input type="text" matInput  [matAutocomplete]="autoGenre" [formControl]="genreControl" > 
                         </mat-form-field>
                         
                         <mat-autocomplete #autoGenre="matAutocomplete" [displayWith]="displayFn">
                             <mat-option *ngFor="let genre of filteredGenres | async" [value]="selectedGenres">
                                 <div (click)="optionClicked($event, genre)">
-                                    <mat-checkbox [checked]="genre.uiSelected" (change)="toggleGenreSelection(genre)" 
+                                    <mat-checkbox [checked]="genre.uiSelected" (change)="toggleGenreSelection(genre)" #selectValue
                                     (click)="$event.stopPropagation()">{{ genre.name }}</mat-checkbox>
                                 </div>
                             </mat-option>
@@ -84,7 +84,7 @@
                         Salveaza
                     </button>
                     <button [disabled]="!addbookForm.valid" class="standard-button" mat-raised-button type="reset" 
-                        click="onCancel()"> Anuleaza
+                        (click)="onCancel()"> Anuleaza
                     </button>
                 </div>
             </form>

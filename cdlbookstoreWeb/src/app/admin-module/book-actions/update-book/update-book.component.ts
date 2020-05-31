@@ -65,7 +65,7 @@ export class UpdateBookComponent implements OnInit {
     }
 
     public get canEdit(): boolean {
-        return !_.isNil(this.selectedBook);
+        return !_.isNil(this.selectedBook) && this.selectedBook !== null;
     }
 
     public get canSubmit(): boolean {
@@ -113,6 +113,7 @@ export class UpdateBookComponent implements OnInit {
 
     public onCancel(): void {
       this.selectedBook = null;
+      console.log(this.canEdit);
     }
 
     private onResetForm(): void {
@@ -210,7 +211,7 @@ export class UpdateBookComponent implements OnInit {
             this.fileSaveService.uploadFile(this.updateBookForm.value.img);
           }
           this.selectedBook = responseData;
-          this.onResetForm();
+          this.onCancel();
           this.spinner.hide();
           this.apiMessage.onUpdateBookMsg(book);
         }, error => {

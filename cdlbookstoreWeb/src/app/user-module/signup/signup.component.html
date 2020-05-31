@@ -57,7 +57,7 @@
                     <hr>
                     <div fxLayout fxLayout="row" fxLayoutAlign="center">
                         <button [disabled]="!signupForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
-                        <button class="standard-button" mat-raised-button click="onCancel()" type="reset">Cancel</button>
+                        <button class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
                     </div>
                 </form>
             </mat-card-content>
