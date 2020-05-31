@@ -1,15 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
 import { ManagementService } from '../admin-management/management.service';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { ManagementBook } from '../admin-management/management-books.model';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
-  selector: 'app-ordered-books',
-  templateUrl: './ordered-books.component.html',
-  styleUrls: ['./ordered-books.component.scss']
+  selector: 'app-unreturned-books',
+  templateUrl: './unreturned-books.component.html',
+  styleUrls: ['./unreturned-books.component.scss']
 })
-export class OrderedBooksComponent {
+export class UnreturnedBooksComponent {
 
   constructor(private managementService: ManagementService, private pathRequest: PathRequestService, private apiRequest: APIRequestService,
               private spinner: NgxSpinnerService) {
@@ -20,16 +21,16 @@ export class OrderedBooksComponent {
   }
 
   public get managementBooks(): ManagementBook[] {
-    return this.managementService.orderdBooks;
+    return this.managementService.unreturnedBooks;
   }
 
-  public onSendBookRequest(element: ManagementBook) {
+  public onReturnBookRequest(element: ManagementBook) {
     this.spinner.show();
-    this.apiRequest.requst('DELETE', this.pathRequest.orderedPath + '/' + element.bookId,  element.userId)
+    this.apiRequest.requst('DELETE', this.pathRequest.returnedPath + '/' + element.bookId,  element.userId)
     .subscribe((responseData: boolean) => {
         if (responseData) {
-          const index: number = this.managementService.orderdBooks.indexOf(element);
-          this.managementService.orderdBooks.splice(index, 1);
+          const index: number = this.managementService.unreturnedBooks.indexOf(element);
+          this.managementService.unreturnedBooks.splice(index, 1);
         }
         this.spinner.hide();
     }, error => {

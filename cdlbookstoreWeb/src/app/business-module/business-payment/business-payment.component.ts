@@ -76,7 +76,6 @@ export class BusinessPaymentComponent implements OnInit {
       emails.push(val.email);
     });
     convMap['emails'] = emails;
-    console.log(convMap);
     this.apiRequest.requst('POST', this.pathRequest.employeesPath, convMap)
     .subscribe((responseData: any) => {
       const tempEmployee: Employee = {email: responseData.email, isSelected: false};

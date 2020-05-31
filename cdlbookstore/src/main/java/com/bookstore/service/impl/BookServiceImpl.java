@@ -163,7 +163,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<List<BookDto>> getLoanedBooks(int userId){
+    public Optional<List<BookDto>> getUnreturnedBooks(int userId){
         List<LoanedBook> loanedBooks = new ArrayList<>();
         loanedBookRepository.findByUserId(userId).forEach(loanedBooks::add);
         List<BookDto> books = new ArrayList<>();
@@ -281,37 +281,28 @@ public class BookServiceImpl implements BookService {
 
     //region management books
     @Override
-    public Optional<Map<String, Map<String, Object>>> getExpiredLoanBooks() {
-        Map<String, Map<String, Object>> responseBooks = new HashMap<>();
+    public Optional<Map<String, List<Map<String, Object>>>> getUnreturnedBooks() {
+        Map<String, List<Map<String, Object>>> responseBooks = new HashMap<>();
         List<LoanedBook> loanedBooks = loanedBookRepository.findByDeliveredTrueAndReturnedFalse();
-        List<LoanedBook> expiredLoan = new ArrayList<>();
-        loanedBooks.forEach(loanedBook -> {
-            Instant now = new Date().toInstant();
-            Instant returnDate = loanedBook.getDateToReturn().toInstant();
-            int days = (int) ChronoUnit.DAYS.between(now, returnDate);
 
-            if (days <= 2) {
-                expiredLoan.add(loanedBook);
-            }
-        });
-        this.serializeBooks(expiredLoan, responseBooks);
+        serializeBooks(loanedBooks, responseBooks);
+
         return Optional.ofNullable(responseBooks);
     }
 
     @Override
-    public Optional<Map<String, Map<String, Object>>> getOrderedBooks() {
-        Map<String, Map<String, Object>> responseBooks = new HashMap<>();
+    public Optional<Map<String, List<Map<String, Object>>>> getOrderedBooks() {
+        Map<String, List<Map<String, Object>>> responseBooks = new HashMap<>();
         List<LoanedBook> loanedBooks = loanedBookRepository.findByOrderedTrueAndDeliveredFalse();
 
         serializeBooks(loanedBooks, responseBooks);
 
         return Optional.ofNullable(responseBooks);
-
     }
 
     @Override
-    public Optional<Map<String, Map<String, Object>>> getReturnedBooks() {
-        Map<String, Map<String, Object>> responseBooks = new HashMap<>();
+    public Optional<Map<String, List<Map<String, Object>>>> getReturnedBooks() {
+        Map<String, List<Map<String, Object>>> responseBooks = new HashMap<>();
         List<LoanedBook> loanedBooks = loanedBookRepository.findByReturnedTrue();
 
         serializeBooks(loanedBooks, responseBooks);
@@ -319,8 +310,9 @@ public class BookServiceImpl implements BookService {
         return Optional.ofNullable(responseBooks);
     }
 
-    private void serializeBooks(List<LoanedBook> loanedBooks, Map<String, Map<String, Object>> responseBooks) {
+    private void serializeBooks(List<LoanedBook> loanedBooks, Map<String, List<Map<String, Object>>> responseBooks) {
         AtomicInteger idx = new AtomicInteger();
+        List<Map<String, Object>> booksList = new ArrayList<>();
         loanedBooks.forEach(e -> {
             Map<String, Object> tempBook = new HashMap<>();
             Book book = bookRepository.findById(e.getBookId()).orElse(null);
@@ -348,10 +340,11 @@ public class BookServiceImpl implements BookService {
                 int days = (int) ChronoUnit.DAYS.between(now, returnDate);
                 tempBook.put("remainedDays", days);
                 tempBook.put("dateToReturn", e.getDateToReturn());
-                responseBooks.put("idx", tempBook);
+                booksList.add(tempBook);
                 idx.getAndIncrement();
             }
         });
+        responseBooks.put("idx", booksList);
     }
 
     @Override

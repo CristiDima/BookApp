@@ -1,7 +1,6 @@
 package com.bookstore.controller;
 
 import com.bookstore.dto.BookDto;
-import com.bookstore.entities.Book;
 import com.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +68,7 @@ public class BookController {
 
     @GetMapping("/loanedBooks/{id}")
     private ResponseEntity<List<BookDto>> getLoanedBooks(@PathVariable int id) {
-        return bookService.getLoanedBooks(id)
+        return bookService.getUnreturnedBooks(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -139,15 +138,15 @@ public class BookController {
 
     //region management books
     @GetMapping("/book/expiredLoan")
-    public ResponseEntity<Map<String, Map<String, Object>>> getExpiredLoanBooks()
+    public ResponseEntity<Map<String, List<Map<String, Object>>>> getLoanedBooks()
     {
-        return bookService.getExpiredLoanBooks()
+        return bookService.getUnreturnedBooks()
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/book/ordered")
-    public ResponseEntity<Map<String, Map<String, Object>>> getOrderedBooks()
+    public ResponseEntity<Map<String, List<Map<String, Object>>>> getOrderedBooks()
     {
         return bookService.getOrderedBooks()
                 .map(ResponseEntity::ok)
@@ -155,7 +154,7 @@ public class BookController {
     }
 
     @GetMapping("/book/returned")
-    public ResponseEntity<Map<String, Map<String, Object>>> getReturnedBooks()
+    public ResponseEntity<Map<String, List<Map<String, Object>>>> getReturnedBooks()
     {
         return bookService.getReturnedBooks()
                 .map(ResponseEntity::ok)

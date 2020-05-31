@@ -48,7 +48,6 @@ import { QuizModule } from './admin-module/quiz/quiz.module';
 import { UserModule } from './user-module/user.module';
 import { FooterComponent } from './footer-component/footer.component';
 import { HeaderComponent } from './header-component/header.component';
-import { BooksFormComponent } from './user-module/books-form/books-form.component';
 import { APIMessagesService } from './shared/api-messages.service';
 
 const config = {

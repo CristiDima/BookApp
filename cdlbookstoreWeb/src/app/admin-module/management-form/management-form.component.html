@@ -1,0 +1,99 @@
+
+<mat-form-field class="input-table" appearance="outline">
+  <mat-label>Nume:</mat-label>
+  <input matInput (keyup)="applyNameFilter($event.target.value)" >
+</mat-form-field>
+<mat-form-field class="input-table" appearance="outline">
+  <mat-label>Carte:</mat-label>
+  <input matInput (keyup)="applyNameFilter($event.target.value)" >
+</mat-form-field>
+<mat-form-field class="input-table" appearance="outline">
+  <mat-label>Oras:</mat-label>
+  <input matInput (keyup)="applyNameFilter($event.target.value)" >
+</mat-form-field>
+<mat-form-field class="input-table" appearance="outline" *ngIf="!isFromOrdered">
+  <mat-label>Zile:</mat-label>
+  <input matInput (keyup)="applyNameFilter($event.target.value)" >
+</mat-form-field>
+<div *ngIf="canShowContent" class="container  mat-elevation-z8" >
+    <mat-table #table  [dataSource]="dataSource" >
+    
+      <!-- Client name Column -->
+      <ng-container matColumnDef="clientName" sticky>
+        <mat-header-cell *matHeaderCellDef fxFlex="14"> Nume </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="14"> {{element.clientName}} </mat-cell>
+      </ng-container>
+    
+      <!-- Book name Column -->
+      <ng-container matColumnDef="bookName" sticky>
+        <mat-header-cell *matHeaderCellDef fxFlex="12"> Carte </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="12"> {{element.bookName}} </mat-cell>
+      </ng-container>
+    
+      <!-- Address Column -->
+      <ng-container matColumnDef="address" sticky>
+        <mat-header-cell *matHeaderCellDef fxFlex="25"> Adresa </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="25"> {{element.address}} </mat-cell>
+      </ng-container>
+    
+      <!-- City Column -->
+      <ng-container matColumnDef="city" sticky>
+        <mat-header-cell *matHeaderCellDef fxFlex="8"> Oras </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="8"> {{element.city}} </mat-cell>
+      </ng-container>
+  
+      <!-- District Column -->
+      <ng-container matColumnDef="district" sticky>
+          <mat-header-cell *matHeaderCellDef fxFlex="6"> Judet </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="6"> {{element.district}} </mat-cell>
+      </ng-container>
+  
+      <!-- Email Column -->
+      <ng-container matColumnDef="email" sticky>
+          <mat-header-cell *matHeaderCellDef fxFlex="10"> Email </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="10"> {{element.email}} </mat-cell>
+      </ng-container>
+  
+      <!-- Phone number Column -->
+      <ng-container matColumnDef="phoneNumber" sticky>
+          <mat-header-cell *matHeaderCellDef fxFlex="10"> Numar de telefon </mat-header-cell>
+          <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="10"> {{element.phoneNumber}} </mat-cell>
+      </ng-container>
+
+      <!-- Return date Column -->
+      <ng-container matColumnDef="returnDate" sticky>
+        <mat-header-cell *matHeaderCellDef fxFlex="7"> Retur </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="7"> {{element.dateToReturn | date: 'dd/MM/yyyy'}} </mat-cell>
+      </ng-container>
+
+      <!-- Remaining Days -->
+      <ng-container matColumnDef="remainingDays" sticky *ngIf="!isFromOrdered">
+        <mat-header-cell *matHeaderCellDef fxFlex="3"> Zile </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="3"> {{element.remainedDays}} </mat-cell>
+      </ng-container>
+
+      <!-- Returned book Column -->
+      <ng-container matColumnDef="returnedBook" sticky *ngIf="!isFromOrdered">
+        <mat-header-cell *matHeaderCellDef fxFlex="5"> Confirma </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="5" class="center-column"> 
+          <button class="book-action" mat-icon-button (click)="onParentAction(element)">
+            <mat-icon>check</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+       <!-- Returned book Column -->
+       <ng-container matColumnDef="returnedBook" sticky *ngIf="isFromOrdered">
+        <mat-header-cell *matHeaderCellDef fxFlex="5"> Trimite </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="5" class="center-column"> 
+          <button class="book-action" mat-icon-button (click)="onParentAction(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+    
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="managementBook.length" [pageSize]="20" showFirstLastButtons></mat-paginator>
+  </div>

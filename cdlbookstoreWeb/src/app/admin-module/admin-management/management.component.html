@@ -1,12 +1,13 @@
 <div class="container">
     <mat-tab-group class="mat-tab-group">
-        <mat-tab class="mat-tab" label="Ordered books" *ngIf="managementService.isLoadedInitialData">
-            <app-ordered-books></app-ordered-books>
+        <mat-tab class="mat-tab" label="Carti comandate">
+            <app-ordered-books *ngIf="canShowContent"></app-ordered-books>
         </mat-tab>
-        <mat-tab  label="Returned books" *ngIf="managementService.isLoadedInitialData">
-            <app-returned-books></app-returned-books>
+        <mat-tab  label="Carti returnate" >
+            <app-returned-books *ngIf="canShowContent"></app-returned-books>
         </mat-tab>
-        <mat-tab label="Unreturned books" *ngIf="managementService.isLoadedInitialData">
+        <mat-tab label="Carti imprumutate">
+            <app-unreturned-books *ngIf="canShowContent"></app-unreturned-books>
         </mat-tab>
     </mat-tab-group>
 </div>

@@ -125,12 +125,9 @@ export class AuthenticationService {
       const currentDate: Date = new Date();
       if (expirationTokenDate < currentDate) {
         currentDate.setMinutes(currentDate.getMinutes() - 30);
-        console.log(this.lastMouseMove, 'lastMouseMove');
         if (this.lastMouseMove < currentDate) {
           this.logout(true);
-          console.log('logout');
         } else {
-          console.log('heartbeat');
           this.apiRequest.heartbeat();
         }
       }

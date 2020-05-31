@@ -20,7 +20,7 @@ public interface BookService {
 
     //region loaned books
     Optional<BookDto> borrowBook(int bookId, int userId);
-    Optional<List<BookDto>> getLoanedBooks(int userId);
+    Optional<List<BookDto>> getUnreturnedBooks(int userId);
     //endregion
 
 
@@ -41,9 +41,9 @@ public interface BookService {
     //endregion
 
     //region management books
-    Optional<Map<String, Map<String, Object>>> getExpiredLoanBooks();
-    Optional<Map<String, Map<String, Object>>> getOrderedBooks();
-    Optional<Map<String, Map<String, Object>>> getReturnedBooks();
+    Optional<Map<String, List<Map<String, Object>>>> getUnreturnedBooks();
+    Optional<Map<String, List<Map<String, Object>>>> getOrderedBooks();
+    Optional<Map<String, List<Map<String, Object>>>> getReturnedBooks();
 
     Optional<Boolean> deleteOrderedBooks(int bookId, int userId);
     Optional<BookDto> returnBook(int bookId, int userId);

@@ -5,7 +5,9 @@ import { ManagementComponent } from './management.component';
 import { ManagementService } from './management.service';
 import { OrderedBooksComponent } from '../ordered-books/ordered-books.component';
 import { ReturnedBooksComponent } from '../returned-books/returned-books.component';
-import { ExpiredLoanComponent } from '../expired-loan/expired-loan.component';
+import { UnreturnedBooksComponent } from '../unreturned-books/unreturned-books.component';
+import { ManagementFormComponent } from '../management-form/management-form.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -13,9 +15,10 @@ import { ExpiredLoanComponent } from '../expired-loan/expired-loan.component';
         ManagementComponent,
         OrderedBooksComponent,
         ReturnedBooksComponent,
-        ExpiredLoanComponent
+        UnreturnedBooksComponent,
+        ManagementFormComponent
     ],
-    imports: [MaterialModule, BrowserModule],
+    imports: [MaterialModule, BrowserModule, FlexLayoutModule],
     providers: [ManagementService],
     bootstrap: [],
     exports: []

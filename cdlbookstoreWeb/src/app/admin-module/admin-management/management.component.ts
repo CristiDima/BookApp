@@ -9,4 +9,8 @@ export class ManagementComponent {
 
   constructor(private managementService: ManagementService) {
   }
+
+  public get canShowContent(): boolean {
+    return this.managementService.isLoadedInitialData;
+  }
 }

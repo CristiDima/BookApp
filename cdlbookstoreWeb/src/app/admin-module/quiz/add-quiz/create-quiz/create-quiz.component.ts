@@ -72,7 +72,7 @@ export class CreateQuizComponent implements OnInit {
         this.selectedBook.quiz = [];
       }
       this.selectedBook.quiz.push(quiz);
-      this.apiMessage.onAddQuestion(this.selectedBook);
+      this.apiMessage.onAddQuestionMsg(this.selectedBook);
       this.addQuizForm.reset();
     }
 

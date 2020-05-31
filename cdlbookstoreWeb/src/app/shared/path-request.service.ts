@@ -10,10 +10,10 @@ export  class PathRequestService {
     public wishlistPath = environment.url + '/book/wishlist';
     public libraryPath = environment.url + '/book/library';
     public bookRating = environment.url + '/book/rating';
-    public onlineBookPath = environment.url + '/onlineBooks'
-    public loanedBookPath = environment.url + '/loanedBooks'
+    public onlineBookPath = environment.url + '/onlineBooks';
+    public loanedBookPath = environment.url + '/loanedBooks';
     //#endregion
-    
+
     //#region bookManagement
     public expiredLoanPath = environment.url + '/book/expiredLoan';
     public orderedPath = environment.url + '/book/ordered';
@@ -25,17 +25,17 @@ export  class PathRequestService {
     public employeesPath = environment.url + '/employees';
     public businessAccountPath = environment.url + '/businessAccount';
     public setBusinessAccountPath = environment.url + '/businessAccount/set';
-    public updateBusinessAccountPath = environment.url + '/businessAccount/update'
+    public updateBusinessAccountPath = environment.url + '/businessAccount/update';
     //#endregion
 
     //#region quiz
     public quizPath = environment.url + '/quiz';
     //#endregion
 
-    public onlineAccountPath = environment.url + '/onlineAccount'
-    public physicalAccountPath = environment.url + '/physicalAccount'
-    public readListBookPath = environment.url + '/readListBook'
-    public addressPath = environment.url + '/address'
+    public onlineAccountPath = environment.url + '/onlineAccount';
+    public physicalAccountPath = environment.url + '/physicalAccount';
+    public readListBookPath = environment.url + '/readListBook';
+    public addressPath = environment.url + '/address';
     public authorPath = environment.url + '/author';
     public genrePath = environment.url + '/genre';
     public loginPath = environment.url + '/login';

@@ -18,16 +18,13 @@ export class FileSaveService {
         // tslint:disable-next-line: only-arrow-functions
         storageRef.put(file).then(function(snapshot) {
         }, error => {
-          console.log('file not deleted');
         });
     }
 
     public deleteFile(fileName: string): void {
       const storageRef: firebase.storage.Reference = this.fs.storage.ref(fileName);
       storageRef.delete().then(file => {
-        console.log('file uploaded');
       }, error => {
-        console.log('not upload file');
       });
     }
 
@@ -41,7 +38,6 @@ export class FileSaveService {
           book.uiImage = file;
         }
       }, error => {
-        console.log('not found file');
       });
     }
 
@@ -57,7 +53,6 @@ export class FileSaveService {
         }
         this.spinner.hide();
       }, error => {
-        console.log('not found file');
         this.spinner.hide();
       });
     }
@@ -72,7 +67,6 @@ export class FileSaveService {
           author.uiImage = file;
         }
       }, error => {
-        console.log('not found file');
       });
     }
 }

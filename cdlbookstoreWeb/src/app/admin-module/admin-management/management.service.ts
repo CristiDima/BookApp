@@ -8,12 +8,12 @@ import { ManagementBook } from './management-books.model';
 export class ManagementService {
 
     public orderdBooks: ManagementBook[] = [];
-    public expiredLoan: ManagementBook[] = [];
+    public unreturnedBooks: ManagementBook[] = [];
     public returnedBooks: ManagementBook[] = [];
 
-    private isOrderedRequestFinish: boolean = false;
-    private isReturnedRequestFinish: boolean = false;
-    private isExpiredFinish: boolean = false;
+    private isOrderedRequestFinish = false;
+    private isReturnedRequestFinish = false;
+    private isUnreturnedRequestFinish = false;
 
     constructor(private pathRequest: PathRequestService, private apiRequest: APIRequestService, private spinner: NgxSpinnerService) {
         this.getUserDetails();
@@ -21,42 +21,44 @@ export class ManagementService {
 
     public get isLoadedInitialData(): boolean {
         return (this.isOrderedRequestFinish && this.isReturnedRequestFinish &&
-            this.isExpiredFinish)
+            this.isUnreturnedRequestFinish);
     }
 
 
-    //event region
+    //#region events
     private async getUserDetails() {
-        this.getExpiredBooksRequest();
+        this.getUnreturnedBooksRequest();
         this.getOrderedBooksRequest();
         this.getReturnedBooksRequest();
     }
-    //endregion
+    //#endregion
 
-    //requests region
-    private getExpiredBooksRequest(): void {
+    //#region request
+    private getUnreturnedBooksRequest(): void {
         this.spinner.show();
         this.apiRequest.requst('GET', this.pathRequest.expiredLoanPath).subscribe((responseData: Map<string, Map<string, any>>) => {
             if (responseData) {
                 const arr = Object.entries(responseData);
                 const map = new Map(arr);
                 map.forEach(data => {
-                    const book: ManagementBook = new ManagementBook();
-                    book.address = data['address'];
-                    book.bookName = data['bookName'];
-                    book.city = data['city'];
-                    book.district = data['district'];
-                    book.clientName = data['clientName'];
-                    book.dateToReturn = data['dateToReturn']
-                    book.email = data['email'];
-                    book.phoneNumber = data['phoneNumber'];
-                    book.remainedDays = data['remainedDays'];
-                    book.bookId = data['bookId'];
-                    book.userId = data['userId'];
-                    this.expiredLoan.push(book);
+                    data.forEach(element => {
+                        const book: ManagementBook = new ManagementBook();
+                        book.address = element.address;
+                        book.bookName = element.bookName;
+                        book.city = element.city;
+                        book.district = element.district;
+                        book.clientName = element.clientName;
+                        book.dateToReturn = element.dateToReturn;
+                        book.email = element.email;
+                        book.phoneNumber = element.phoneNumber;
+                        book.remainedDays = element.remainedDays;
+                        book.bookId = element.bookId;
+                        book.userId = element.userId;
+                        this.unreturnedBooks.push(book);
+                    });
                 });
             }
-            this.isExpiredFinish = true;
+            this.isUnreturnedRequestFinish = true;
             this.spinner.hide();
         }, error => {
             this.isOrderedRequestFinish = true;
@@ -71,19 +73,21 @@ export class ManagementService {
                 const arr = Object.entries(responseData);
                 const map = new Map(arr);
                 map.forEach(data => {
-                    const book: ManagementBook = new ManagementBook();
-                    book.address = data['address'];
-                    book.bookName = data['bookName'];
-                    book.city = data['city'];
-                    book.district = data['district'];
-                    book.clientName = data['clientName'];
-                    book.dateToReturn = data['dateToReturn']
-                    book.email = data['email'];
-                    book.phoneNumber = data['phoneNumber'];
-                    book.remainedDays = data['remainedDays'];
-                    book.bookId = data['bookId'];
-                    book.userId = data['userId'];
-                    this.returnedBooks.push(book);
+                    data.forEach(element => {
+                        const book: ManagementBook = new ManagementBook();
+                        book.address = element.address;
+                        book.bookName = element.bookName;
+                        book.city = element.city;
+                        book.district = element.district;
+                        book.clientName = element.clientName;
+                        book.dateToReturn = element.dateToReturn;
+                        book.email = element.email;
+                        book.phoneNumber = element.phoneNumber;
+                        book.remainedDays = element.remainedDays;
+                        book.bookId = element.bookId;
+                        book.userId = element.userId;
+                        this.returnedBooks.push(book);
+                    });
                 });
             }
             this.isReturnedRequestFinish = true;
@@ -101,19 +105,21 @@ export class ManagementService {
                 const arr = Object.entries(responseData);
                 const map = new Map(arr);
                 map.forEach(data => {
-                    const book: ManagementBook = new ManagementBook();
-                    book.address = data['address'];
-                    book.bookName = data['bookName'];
-                    book.city = data['city'];
-                    book.district = data['district'];
-                    book.clientName = data['clientName'];
-                    book.dateToReturn = data['dateToReturn']
-                    book.email = data['email'];
-                    book.phoneNumber = data['phoneNumber'];
-                    book.remainedDays = data['remainedDays'];
-                    book.bookId = data['bookId'];
-                    book.userId = data['userId'];
-                    this.orderdBooks.push(book);
+                    data.forEach(element => {
+                        const book: ManagementBook = new ManagementBook();
+                        book.address = element.address;
+                        book.bookName = element.bookName;
+                        book.city = element.city;
+                        book.district = element.district;
+                        book.clientName = element.clientName;
+                        book.dateToReturn = element.dateToReturn;
+                        book.email = element.email;
+                        book.phoneNumber = element.phoneNumber;
+                        book.remainedDays = element.remainedDays;
+                        book.bookId = element.bookId;
+                        book.userId = element.userId;
+                        this.orderdBooks.push(book);
+                    });
                 });
             }
             this.isOrderedRequestFinish = true;
@@ -123,5 +129,5 @@ export class ManagementService {
             this.spinner.hide();
         });
     }
-    //endregion
+    //#endregion
 }

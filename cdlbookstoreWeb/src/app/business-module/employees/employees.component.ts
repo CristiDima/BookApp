@@ -12,7 +12,7 @@ import { UserSessionService } from 'src/app/shared/user-session.service';
   styleUrls: ['./employees.component.scss']
 })
 export class EmployeesComponent {
-    
+
     public dataSource: MatTableDataSource<Employee> = null;
     public displayedColumns: string[] = ['name', 'email', 'delete'];
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -23,7 +23,7 @@ export class EmployeesComponent {
       this.dataSource = new MatTableDataSource<Employee>(businessService.employees);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = 
+      this.dataSource.filterPredicate =
         (data: Employee, filtersJson: string) => {
             const matchFilter = [];
             const filters = JSON.parse(filtersJson);

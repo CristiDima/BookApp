@@ -282,7 +282,6 @@ export class AddBookComponent implements OnInit {
       }
 
       this.authorControl.setValue(this.selectedAuthors);
-      console.log(this.authorControl);
     }
 
     public toggleGenreSelection(genre: Genre): void {
