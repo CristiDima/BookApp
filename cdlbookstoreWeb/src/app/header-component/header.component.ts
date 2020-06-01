@@ -84,6 +84,10 @@ export class HeaderComponent {
     protected onAddQuizPage(): any {
         this.pagesRouting.AddQuizPage();
     }
+
+    protected onLibraryBooksPage(): any {
+        this.pagesRouting.LibraryBooksPage();
+    }
     //#endregion
 
     //#region business events

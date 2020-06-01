@@ -18,6 +18,7 @@ export  class PathRequestService {
     public expiredLoanPath = environment.url + '/book/expiredLoan';
     public orderedPath = environment.url + '/book/ordered';
     public returnedPath = environment.url + '/book/returned';
+    public allLibraryPath = environment.url + '/book/allLibrary';
     //#endregion
 
     //#region business

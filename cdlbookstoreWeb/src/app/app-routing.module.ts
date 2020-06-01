@@ -34,6 +34,7 @@ import { LibraryComponent } from './user-module/library/library.component';
 import { WishlistComponent } from './user-module/wishlist/wishlist.component';
 import { OnlineBooksComponent } from './user-module/online-books/online-books.component';
 import { LoannedBooksComponent } from './user-module/loanned-books/loanned-books.component';
+import { LibraryBooksComponent } from './admin-module/library-books/library-books.component';
 
 const routes: Routes = [
   //#region  general
@@ -60,6 +61,7 @@ const routes: Routes = [
 
   //#region  admin
   { path: 'add-quiz', canActivate: [AuthGuard, AdminGuard], component: AddQuizComponent},
+  { path: 'all-books', canActivate: [AuthGuard, AdminGuard], component: LibraryBooksComponent},
   {
     path: 'admin',
     canActivate: [AuthGuard, AdminGuard],

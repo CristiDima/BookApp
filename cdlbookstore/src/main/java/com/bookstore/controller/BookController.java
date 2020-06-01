@@ -186,4 +186,14 @@ public class BookController {
                 .orElse(ResponseEntity.notFound().build());
     }
     //endregion
+
+    //region allBooks
+    @GetMapping("/book/allLibrary")
+    public ResponseEntity<List<Map<String, Object>>> getAdminAllBooks()
+    {
+        return bookService.getAdminAllBooks()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+    //endregion
 }

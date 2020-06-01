@@ -49,4 +49,8 @@ public interface BookService {
     Optional<BookDto> returnBook(int bookId, int userId);
     Optional<Boolean> confirmBookReturn(int bookId, int userId);
     //endregion
+
+    //region admin all books
+    Optional<List<Map<String, Object>>> getAdminAllBooks();
+    //endregion
 }

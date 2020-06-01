@@ -8,6 +8,7 @@ import { ReturnedBooksComponent } from '../returned-books/returned-books.compone
 import { UnreturnedBooksComponent } from '../unreturned-books/unreturned-books.component';
 import { ManagementFormComponent } from '../management-form/management-form.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { LibraryBooksComponent } from '../library-books/library-books.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         OrderedBooksComponent,
         ReturnedBooksComponent,
         UnreturnedBooksComponent,
-        ManagementFormComponent
+        ManagementFormComponent,
+        LibraryBooksComponent
     ],
     imports: [MaterialModule, BrowserModule, FlexLayoutModule],
     providers: [ManagementService],

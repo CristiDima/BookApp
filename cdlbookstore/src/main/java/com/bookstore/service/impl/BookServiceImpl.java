@@ -378,4 +378,22 @@ public class BookServiceImpl implements BookService {
         return Optional.ofNullable(false);
     }
     //endregion
+
+    //region admin all books
+    @Override
+    public Optional<List<Map<String, Object>>> getAdminAllBooks() {
+        List<Map<String, Object>> books = new ArrayList<>();
+        List<Book> bookList = new ArrayList();
+        bookRepository.findAll().forEach(bookList::add);
+        for (Book book : bookList) {
+            Map<String, Object> booksMap = new HashMap<>();
+            booksMap.put("bookName", book.getName());
+            booksMap.put("total", book.getTotal());
+            booksMap.put("available", book.getTotal() - book.getLoaned());
+            books.add(booksMap);
+        }
+
+        return Optional.ofNullable(books);
+    }
+    //endregion
 }

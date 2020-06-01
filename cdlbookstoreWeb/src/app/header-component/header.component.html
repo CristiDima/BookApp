@@ -19,7 +19,7 @@
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAdminPage()">Modifica</button>
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onAddQuizPage()">Quiz</button>
                 <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onManaagementPage()">Clienti</button>
-                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button">BookStore</button>
+                <button *ngIf="isAdmin() && isLoggedId()" mat-menu-item class="standard-button" (click)="onLibraryBooksPage()">BookStore</button>
                 <!-- user -->
                 <button *ngIf="isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBooksPage()">BookStore</button>
                 <button *ngIf="isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onTakeQuizPage()">Quiz</button>

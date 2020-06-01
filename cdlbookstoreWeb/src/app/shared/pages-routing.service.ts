@@ -60,6 +60,10 @@ export class PagesRouting {
         return this.router.navigate(['add-quiz']);
     }
 
+    public LibraryBooksPage(): any {
+        return this.router.navigate(['all-books']);
+    }
+
     public TakeQuizPage(): any {
         return this.router.navigate(['take-quiz']);
     }

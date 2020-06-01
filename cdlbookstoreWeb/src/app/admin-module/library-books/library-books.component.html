@@ -1,0 +1,40 @@
+
+<div class="container">
+    <mat-form-field class="input-table" appearance="outline">
+        <mat-label>Nume carte:</mat-label>
+        <input matInput (keyup)="applyBookNameFilter($event.target.value)" >
+    </mat-form-field>
+    <div *ngIf="canShowContent" class=" mat-elevation-z8" >
+        <mat-table #table  [dataSource]="dataSource" >
+        
+        <!-- Index Column -->
+        <ng-container matColumnDef="index" sticky>
+            <mat-header-cell *matHeaderCellDef fxFlex="10"> Index </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index" fxFlex="10"> {{i}} </mat-cell>
+        </ng-container>
+        
+        <!-- Book name Column -->
+        <ng-container matColumnDef="bookName" sticky>
+            <mat-header-cell *matHeaderCellDef fxFlex="50"> Carti </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="50"> {{element.bookName}} </mat-cell>
+        </ng-container>
+        
+        <!-- Total Column -->
+        <ng-container matColumnDef="total" sticky>
+            <mat-header-cell *matHeaderCellDef fxFlex="20"> Total </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="20"> {{element.total}} </mat-cell>
+        </ng-container>
+        
+        <!-- Available Column -->
+        <ng-container matColumnDef="available" sticky>
+            <mat-header-cell *matHeaderCellDef fxFlex="20"> Stoc </mat-header-cell>
+            <mat-cell *matCellDef="let element" fxFlex="20"> {{element.available}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="libraryBooks.length" [pageSize]="20" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+  
