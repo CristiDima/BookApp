@@ -57,7 +57,7 @@ export class DetailsComponent implements OnInit {
     this.userSessionService.user.phoneNumber = this.userInfoForm.controls.phoneNumber.value;
     this.userSessionService.user.email = this.userInfoForm.controls.email.value;
     this.userDetailsService.address.address = this.userInfoForm.controls.address.value;
-    this.userDetailsService.address.address = this.userInfoForm.controls.city.value;
+    this.userDetailsService.address.city = this.userInfoForm.controls.city.value;
     this.userDetailsService.address.district = this.userInfoForm.controls.district.value;
   }
 

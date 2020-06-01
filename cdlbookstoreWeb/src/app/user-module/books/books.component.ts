@@ -22,9 +22,12 @@ export class BooksComponent {
 
 
   public selectedBook: Book = null;
+  public areBooksDownloaded = false;
 
   constructor(private bookService: BookService, private authorService: AuthorService, private genreService: GenreService) {
-
+    this.bookService.isBooksDownloadedSubject.subscribe(el => {
+      this.areBooksDownloaded = true;
+    });
   }
 
   public canShowContent(): boolean {

@@ -91,16 +91,16 @@ export class TakeQuizComponent implements OnInit {
             return;
         }
 
-        if (this.selected.value === this.correctChoice.A) {
+        if (this.question.correctChoice === this.correctChoice.A) {
             this.isWrongChoice = true;
             this.message = 'Raspunsul este gresit. Raspunsul corect este: `' +  this.question.firstChoice + '`';
-        } else if (this.selected.value === this.correctChoice.B) {
+        } else if (this.question.correctChoice === this.correctChoice.B) {
             this.isWrongChoice = true;
             this.message = 'Raspunsul este gresit. Raspunsul corect este: `' + this.question.secondChoice + '`';
-        } else if (this.selected.value === this.correctChoice.C) {
+        } else if (this.question.correctChoice === this.correctChoice.C) {
             this.isWrongChoice = true;
             this.message = 'Raspunsul este gresit. Raspunsul corect este: `' + this.question.thirdChoice + '`';
-        } else if (this.selected.value === this.correctChoice.D) {
+        } else if (this.question.correctChoice === this.correctChoice.D) {
             this.isWrongChoice = true;
             this.message = 'Raspunsul este gresit. Raspunsul corect este: `' + this.question.fourthChoice + '`';
         }
@@ -127,6 +127,7 @@ export class TakeQuizComponent implements OnInit {
     private onResetCSS(): void {
         this.isCorrectChoiche = false;
         this.isWrongChoice = false;
+        this.message = '';
     }
     //#endregion
 

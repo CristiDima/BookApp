@@ -9,6 +9,7 @@ import { Author } from 'src/app/models/author.model';
 import { Genre } from 'src/app/models/genre.model';
 import { BookService } from 'src/app/shared/book.service';
 import { PagesRouting } from 'src/app/shared/pages-routing.service';
+import { UserDetailsService } from 'src/app/shared/user-details.service';
 
 export enum SearchValues {
   Autor = 'Author',
@@ -51,8 +52,14 @@ export class BooksFormComponent implements OnInit, OnDestroy, AfterViewInit {
   public uiBooks: Book[] = null;
   public selectedBook: Book = null;
 
-  constructor(private cdr: ChangeDetectorRef, private pagesRouting: PagesRouting, private bookService: BookService) {
-      this.instantiateNavigator();
+  constructor(private cdr: ChangeDetectorRef, private pagesRouting: PagesRouting, private bookService: BookService,
+              private userDetailsService: UserDetailsService) {
+    this.bookService.isBooksDownloadedSubject.subscribe(el => {
+      this.onClear();
+    });
+    this.userDetailsService.isBooksDownloadedSubject.subscribe(el => {
+      this.onClear();
+    });
   }
 
   ngOnInit() {
@@ -60,11 +67,13 @@ export class BooksFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-      // this.instantiateNavigator();
+      this.instantiateNavigator();
       this.cdr.detectChanges();
   }
 
   ngOnDestroy() {
+    // this.userDetailsService.isBooksDownloadedSubject.unsubscribe();
+    // this.bookService.isBooksDownloadedSubject.unsubscribe();
     this.dataSource.disconnect();
   }
 
@@ -97,14 +106,16 @@ export class BooksFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public get canShowContent(): boolean {
-    if (_.isNil(this.obs) || this.books.length === 0 || _.isNil(this.dataSource)) {
+    if (!this.books || _.isNil(this.obs) || _.isNil(this.dataSource)) {
       return false;
     }
     return true;
   }
 
   private instantiateNavigator() {
-    this.uiBooks = this.books;
+    if (this.uiBooks === null) {
+      this.uiBooks = this.books;
+    }
     this.dataSource = new MatTableDataSource<Book>(this.uiBooks);
     this.dataSource.paginator = this.paginator;
     this.obs = this.dataSource.connect();
@@ -194,8 +205,8 @@ export class BooksFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedGenres.forEach(el => {
       el.uiSelected = false;
     });
-    this.setFilters();
     this.uiBooks = this.books;
+    this.setFilters();
     this.instantiateNavigator();
   }
 

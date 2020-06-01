@@ -5,15 +5,15 @@
 </mat-form-field>
 <mat-form-field class="input-table" appearance="outline">
   <mat-label>Carte:</mat-label>
-  <input matInput (keyup)="applyNameFilter($event.target.value)" >
+  <input matInput (keyup)="applyBookNameFilter($event.target.value)" >
 </mat-form-field>
 <mat-form-field class="input-table" appearance="outline">
   <mat-label>Oras:</mat-label>
-  <input matInput (keyup)="applyNameFilter($event.target.value)" >
+  <input matInput (keyup)="applyCityFilter($event.target.value)" >
 </mat-form-field>
 <mat-form-field class="input-table" appearance="outline" *ngIf="!isFromOrdered">
   <mat-label>Zile:</mat-label>
-  <input matInput (keyup)="applyNameFilter($event.target.value)" >
+  <input matInput (keyup)="applyDaysFilter($event.target.value)" >
 </mat-form-field>
 <div *ngIf="canShowContent" class="container  mat-elevation-z8" >
     <mat-table #table  [dataSource]="dataSource" >
@@ -67,7 +67,7 @@
       </ng-container>
 
       <!-- Remaining Days -->
-      <ng-container matColumnDef="remainingDays" sticky *ngIf="!isFromOrdered">
+      <ng-container matColumnDef="remainingDays" *ngIf="!isFromOrdered" sticky>
         <mat-header-cell *matHeaderCellDef fxFlex="3"> Zile </mat-header-cell>
         <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="3"> {{element.remainedDays}} </mat-cell>
       </ng-container>
@@ -87,7 +87,7 @@
         <mat-header-cell *matHeaderCellDef fxFlex="5"> Trimite </mat-header-cell>
         <mat-cell *matCellDef="let element" class="truncate-cell" fxFlex="5" class="center-column"> 
           <button class="book-action" mat-icon-button (click)="onParentAction(element)">
-            <mat-icon>delete</mat-icon>
+            <mat-icon>local_shipping</mat-icon>
           </button>
         </mat-cell>
       </ng-container>

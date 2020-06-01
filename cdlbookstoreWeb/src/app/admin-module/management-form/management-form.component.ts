@@ -2,6 +2,7 @@ import { Component, ViewChild, Input, EventEmitter, Output,
     AfterViewInit, ChangeDetectorRef, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { ManagementBook } from '../admin-management/management-books.model';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-management-form',
@@ -12,11 +13,11 @@ import { ManagementBook } from '../admin-management/management-books.model';
 export class ManagementFormComponent implements AfterViewInit, OnChanges {
     @Input() managementBook: ManagementBook[];
     @Input() isFromOrdered: false;
+    @Input() parentSubject: Subject<boolean>;
     @Output() parentEvent: EventEmitter<ManagementBook> = new EventEmitter();
 
     public dataSource: MatTableDataSource<ManagementBook> = null;
-    public displayedColumns: string[] = ['clientName', 'bookName', 'address', 'city', 'district', 'email',
-                    'phoneNumber', 'returnDate', 'remainingDays', 'returnedBook'];
+    public displayedColumns: string[] = [];
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -24,15 +25,27 @@ export class ManagementFormComponent implements AfterViewInit, OnChanges {
     }
 
     ngAfterViewInit() {
+        this.parentSubject.subscribe(el => {
+            this.setInitData();
+        });
+        this.setInitData();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+    }
+
+    public setInitData() {
+        if (!this.isFromOrdered) {
+            this.displayedColumns = ['clientName', 'bookName', 'address', 'city', 'district', 'email',
+            'phoneNumber', 'returnDate', 'remainingDays', 'returnedBook'];
+        } else {
+            this.displayedColumns = ['clientName', 'bookName', 'address', 'city', 'district', 'email',
+            'phoneNumber', 'returnDate', 'returnedBook'];
+        }
         this.dataSource = new MatTableDataSource<ManagementBook>(this.managementBook);
         this.dataSource.paginator = this.paginator;
         this.filterPredicate();
         this.cdr.detectChanges();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        this.dataSource = new MatTableDataSource<ManagementBook>(changes.managementBook.currentValue);
-        this.dataSource.paginator = this.paginator;
     }
 
     public get canShowContent(): boolean {

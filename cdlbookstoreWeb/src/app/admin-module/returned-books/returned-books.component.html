@@ -1,1 +1,1 @@
-<app-management-form *ngIf="canShowContent" [managementBook]="managementBooks" (parentEvent)="onReturnBookRequest($event)"></app-management-form>
+<app-management-form *ngIf="canShowContent" [managementBook]="managementBooks" [parentSubject]="isParentModifiedSubject" (parentEvent)="onReturnBookRequest($event)"></app-management-form>

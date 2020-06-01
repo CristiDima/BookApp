@@ -1,10 +1,11 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ManagementService } from '../admin-management/management.service';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { ManagementBook } from '../admin-management/management-books.model';
 import { PathRequestService } from 'src/app/shared/path-request.service';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject } from 'rxjs';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 @Component({
   selector: 'app-returned-books',
   templateUrl: './returned-books.component.html',
@@ -12,9 +13,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ReturnedBooksComponent {
 
+  public isParentModifiedSubject: Subject<boolean> = new Subject<boolean>();
 
   constructor(private managementService: ManagementService, private pathRequest: PathRequestService, private apiRequest: APIRequestService,
-              private spinner: NgxSpinnerService) {
+              private spinner: NgxSpinnerService, private apiMessages: APIMessagesService) {
   }
 
   public get canShowContent(): boolean {
@@ -34,8 +36,11 @@ export class ReturnedBooksComponent {
           const index: number = this.managementService.returnedBooks.indexOf(element);
           this.managementService.returnedBooks.splice(index, 1);
         }
+        this.isParentModifiedSubject.next(true);
+        this.apiMessages.onReturnedBookMsg(element);
         this.spinner.hide();
     }, error => {
+        this.apiMessages.onReturnedBookMsg(error, true);
         this.spinner.hide();
     });
   }

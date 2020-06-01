@@ -363,6 +363,9 @@ public class BookServiceImpl implements BookService {
         if (loanedBook != null) {
             loanedBookRepository.updateReturnedBook(true, bookId, userId);
             BookDto bookDto = getBookById(bookId);
+            Library library = new Library();
+            library.setBookId(bookId);
+            library.setUserId(userId);
             return Optional.ofNullable(bookDto);
         }
         return Optional.ofNullable(null);
@@ -372,6 +375,11 @@ public class BookServiceImpl implements BookService {
     public Optional<Boolean> confirmBookReturn(int bookId, int userId) {
         LoanedBook loanedBook = loanedBookRepository.findByBookIdAndUserId(bookId, userId);
         if (loanedBook != null) {
+            Book book = bookRepository.findById(bookId).orElse(null);
+            if (book != null) {
+                book.setLoaned(book.getLoaned() - 1);
+                bookRepository.save(book);
+            }
             loanedBookRepository.delete(loanedBook);
             return Optional.ofNullable(true);
         }

@@ -134,7 +134,7 @@ export class BookService {
           this.getPhoto();
           this.getFile();
           this.spinner.hide();
-          this.isBooksDownloadedSubject.next();
+          this.isBooksDownloadedSubject.next(true);
         }, error => {
           this.spinner.hide();
         });

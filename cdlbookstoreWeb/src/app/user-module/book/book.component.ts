@@ -97,7 +97,7 @@ export class BookComponent {
             return;
         }
 
-        if (this.isBookAvailable()) {
+        if (!this.isBookAvailable()) {
             this.apiMessage.onNotAvailableBookMsg();
             return;
         }

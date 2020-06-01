@@ -1,2 +1,2 @@
-<app-management-form *ngIf="canShowContent" [managementBook]="managementBooks" [isFromOrdered]="true"
+<app-management-form *ngIf="canShowContent" [managementBook]="managementBooks" [isFromOrdered]="true" [parentSubject]="isParentModifiedSubject"
     (parentEvent)="onSendBookRequest($event)"></app-management-form>

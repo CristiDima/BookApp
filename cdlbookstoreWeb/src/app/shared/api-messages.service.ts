@@ -262,4 +262,20 @@ export class APIMessagesService {
         }
     }
 
+    public onSendBookMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('Cartea: `' + value.bookName + '` a fost expediata catre clientul: `' + value.clientName + '');
+    }
+
+    public onReturnedBookMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('Cartea: `' + value.bookName + '` a fost returnata de catre clientul: `' + value.clientName + '');
+    }
+
 }

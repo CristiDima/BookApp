@@ -7,9 +7,12 @@ import { APIRequestService } from './api-request.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FileSaveService } from './file-save.service';
 import { BookService } from './book.service';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class UserDetailsService {
+
+    public isBooksDownloadedSubject: Subject<boolean> = new Subject<boolean>();
 
     public userPhysicalSubscription: UserPhysicalSubscription = null;
     public userBusinessSubscription: UserBusinessSubscription = null;
@@ -32,8 +35,7 @@ export class UserDetailsService {
     }
 
     public get isLoadedInitialData(): boolean {
-        return (this.isUserPhysicalSubscriptionRequestFinish &&
-            this.isLoannedBooksRequestFinish && this.isOnlineBooksRequestFinish && this.isAddressRequestFinish &&
+        return ( this.isLoannedBooksRequestFinish && this.isOnlineBooksRequestFinish &&
             this.isWishlistRequestFinish && this.isLibraryRequestFinish);
     }
 
@@ -188,6 +190,9 @@ export class UserDetailsService {
             }
             this.spinner.hide();
             this.isLoannedBooksRequestFinish = true;
+            if (this.isLoadedInitialData) {
+                this.isBooksDownloadedSubject.next(true);
+            }
         }, error => {
             this.isLoannedBooksRequestFinish = true;
             this.spinner.hide();
@@ -215,6 +220,9 @@ export class UserDetailsService {
             }
             this.spinner.hide();
             this.isOnlineBooksRequestFinish = true;
+            if (this.isLoadedInitialData) {
+                this.isBooksDownloadedSubject.next(true);
+            }
         }, error => {
             this.isOnlineBooksRequestFinish = true;
             this.spinner.hide();
@@ -241,6 +249,9 @@ export class UserDetailsService {
                 });
             }
             this.isWishlistRequestFinish = true;
+            if (this.isLoadedInitialData) {
+                this.isBooksDownloadedSubject.next(true);
+            }
             this.spinner.hide();
         }, error => {
             this.isWishlistRequestFinish = true;
@@ -268,6 +279,9 @@ export class UserDetailsService {
                 });
             }
             this.isLibraryRequestFinish = true;
+            if (this.isLoadedInitialData) {
+                this.isBooksDownloadedSubject.next(true);
+            }
             this.spinner.hide();
         }, error => {
             this.isLibraryRequestFinish = true;

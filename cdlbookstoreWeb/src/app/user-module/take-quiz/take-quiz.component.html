@@ -23,7 +23,7 @@
                 <div fxLayout fxLayout="column" fxLayoutAlign="center" class="mat-form-group selected-domain" *ngIf="canStartQuiz">
                     <p>{{question.question}}</p>
                     <div  *ngFor="let item of correctChoice | keyvalue; let i = index" fxLayout="row">
-                        <mat-radio-button  [checked]="selected === item" (change)="selected = item">{{i}}. {{choice(i)}}</mat-radio-button>
+                        <mat-radio-button  [checked]="selected === item" (change)="selected = item">{{item.value}}. {{choice(i)}}</mat-radio-button>
                     </div>
                     <p *ngIf="canGoToNextQuestion" [class.corect-answer]="isCorrectChoiche" [class.wrong-answer]="isWrongChoice" >{{message}}</p>
                     <hr>
