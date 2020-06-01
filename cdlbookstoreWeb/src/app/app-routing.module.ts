@@ -35,6 +35,8 @@ import { WishlistComponent } from './user-module/wishlist/wishlist.component';
 import { OnlineBooksComponent } from './user-module/online-books/online-books.component';
 import { LoannedBooksComponent } from './user-module/loanned-books/loanned-books.component';
 import { LibraryBooksComponent } from './admin-module/library-books/library-books.component';
+import { BusinessPaymentComponent } from './business-module/business-payment/business-payment.component';
+import { EmployeesComponent } from './business-module/employees/employees.component';
 
 const routes: Routes = [
   //#region  general
@@ -87,7 +89,9 @@ const routes: Routes = [
 
   //#region  business
   { path: 'businessSignup', component: BusinessSignupComponent},
-  { path: 'businessProfile',   canActivate: [AuthGuard, BusinessGuard], component: BusinessProfileComponent},
+  { path: 'business-payment', canActivate: [AuthGuard, BusinessGuard], component: BusinessPaymentComponent},
+  { path: 'business-employees', canActivate: [AuthGuard, BusinessGuard], component: EmployeesComponent},
+  { path: 'business-profile', canActivate: [AuthGuard, BusinessGuard], component: BusinessProfileComponent},
   //#endregion
 
   { path: '**',  redirectTo: 'home'}

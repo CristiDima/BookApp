@@ -24,8 +24,8 @@
     }
 
     .large-button:disabled {
-        color: $app-primary;
-        background-color: #d9d9d9;
+        color: $app-secondary;
+        background-color: $background-color;
     }
     
 }

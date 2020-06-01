@@ -16,4 +16,9 @@
         display: flow-root;
     }
 
+    .standard-button:disabled {
+        color: $app-secondary;
+            background-color: $background-color;
+    }
+
 }

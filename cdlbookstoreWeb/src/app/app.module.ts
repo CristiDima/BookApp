@@ -40,7 +40,7 @@ import { ManagementModule } from './admin-module/admin-management/management.mod
 import { BusinessSignupComponent } from './business-module/business-signup/business-signup.component';
 import { EmployerSignupComponent } from './employer-signup/employer-signup.component';
 import { SignupGuard } from './guards/signup-guard';
-import { BusinessProfileModule } from './business-module/business-profile/business-profile.module';
+import { BusinessProfileModule } from './business-module/business-profile.module';
 import { UserGuard } from './guards/user-guard';
 import { BusinessGuard } from './guards/business-guard';
 import { SignupComponent } from './user-module/signup/signup.component';
@@ -49,6 +49,7 @@ import { UserModule } from './user-module/user.module';
 import { FooterComponent } from './footer-component/footer.component';
 import { HeaderComponent } from './header-component/header.component';
 import { APIMessagesService } from './shared/api-messages.service';
+import { BusinessPaymentComponent } from './business-module/business-payment/business-payment.component';
 
 const config = {
     apiKey: 'AIzaSyCS1_bJX95rdMH6mWdRNl_rnp6ewVK1xYc',

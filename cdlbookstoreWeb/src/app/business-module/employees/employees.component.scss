@@ -1,10 +1,38 @@
-mat-table {
+@import "src/styles.scss";
+
+.container {
+    margin-top: 60px;
+    margin-bottom:30px;
     width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    mat-table {
+        width: 100%;
+    
+        mat-header-cell {
+            // display: flex;
+            align-items: center;
+            justify-content: center !important;
+            left: 0px !important;
+        }
+    
+        mat-cell {
+            // overflow: auto;
+            // display: flex;
+            align-items: center;
+            justify-content: center !important;
+            left: 0px !important;
+        }
+    }
+    
+      
+    .mat-table-sticky {
+        border-right: 1px solid $app-primary;
+    }
+    
+    .input-table {
+        width: 20%;
+    }
 }
 
-.truncate-cell {
-    // max-width: 60px; /* feel free to include any other value */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}

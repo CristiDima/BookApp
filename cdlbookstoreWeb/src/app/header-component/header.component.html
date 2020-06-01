@@ -29,6 +29,8 @@
                 <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onLoanedPage()">Imprumutate</button>
                 <button *ngIf=" isUser() && isLoggedId()" mat-menu-item class="standard-button" (click)="onProfilePage()">Profil</button>
                 <!-- business -->
+                <button *ngIf=" isBusiness() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBusinessPaymentPage()">Abonament</button>
+                <button *ngIf=" isBusiness() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBusinessEmployeesPage()">Angajati</button>
                 <button *ngIf=" isBusiness() && isLoggedId()" mat-menu-item class="standard-button" (click)="onBusinessProfilePage()">Profil</button>
                 <!-- both -->
                 <button *ngIf="!isLoggedId()" mat-menu-item class="standard-button" (click)="onLogin()">Log in</button>

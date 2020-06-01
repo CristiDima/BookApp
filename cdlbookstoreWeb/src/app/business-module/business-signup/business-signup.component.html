@@ -2,14 +2,14 @@
     <div fxFlex="100%" class="signup" fxLayoutAlign="center">
         <mat-card class="mat-card">
             <mat-card-header>
-                <mat-card-title>Business signup</mat-card-title>
+                <mat-card-title>Autentificare</mat-card-title>
             </mat-card-header>
             <mat-card-content>
                 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
                     <div fxLayout fxLayout="column" fxLayoutAlign="center">
                         <div fxLayout fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="companyName">Company name:*</mat-label>
+                                <mat-label for="companyName">Numele companiei:*</mat-label>
                                 <input matInput formControlName="companyName" class="form-control">
                             </mat-form-field>
                         </div>
@@ -19,41 +19,41 @@
                                 <input matInput formControlName="email" class="form-control">
                             </mat-form-field>
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="phoneNumber">Phone number:*</mat-label>
+                                <mat-label for="phoneNumber">Numar de telefon:*</mat-label>
                                 <input matInput formControlName="phoneNumber" class="form-control">
                             </mat-form-field>
                         </div>
                         <div fxLayout fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="password">Password:*</mat-label>
+                                <mat-label for="password">Parola:*</mat-label>
                                 <input type="password" matInput formControlName="password" class="form-control">
                             </mat-form-field>
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="repeatPassword">Repeat password:*</mat-label>
+                                <mat-label for="repeatPassword">Verifica parola:*</mat-label>
                                 <input type="password" matInput formControlName="repeatPassword" class="form-control">
                             </mat-form-field>
                         </div>
                         <div fxLayout fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="address">Address(Street, Number...):*</mat-label>
+                                <mat-label for="address">Adresa(Strada, Numar...):*</mat-label>
                                 <input matInput formControlName="address" class="form-control">
                             </mat-form-field>
                         </div>
                         <div fxLayout fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="city">City:*</mat-label>
+                                <mat-label for="city">Oras:*</mat-label>
                                 <input matInput formControlName="city" class="form-control">
                             </mat-form-field>
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="district">District*</mat-label>
+                                <mat-label for="district">Judet*</mat-label>
                                 <input matInput formControlName="district" class="form-control">
                             </mat-form-field>
                         </div>
                     </div>
                     <hr>
                     <div fxLayout fxLayout="row" fxLayoutAlign="center">
-                        <button [disabled]="!signupForm.valid" class="standard-button" mat-raised-button type="submit">Save</button>
-                        <button class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Cancel</button>
+                        <button [disabled]="!signupForm.valid" class="standard-button" mat-raised-button type="submit">Salveaza</button>
+                        <button class="standard-button" mat-raised-button (click)="onCancel()" type="reset">Anuleaza</button>
                     </div>
                 </form>
             </mat-card-content>

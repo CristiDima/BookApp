@@ -238,4 +238,28 @@ export class APIMessagesService {
         this.toastr.success('A fost actualizata cartea: `' + value.name + '`');
     }
 
+    public onExistingAccountMsg(): void {
+            this.toastr.error('Un cont cu acest email exista deja');
+    }
+
+    public onAddEmployeeMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        this.toastr.success('Angajatul cu emailul: `' + value + '` a fost adaugat la contul companiei');
+    }
+
+    public onDeleteEmployeesMsg(value: any, error?: any): void {
+        if (error) {
+            this.toastr.error('A aparut o eroare in timpul procesului. Actiunea nu a fost finalizata');
+            return;
+        }
+        if (typeof value === 'number') {
+            this.toastr.success('Au fost stersi din contul companiei: `' + value + '` angajati');
+        } else {
+            this.toastr.success('Angajatul cu emailul: `' + value + '` a fost sters din contul companiei');
+        }
+    }
+
 }

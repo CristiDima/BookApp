@@ -53,7 +53,15 @@ export class PagesRouting {
     }
 
     public BusinessProfilePage(): any {
-        return this.router.navigate(['businessProfile']);
+        return this.router.navigate(['business-profile']);
+    }
+
+    public BusinessPaymentPage(): any {
+        return this.router.navigate(['business-payment']);
+    }
+
+    public BusinessEmployeesPage(): any {
+        return this.router.navigate(['business-employees']);
     }
 
     public AddQuizPage(): any {

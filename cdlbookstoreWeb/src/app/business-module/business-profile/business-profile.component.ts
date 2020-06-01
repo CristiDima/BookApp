@@ -7,14 +7,10 @@ import { BusinessService } from './business-service';
   templateUrl: './business-profile.component.html',
   styleUrls: ['./business-profile.component.scss']
 })
-export class BusinessProfileComponent implements OnInit {
+export class BusinessProfileComponent {
 
-  public isPageLoaded: boolean = false;
+  public isPageLoaded = false;
 
-  constructor(private businessService: BusinessService) { 
-    this.businessService.getAllEmployeesRequest();
-  }
-
-  ngOnInit(){
+  constructor(private businessService: BusinessService) {
   }
 }

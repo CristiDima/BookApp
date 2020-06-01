@@ -15,7 +15,7 @@
                         </div>
                         <div fxLayout="row" fxLayoutAlign="center">
                             <mat-form-field class="form-group" appearance="outline" fxLayout="column">
-                                <mat-label for="password">Password</mat-label>
+                                <mat-label for="password">Parola</mat-label>
                                 <input matInput formControlName="password" class="form-control" type="password">
                             </mat-form-field>
                         </div>
@@ -23,13 +23,13 @@
                     <hr>
                     <div fxLayout="row" fxLayoutAlign="center">
                         <button class="standard-button" mat-raised-button type="submit">Log in</button>
-                        <button class="standard-button" mat-raised-button (click)="onCancel()">Cancel</button>
+                        <button class="standard-button" mat-raised-button (click)="onCancel()">Anuleaza</button>
                     </div>
                     <hr>
                     <div fxLayout="row" fxLayoutAlign="center">
-                        <button class="large-button" mat-raised-button (click)="onSignUpPage()">Personal account</button>
-                        <button class="large-button" mat-raised-button (click)="onBusinessSignUpPage()">Business account</button>
-                        <button class="large-button" mat-raised-button (click)="onResetPasswordPage()">Reset password</button>
+                        <button class="large-button" mat-raised-button (click)="onSignUpPage()">Persoana fizica</button>
+                        <button class="large-button" mat-raised-button (click)="onBusinessSignUpPage()">Cont companie</button>
+                        <button class="large-button" mat-raised-button (click)="onResetPasswordPage()">Reseteaza parola</button>
                     </div>
                 </form>
             </mat-card-content>

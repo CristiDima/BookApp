@@ -14,54 +14,44 @@ import { UserSessionService } from 'src/app/shared/user-session.service';
 export class EmployeesComponent {
 
     public dataSource: MatTableDataSource<Employee> = null;
-    public displayedColumns: string[] = ['name', 'email', 'delete'];
+    public displayedColumns: string[] = ['name', 'email'];
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private businessService: BusinessService, private pathRequest: PathRequestService, private apiRequest: APIRequestService,
-              private spinner: NgxSpinnerService,  private toastr: ToastrService, private userSession: UserSessionService) {
-      this.dataSource = new MatTableDataSource<Employee>(businessService.employees);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate =
-        (data: Employee, filtersJson: string) => {
-            const matchFilter = [];
-            const filters = JSON.parse(filtersJson);
-
-            filters.forEach(filter => {
-              const val = data[filter.id] === null ? '' : data[filter.id];
-              if (!val) {
-                return;
-              }
-              matchFilter.push(val.toLowerCase().includes(filter.value.toLowerCase()));
-            });
-            return matchFilter.every(Boolean);
-      };
+  constructor(private businessService: BusinessService) {
+      this.businessService.getAllEmployeesRequest();
+      this.businessService.isDownloadedSubject.subscribe(el => {
+        this.setInitData();
+      });
   }
 
   public get canShowContent(): boolean {
     return this.businessService.employees.length > 0;
   }
 
-  //#region request
-  public deleteEmployeesRequest(employee) {
-    this.spinner.show();
-    const successMsg: string = 'The employee was removed';
-    const errorMsg: string = 'An error occured. Please try again';
-    this.apiRequest.requst('POST', this.pathRequest.employeesPath + '/' + 'delete', employee.email)
-    .subscribe((responseData: any) => {
-        if (responseData) {
-            const index: number = this.businessService.employees.indexOf(employee);
-            this.businessService.employees.splice(index, 1);
-        }
-      this.spinner.hide();
-      this.toastr.success(successMsg);
-    }, error => {
-      this.spinner.hide();
-      this.toastr.error(errorMsg);
-    });
+  public get contentLength(): number {
+    return this.businessService.employees.length;
   }
-  //#endregion
+
+  private setInitData(): void {
+    this.dataSource = new MatTableDataSource<Employee>(this.businessService.employees);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.filterPredicate =
+      (data: Employee, filtersJson: string) => {
+          const matchFilter = [];
+          const filters = JSON.parse(filtersJson);
+
+          filters.forEach(filter => {
+            const val = data[filter.id] === null ? '' : data[filter.id];
+            if (!val) {
+              return;
+            }
+            matchFilter.push(val.toLowerCase().includes(filter.value.toLowerCase()));
+          });
+          return matchFilter.every(Boolean);
+    };
+  }
 
   //#region filter
   applyFilter(filterValue: string) {
@@ -76,5 +66,4 @@ export class EmployeesComponent {
     }
   }
   //#endregion
-  
 }

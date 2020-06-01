@@ -94,5 +94,13 @@ export class HeaderComponent {
     protected onBusinessProfilePage(): any {
         this.pagesRouting.BusinessProfilePage();
     }
+
+    protected onBusinessPaymentPage(): any {
+        this.pagesRouting.BusinessPaymentPage();
+    }
+
+    protected onBusinessEmployeesPage(): any {
+        this.pagesRouting.BusinessEmployeesPage();
+    }
     //#endregion
 }

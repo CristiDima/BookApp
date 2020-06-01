@@ -6,6 +6,7 @@ import { APIRequestService } from '../../shared/api-request.service';
 import { PathRequestService } from '../../shared/path-request.service';
 import { UserDetailsService } from '../../shared/user-details.service';
 import { UserBusinessSubscription } from '../../models/user.model';
+import { Subject } from 'rxjs';
 
 export interface Employee {
     email: string;
@@ -20,6 +21,7 @@ export class BusinessService {
 
     public employees: Employee[] = [];
     public canShowContent = false;
+    public isDownloadedSubject: Subject<boolean> = new Subject<boolean>();
 
     constructor(private userSessionService: UserSessionService, private apiRequest: APIRequestService,
                 private pathRequest: PathRequestService, private spinner: NgxSpinnerService,
@@ -36,7 +38,9 @@ export class BusinessService {
             const tempEmployee: Employee = {email: employee.email, isSelected: false, name: employee.name};
             this.employees.push(tempEmployee);
           });
+          this.isDownloadedSubject.next(true);
           this.canShowContent = true;
+          console.log(this.employees);
         }
         this.spinner.hide();
       }, error => {

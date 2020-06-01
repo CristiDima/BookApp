@@ -6,7 +6,7 @@ import { PagesRouting } from 'src/app/shared/pages-routing.service';
 import { CustomValidatorService } from 'src/app/validators/custom-validator.service';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { PathRequestService } from 'src/app/shared/path-request.service';
-import { ToastrService } from 'ngx-toastr';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
   selector: 'app-business-signup',
@@ -16,22 +16,23 @@ import { ToastrService } from 'ngx-toastr';
 export class BusinessSignupComponent implements OnInit {
 
   protected signupForm: FormGroup = null;
+  // tslint:disable-next-line: max-line-length
   private phoneNumberRegex: any = /^(?:(?:(?:00\s?|\+)40\s?|0)(?:7\d{2}\s?\d{3}\s?\d{3}|(21|31)\d{1}\s?\d{3}\s?\d{3}|((2|3)[3-7]\d{1})\s?\d{3}\s?\d{3}|(8|9)0\d{1}\s?\d{3}\s?\d{3}))$/;
 
-  constructor(private _pagesRouting: PagesRouting, private apiRequest: APIRequestService, private toastr: ToastrService,
+  constructor(private pagesRouting: PagesRouting, private apiRequest: APIRequestService, private apiMessage: APIMessagesService,
               private pathRequest: PathRequestService, private customValidatorsService: CustomValidatorService,
               private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.signupForm = new FormGroup({
-      'companyName': new FormControl(null, [Validators.required]),
-      'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      'repeatPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      'email': new FormControl(null, [Validators.required, Validators.email]),
-      'phoneNumber': new FormControl(null, [Validators.required, Validators.pattern(this.phoneNumberRegex)]),
-      'address': new FormControl(null, [Validators.required]),
-      'city': new FormControl(null, [Validators.required]),
-      'district': new FormControl(null, [Validators.required])
+      companyName: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      repeatPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      phoneNumber: new FormControl(null, [Validators.required, Validators.pattern(this.phoneNumberRegex)]),
+      address: new FormControl(null, [Validators.required]),
+      city: new FormControl(null, [Validators.required]),
+      district: new FormControl(null, [Validators.required])
     }, {
       validators: [
         this.customValidatorsService.passwordsMatch('password', 'repeatPassword'),
@@ -40,7 +41,7 @@ export class BusinessSignupComponent implements OnInit {
   }
 
   //#region events
-  protected onSubmit():void {
+  protected onSubmit(): void {
     const userDetails: Map<string, any> = new Map<string, string>();
     Object.keys(this.signupForm.controls).forEach(key => {
        if (key === 'password') {
@@ -59,22 +60,21 @@ export class BusinessSignupComponent implements OnInit {
   //#endregion
 
 
-  //#request events
+  //#region request events
   private saveUserRequest(userDetails: Map<string, any>): void {
     const convMap = {};
     userDetails.forEach((val: string, key: string) => {
       convMap[key] = val;
     });
     this.spinner.show();
-    const errorMsg: string = 'An account with this email already exist.'
     this.apiRequest.requst('POST', this.pathRequest.signupPath, convMap).subscribe((responseData: any) => {
-        this._pagesRouting.LoginPage();
+        this.pagesRouting.LoginPage();
         this.signupForm.reset();
         this.spinner.hide();
-    }, 
+    },
     error => {
       this.onCancel();
-      this.toastr.error(errorMsg);
+      this.apiMessage.onExistingAccountMsg();
       this.spinner.hide();
   });
   }

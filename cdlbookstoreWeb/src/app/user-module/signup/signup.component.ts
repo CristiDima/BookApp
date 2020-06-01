@@ -7,6 +7,7 @@ import { PagesRouting } from 'src/app/shared/pages-routing.service';
 import { APIRequestService } from 'src/app/shared/api-request.service';
 import { CustomValidatorService } from 'src/app/validators/custom-validator.service';
 import { PathRequestService } from 'src/app/shared/path-request.service';
+import { APIMessagesService } from 'src/app/shared/api-messages.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +20,7 @@ export class SignupComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   private phoneNumberRegex: any = /^(?:(?:(?:00\s?|\+)40\s?|0)(?:7\d{2}\s?\d{3}\s?\d{3}|(21|31)\d{1}\s?\d{3}\s?\d{3}|((2|3)[3-7]\d{1})\s?\d{3}\s?\d{3}|(8|9)0\d{1}\s?\d{3}\s?\d{3}))$/;
 
-  constructor(private pagesRouting: PagesRouting, private apiRequest: APIRequestService, private toastr: ToastrService,
+  constructor(private pagesRouting: PagesRouting, private apiRequest: APIRequestService, private apiMessage: APIMessagesService,
               private pathRequest: PathRequestService, private customValidatorsService: CustomValidatorService,
               private spinner: NgxSpinnerService) {}
 
@@ -68,14 +69,13 @@ export class SignupComponent implements OnInit {
       convMap[key] = val;
     });
     this.spinner.show();
-    const errorMsg = 'An account with this email already exist.';
     this.apiRequest.requst('POST', this.pathRequest.signupPath, convMap).subscribe((responseData: any) => {
         this.pagesRouting.LoginPage();
         this.signupForm.reset();
         this.spinner.hide();
     },
     error => {
-      this.toastr.error(errorMsg);
+      this.apiMessage.onExistingAccountMsg();
       this.spinner.hide();
       this.onCancel();
   });
