@@ -121,6 +121,19 @@ export class BooksFormComponent implements OnInit, OnDestroy, AfterViewInit {
     this.obs = this.dataSource.connect();
   }
 
+  public isLoanedBook(book: Book): boolean {
+    if (this.isLoanedPage) {
+      return false;
+    }
+
+    const loanedBook: Book = this.userDetailsService.loanedBooks.filter(el => el.id === book.id)[0];
+    if (loanedBook) {
+      return true;
+    }
+
+    return false;
+  }
+
   //#region event
   public onSearch(): void {
     if (this.selected.value === SearchValues.Gen) {

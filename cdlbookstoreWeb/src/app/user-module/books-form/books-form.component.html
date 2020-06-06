@@ -67,7 +67,7 @@
     <mat-sidenav-content class="nav-content">
         <div fxLayout="row wrap">
             <div class="container" fxFlex *ngFor="let book of obs | async">
-                <mat-card class="book-card">
+                <mat-card class="book-card" [class.loaned]="isLoanedBook(book)">
                     <mat-card-header>
                         <div *ngIf="book.authors[0].uiImage" mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + book.authors[0].uiImage + ')'}"></div>
                         <div *ngIf="!book.authors[0].uiImage" mat-card-avatar class="icon-card"></div><mat-card-title>{{book.name}}</mat-card-title>

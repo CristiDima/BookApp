@@ -20,6 +20,7 @@ $app-secondary: #C8E3D3;
 $hover-color: #8BB19E;
 $background-color: #FFFFFF;
 $mat-card-color: #F1EEEF;
+$wishlist-card-color: #87865A;
 $text-color: #000000;
 $app-accent: mat-palette($mat-pink, A200, A100, A400);
 
@@ -113,6 +114,10 @@ html { background-color: $background-color; }
         overflow: hidden;
         text-overflow: ellipsis;
     }
+}
+
+.loaned {
+    background-color: $wishlist-card-color;
 }
 
 .book-action {
