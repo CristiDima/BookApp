@@ -143,7 +143,7 @@ export class BookComponent {
         this.spinner.show();
         this.apiRequest.requst('POST', this.pathRequest.wishlistPath + '/' + book.id, this.userSesion.user.id)
         .subscribe((responseData: Book) => {
-            this.userDetailsService.wishlist.push(responseData);
+            this.userDetailsService.wishlist.push(book);
             this.apiMessage.onAddToWishlistMsg(book);
             this.spinner.hide();
         }, error => {
@@ -170,7 +170,7 @@ export class BookComponent {
         this.spinner.show();
         this.apiRequest.requst('POST', this.pathRequest.onlinePath + '/' + book.id, this.userSesion.user.id)
         .subscribe((responseData: Book) => {
-            this.userDetailsService.onlineBooks.push(responseData);
+            this.userDetailsService.onlineBooks.push(book);
             this.apiMessage.onAddToEBookMsg(book);
             this.pagesRouting.PdfViewerPage(this.selectedBook);
             this.spinner.hide();

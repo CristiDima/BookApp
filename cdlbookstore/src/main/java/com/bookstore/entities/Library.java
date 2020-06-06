@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "history")
+@Table(name = "library")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

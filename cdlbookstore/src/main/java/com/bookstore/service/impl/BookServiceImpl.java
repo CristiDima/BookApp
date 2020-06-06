@@ -363,9 +363,6 @@ public class BookServiceImpl implements BookService {
         if (loanedBook != null) {
             loanedBookRepository.updateReturnedBook(true, bookId, userId);
             BookDto bookDto = getBookById(bookId);
-            Library library = new Library();
-            library.setBookId(bookId);
-            library.setUserId(userId);
             return Optional.ofNullable(bookDto);
         }
         return Optional.ofNullable(null);
@@ -379,9 +376,13 @@ public class BookServiceImpl implements BookService {
             if (book != null) {
                 book.setLoaned(book.getLoaned() - 1);
                 bookRepository.save(book);
+                Library library = new Library();
+                library.setBookId(bookId);
+                library.setUserId(userId);
+                libraryRepository.save(library);
+                loanedBookRepository.delete(loanedBook);
+                return Optional.ofNullable(true);
             }
-            loanedBookRepository.delete(loanedBook);
-            return Optional.ofNullable(true);
         }
         return Optional.ofNullable(false);
     }
