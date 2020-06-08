@@ -16,8 +16,7 @@ export class ResetPassGuard implements CanActivate, CanActivateChild {
       return false;
     }
     return this.authService.canResetPassword(token, id).pipe(
-      map(response =>
-        {
+      map(response =>   {
           if (response === true) {
             return true;
           } else {

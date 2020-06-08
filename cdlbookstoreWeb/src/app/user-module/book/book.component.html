@@ -1,7 +1,8 @@
 <div class="container">
     <mat-card class="mat-card">
         <mat-card-header>
-        <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + selectedBook.uiImage + ')'}"></div>
+        <div mat-card-avatar class="icon-card" *ngIf="selectedBook.uiImage"
+            [ngStyle]="{'background-image': 'url(' + selectedBook.uiImage + ')'}"></div>
         <mat-card-title>{{selectedBook.name}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -40,7 +41,8 @@
             <p class="title"><b>Autor</b></p>
             <div *ngFor="let author of selectedBook.authors">
                 <mat-card-header>
-                    <div mat-card-avatar class="icon-card" [ngStyle]="{'background-image': 'url(' + author.uiImage + ')'}"></div>
+                    <div mat-card-avatar class="icon-card" *ngIf="author.uiImage"
+                        [ngStyle]="{'background-image': 'url(' + author.uiImage + ')'}"></div>
                     <p> {{author.name}}</p>
                 </mat-card-header>
                 <mat-form-field class="form-group" appearance="outline" fxLayout="column">

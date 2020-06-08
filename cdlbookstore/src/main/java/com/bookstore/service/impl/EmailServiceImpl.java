@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
 
         try {
             helper.setTo(to);
-            helper.setSubject("Create an account");
+            helper.setSubject("Creare cont");
             Map<String, String> values = new HashMap<>();
             values.put("username", lastName);
             helper.setText(this.generateMailHtml(values, "NewAccountTemplate"), true);
@@ -51,7 +51,7 @@ public class EmailServiceImpl implements EmailService {
 
         try {
             helper.setTo(to);
-            helper.setSubject("Reset password");
+            helper.setSubject("Resetare parola");
             Map<String, String> values = new HashMap<>();
             values.put("username", lastName);
             values.put("link", link);
@@ -72,13 +72,49 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
+    public void sendBookEmail(String to, String lastName, String bookName) {
+        MimeMessage message = this.getJavaMailSender().createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            helper.setTo(to);
+            helper.setSubject("Expediere carte");
+            Map<String, String> values = new HashMap<>();
+            values.put("username", lastName);
+            values.put("bookName", bookName);
+            helper.setText(this.generateMailHtml(values, "SendBookTemplate"), true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        this.getJavaMailSender().send(message);
+    }
+
+    @Override
+    public void returnedBookEmail(String to, String lastName, String bookName) {
+        MimeMessage message = this.getJavaMailSender().createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            helper.setTo(to);
+            helper.setSubject("Inregistrare comanda");
+            Map<String, String> values = new HashMap<>();
+            values.put("username", lastName);
+            values.put("bookName", bookName);
+            helper.setText(this.generateMailHtml(values, "ReturnedBookTemplate"), true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        this.getJavaMailSender().send(message);
+    }
+
+    @Override
     public void createBusinessAccountEmail(String to, String companyName, String link) {
         MimeMessage message = this.getJavaMailSender().createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         try {
             helper.setTo(to);
-            helper.setSubject("Create Bookstore account");
+            helper.setSubject("Creare cont business");
             Map<String, String> values = new HashMap<>();
             values.put("companyName", companyName);
             values.put("link", link);

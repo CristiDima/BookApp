@@ -54,6 +54,9 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private GenreRepository genreRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public BookDto getBookById(int id){
         Book book = bookRepository.findById(id).get();
@@ -352,6 +355,10 @@ public class BookServiceImpl implements BookService {
         LoanedBook loanedBook = loanedBookRepository.findByBookIdAndUserId(bookId, userId);
         if (loanedBook != null) {
             loanedBookRepository.updateLoanedBooks(true, bookId, userId);
+            UserBookstoreDto userBookstoreDto = userBookstoreService.getUserById(userId).orElse(null);
+            UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByUserId(userId);
+            BookDto bookDto = getBookById(bookId);
+            emailService.sendBookEmail(userCredentialsDto.getEmail(), userBookstoreDto.getLastName(), bookDto.getName());
             return Optional.ofNullable(true);
         }
         return Optional.ofNullable(false);
@@ -363,6 +370,9 @@ public class BookServiceImpl implements BookService {
         if (loanedBook != null) {
             loanedBookRepository.updateReturnedBook(true, bookId, userId);
             BookDto bookDto = getBookById(bookId);
+            UserBookstoreDto userBookstoreDto = userBookstoreService.getUserById(userId).orElse(null);
+            UserCredentialsDto userCredentialsDto = userCredentialsService.findUserByUserId(userId);
+            emailService.returnedBookEmail(userCredentialsDto.getEmail(), userBookstoreDto.getLastName(), bookDto.getName());
             return Optional.ofNullable(bookDto);
         }
         return Optional.ofNullable(null);

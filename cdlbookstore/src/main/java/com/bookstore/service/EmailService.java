@@ -7,4 +7,6 @@ public interface EmailService {
     void createBusinessAccountEmail(String to, String companyName, String link);
     void updateBusinessAccountEmail(String to, String companyName, String userName);
     void changePasswordEmail(String to);
+    void sendBookEmail(String to, String lastName, String bookName);
+    void returnedBookEmail(String to, String lastName, String bookName);
 }

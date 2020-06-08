@@ -64,6 +64,7 @@ export class AuthenticationService {
         if (isSessionExpired) {
           this.apiMessage.onLogoutMsg(isSessionExpired, null);
         }
+        this.pagesRouting.LoginPage();
         this.spinner.hide();
       }, error => {
         this.spinner.hide();
