@@ -92,7 +92,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<BookDto> deleteBook (int id) {
         BookDto bookDto = getBookById(id);
-        bookRepository.delete(bookMapper.bookDtoToBook(bookDto));
+        Book book = bookMapper.bookDtoToBook(bookDto);
+        book.setGenres(null);
+        book.setAuthors(null);
+        bookRepository.delete(book);
         return Optional.ofNullable(bookDto);
     }
 

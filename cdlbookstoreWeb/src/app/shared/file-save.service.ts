@@ -33,11 +33,14 @@ export class FileSaveService {
         return;
       }
       const storageRef: firebase.storage.Reference = this.fs.storage.ref(book.photo);
+      this.spinner.show();
       storageRef.getDownloadURL().then(file => {
         if (file) {
           book.uiImage = file;
+          this.spinner.hide();
         }
       }, error => {
+        this.spinner.hide();
       });
     }
 
@@ -62,11 +65,14 @@ export class FileSaveService {
         return;
       }
       const storageRef: firebase.storage.Reference = this.fs.storage.ref(author.photo);
+      this.spinner.show();
       storageRef.getDownloadURL().then(file => {
         if (file) {
           author.uiImage = file;
+          this.spinner.hide();
         }
       }, error => {
+        this.spinner.hide();
       });
     }
 }

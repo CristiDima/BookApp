@@ -29,28 +29,30 @@
     <div fxLayout fxLayout="row" *ngFor="let book of books">
         <mat-card class="book-card">
             <mat-card-header>
-                <div mat-card-avatar class="icon-card" *ngIf="book.authors[0].uiImage"
+                <div *ngIf="book.authors[0].uiImage" mat-card-avatar class="icon-card" 
                     [ngStyle]="{'background-image': 'url(' + book.authors[0].uiImage + ')'}"></div>
-              <mat-card-title>{{book.name}}</mat-card-title>
-              <mat-card-subtitle class="truncate">
-                  <span *ngFor="let author of book.authors">
-                      {{author.name}};
-                  </span>
-              </mat-card-subtitle>
+                <div *ngIf="!book.authors[0].uiImage" mat-card-avatar class="icon-card"></div><mat-card-title>{{book.name}}</mat-card-title>
+                <mat-card-subtitle class="truncate">
+                    <span *ngFor="let author of book.authors">
+                        {{author.name}};
+                    </span>
+                </mat-card-subtitle>
             </mat-card-header>
             <img class="book-image" mat-card-image [src]="book.uiImage ? book.uiImage : ''" alt="">
-            <mat-card-content class="book-card-content">
-                <p> <b>Rating:</b> {{book.rating}} / {{book.votes}} </p>
-                <p> <b>Year:</b> {{book.year}} </p>
-                <p> <b>Genre:</b> 
-                <span *ngFor="let genre of book.genres" class="truncate">
-                    {{genre.name}};
-                </span>
-                </p>
-              </mat-card-content>
-            <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
-              <button mat-button class="standard-button" (click)="onShowDetails(book)">Details</button>
-            </mat-card-actions>
+                <mat-card-content class="book-card-content">
+                    <p> <b>Rating:</b> {{book.rating}} / {{book.votes}} </p>
+                    <p> <b>An:</b> {{book.year}} </p>
+                    <p> <b>Gen:</b> 
+                    <span *ngFor="let genre of book.genres" class="truncate">
+                        {{genre.name}};
+                    </span>
+                    </p>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxLayout="column">
+                            <button mat-button class="standard-button" (click)="onShowDetails(book)">Detalii</button>
+                        </div>
+                    </div>
+                </mat-card-content>
           </mat-card>
     </div>
 </div>

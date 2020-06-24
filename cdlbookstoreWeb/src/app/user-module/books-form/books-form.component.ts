@@ -72,8 +72,6 @@ export class BooksFormComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    // this.userDetailsService.isBooksDownloadedSubject.unsubscribe();
-    // this.bookService.isBooksDownloadedSubject.unsubscribe();
     this.dataSource.disconnect();
   }
 

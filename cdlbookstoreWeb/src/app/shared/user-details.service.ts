@@ -186,6 +186,13 @@ export class UserDetailsService {
                         this.fileService.getBookImg(book);
                         this.bookService.getAuthorPhoto(book.authors);
                     }
+                    if (!book.uiFile && book.file) {
+                        this.fileService.getBookPdf(book);
+                    }
+
+                    if (!book.uiImage && book.photo) {
+                        this.fileService.getBookImg(book);
+                    }
                 });
             }
             this.spinner.hide();
@@ -215,6 +222,14 @@ export class UserDetailsService {
                         this.fileService.getBookPdf(book);
                         this.fileService.getBookImg(book);
                         this.bookService.getAuthorPhoto(book.authors);
+                    }
+
+                    if (!book.uiFile && book.file) {
+                        this.fileService.getBookPdf(book);
+                    }
+
+                    if (!book.uiImage && book.photo) {
+                        this.fileService.getBookImg(book);
                     }
                 });
             }
@@ -246,6 +261,14 @@ export class UserDetailsService {
                         this.fileService.getBookImg(book);
                         this.bookService.getAuthorPhoto(book.authors);
                     }
+
+                    if (!book.uiFile && book.file) {
+                        this.fileService.getBookPdf(book);
+                    }
+
+                    if (!book.uiImage && book.photo) {
+                        this.fileService.getBookImg(book);
+                    }
                 });
             }
             this.isWishlistRequestFinish = true;
@@ -275,6 +298,14 @@ export class UserDetailsService {
                         this.fileService.getBookPdf(book);
                         this.fileService.getBookImg(book);
                         this.bookService.getAuthorPhoto(book.authors);
+                    }
+
+                    if (!book.uiFile && book.file) {
+                        this.fileService.getBookPdf(book);
+                    }
+
+                    if (!book.uiImage && book.photo) {
+                        this.fileService.getBookImg(book);
                     }
                 });
             }

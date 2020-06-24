@@ -23,6 +23,22 @@ public class Book {
     @NotNull
     private String name;
 
+    @ManyToMany( cascade = CascadeType.ALL )
+    @JoinTable(
+            name = "book_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @EqualsAndHashCode.Exclude @ToString.Exclude
+    private Set<Author> authors;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "book_genres",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @EqualsAndHashCode.Exclude @ToString.Exclude
+    private Set<Genre> genres;
+
     @Column
     @NotNull
     private String description;
@@ -52,21 +68,7 @@ public class Book {
     @Column
     private int loaned;
 
-    @ManyToMany( cascade = CascadeType.ALL )
-    @JoinTable(
-            name = "book_authors",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
-    @EqualsAndHashCode.Exclude @ToString.Exclude
-    private Set<Author> authors;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "book_genres",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    @EqualsAndHashCode.Exclude @ToString.Exclude
-    private Set<Genre> genres;
 
     @Override
     public String toString() {
